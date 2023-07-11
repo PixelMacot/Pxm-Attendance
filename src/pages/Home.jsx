@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
+import { collection, addDoc, doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { db } from '../firebase';
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
@@ -19,7 +21,7 @@ const Home = () => {
         // ...
         console.log("uid", uid)
       } else {
-       navigate("/login")
+        navigate("/login")
       }
     });
 
@@ -44,21 +46,45 @@ const Home = () => {
     let valid = startDate < currentDate && endDate > currentDate
     return valid
   }
-  const markAttendance =async (e) => {
+  const markAttendance = async (e) => {
     e.preventDefault()
 
     if (validTime()) {
       console.log("valid time")
+      let currentDate = new Date()
+
+      let separator = '-'
+      let newDate = new Date()
+      let date = newDate.getDate();
+      let month = newDate.getMonth() + 1;
+      let year = newDate.getFullYear();
+      let newTime = new Date(currentDate.getTime());
+      let arrivalDate = `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}${separator}${newTime}`
+
+      console.log(arrivalDate)
       try {
-        const userProjectsColRef = await collection(db, 'attendance', userData.uid, 'date');
-        const newProjectDocRef = await doc(userProjectsColRef);
-       await addDoc(collection(newProjectDocRef, 'tasks'), {
-         "data":"data is inserted"
-        });
-        // const docRef = await addDoc(collection(db, "attendance"), {
-        //   todo: todo,
-        // });
-        console.log("Document written with ID: ", userData.uid);
+
+        const docData = {
+
+          [arrivalDate]: {
+            name:userData.displayName,
+            arrivalDate:Timestamp.fromDate(new Date())
+          }
+
+        };
+
+        const docRef = doc(db, "attendance", userData.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          await updateDoc(doc(db, "attendance", userData.uid), docData);
+          console.log("Document written with ID: ", userData.uid);
+        } else {
+          await setDoc(doc(db, "attendance", userData.uid), docData);
+          console.log("Document written with ID: ", userData.uid);
+        }
+
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -73,15 +99,11 @@ const Home = () => {
     e.preventDefault();
 
     try {
-      const userProjectsColRef = collection(db, 'attendance', userData.uid, 'date');
-      const newProjectDocRef = doc(userProjectsColRef);
-      addDoc(collection(newProjectDocRef, 'tasks'), {
-       "data":"data is inserted"
+      await setDoc(doc(db, "attendance", userData.uid), {
+        name: "Los Angeles",
+        state: "CA",
+        country: "USA"
       });
-      // const docRef = await addDoc(collection(db, "attendance"), {
-      //   todo: todo,
-      // });
-      console.log("Document written with ID: ", userData.uid);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -97,8 +119,8 @@ const Home = () => {
 
             <div className="flex flex-col gap-10 justify-center items-center py-20">
 
-              <div className="rounded-full w-[200px] shadow-md p-5">
-                <img src={userData.photoURL} />
+              <div className="rounded-full w-fit shadow-md p-1">
+                <img src={userData.photoURL} className='rounded-full w-[250px]' />
               </div>
 
               <div className="text-center text-2xl font-bold w-fit">

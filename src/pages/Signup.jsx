@@ -33,7 +33,7 @@ const Signup = () => {
                 // ..
             });
 
-
+     navigate("/")
     }
     //image upload
     function handleImageChange(event) {
