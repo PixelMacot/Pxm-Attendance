@@ -28,7 +28,7 @@ const Home = () => {
   }, [])
   const validTime = () => {
     var startTime = '10:10:10';
-    var endTime = '18:10:00';
+    var endTime = '11:10:00';
 
     let currentDate = new Date()
 
