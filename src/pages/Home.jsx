@@ -58,8 +58,8 @@ const Home = () => {
       let date = newDate.getDate();
       let month = newDate.getMonth() + 1;
       let year = newDate.getFullYear();
-      let newTime = new Date(currentDate.getTime());
-      let arrivalDate = `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}${separator}${newTime}`
+      let day = newDate.getDay();
+      let arrivalDate = `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}${separator}${day}`
 
       console.log(arrivalDate)
       try {
@@ -67,8 +67,8 @@ const Home = () => {
         const docData = {
 
           [arrivalDate]: {
-            name:userData.displayName,
-            arrivalDate:Timestamp.fromDate(new Date())
+            name: userData.displayName,
+            arrivalDate: Timestamp.fromDate(new Date())
           }
 
         };
