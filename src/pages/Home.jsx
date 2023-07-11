@@ -89,6 +89,7 @@ const Home = () => {
         console.error("Error adding document: ", e);
       }
     } else {
+      alert("time for attendance is ended")
       console.log("invalid time")
     }
   }
