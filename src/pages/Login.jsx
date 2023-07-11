@@ -29,7 +29,7 @@ const Login = () => {
         <>
             <main >
                 <section>
-                    <div className='w-[40%] mx-auto shadow-lg rounded-sm p-5 my-10'>
+                    <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-10'>
                         <h1 className='text-center text-2xl'>Login</h1>
                         <form  className='flex flex-col gap-2'>
                             <div  className='flex flex-col gap-1'> 
@@ -60,7 +60,7 @@ const Login = () => {
                                 />
                             </div>
 
-                            <div>
+                            <div className='my-5'>
                                 <button
                                     onClick={onLogin}
                                     className='bg-orange-400 px-5 py-2 rounded-md text-white font-bold'
@@ -70,7 +70,7 @@ const Login = () => {
                             </div>
                         </form>
 
-                        <p className="text-sm text-white text-center">
+                        <p className="text-sm text-cyan-700 text-center">
                             No account yet? {' '}
                             <NavLink to="/signup">
                                 Sign up

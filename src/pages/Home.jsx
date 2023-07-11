@@ -6,6 +6,7 @@ import { auth } from '../firebase';
 const Home = () => {
   const [logged, SetLogged] = useState(false)
   const [userData, setUserData] = useState({})
+  const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -18,9 +19,7 @@ const Home = () => {
         // ...
         console.log("uid", uid)
       } else {
-        // User is signed out
-        // ...
-        console.log("user is logged out")
+       navigate("/login")
       }
     });
 
