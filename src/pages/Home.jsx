@@ -28,7 +28,7 @@ const Home = () => {
   }, [])
   const validTime = () => {
     var startTime = '10:10:10';
-    var endTime = '11:10:00';
+    var endTime = '18:10:00';
 
     let currentDate = new Date()
 
@@ -136,7 +136,7 @@ const Home = () => {
             {/* //attendance mark */}
 
             <div className="mark">
-              <form className='mx-auto shadow-md p-5 w-fit'>
+              <form className='mx-auto shadow-md p-5 w-fit bg-orange-400 rounded-md text-white'>
                 <button onClick={markAttendance}>mark attendance</button>
               </form>
             </div>
