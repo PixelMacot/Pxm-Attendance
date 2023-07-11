@@ -6,22 +6,24 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Month from './pages/Month';
+import Navbar from './components/Navbar';
 
 function App() {
 
   return (
     <Router>
       <div>
-
+        <Navbar />
         <section>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard/>} />
-            <Route path="/Month" element={<Month/>} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/Month" element={<Month />} />
           </Routes>
         </section>
+        
       </div>
     </Router>
   );

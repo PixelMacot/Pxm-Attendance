@@ -68,7 +68,7 @@ const Home = () => {
 
           [arrivalDate]: {
             name: userData.displayName,
-            arrivalDate: Timestamp.fromDate(new Date())
+            arrivalDate: Timestamp.fromDate(new Date()),
           }
 
         };
