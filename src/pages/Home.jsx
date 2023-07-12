@@ -8,6 +8,7 @@ import { db } from '../firebase';
 const Home = () => {
   const [logged, SetLogged] = useState(false)
   const [userData, setUserData] = useState({})
+  const [status,setStatus] = useState('present')
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -114,14 +115,14 @@ const Home = () => {
     <section>
       {
         logged ? (
-          <div className='w-[80vw] py-20 mx-auto'>
+          <div className='w-[80vw] py-10 md:py-20 mx-auto'>
 
             {/* //user-details */}
 
             <div className="flex flex-col gap-10 justify-center items-center py-20">
 
               <div className="rounded-full w-fit shadow-md p-1">
-                <img src={userData.photoURL} className='rounded-full w-[250px]' />
+                <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
               </div>
 
               <div className="text-center text-2xl font-bold w-fit">
@@ -130,7 +131,6 @@ const Home = () => {
               <div className="text-center text-2xl font-bold w-fit">
                 <h2>Web Developer</h2>
               </div>
-
             </div>
 
             {/* //attendance mark */}

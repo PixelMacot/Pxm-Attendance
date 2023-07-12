@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
-
+import { getAuth, signOut } from "firebase/auth";
 import { BiMenuAltRight, BiCopyAlt, BiLogOut } from 'react-icons/bi';
 import { BsPersonFill } from 'react-icons/bs'
 import { HiX } from 'react-icons/hi';
@@ -34,8 +34,15 @@ const Navbar = () => {
   }, [])
 
   const handleSignOut = () => {
-
+    const auth = getAuth();
+signOut(auth).then(() => {
+  // Sign-out successful.
+  alert("you have signed out succesfully")
+}).catch((error) => {
+  // An error happened.
+});
   }
+
   return (
     <>
       <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white border-b-4 shadow-sm w-full'>
@@ -65,7 +72,7 @@ const Navbar = () => {
           initial={{ width: 0 }} animate={{ width: 300 }}
           className='transition ease-in-out delay-150 duration-300 p-5 bg-gradient-to-r from-[#dd5a69] to-[#fa0421] fixed z-40 w-[70%] md:w-[60%] top-0 right-0 h-full'
         >
-          <HiX onClick={() => setToggle(false)} className='text-white float-right text-3xl m-2 hover:cursor-pointer hover:text-red-500' />
+          <HiX onClick={() => setToggle(false)} className='text-white hover:text-cyan-200 float-right text-3xl m-2 hover:cursor-pointer hover:text-red-500' />
           <ul className='my-10 flex flex-col gap-2 justify-evenly'>
 
 

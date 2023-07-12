@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Month from './pages/Month';
 import Navbar from './components/Navbar';
+import Location from './components/location';
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
             <Route path="/Month" element={<Month />} />
           </Routes>
         </section>
-        
+        <Location/>
       </div>
     </Router>
   );
