@@ -4,11 +4,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
 import { collection, addDoc, doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
+import CalendarApp from '../components/CalendarApp';
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
   const [userData, setUserData] = useState({})
-  const [status,setStatus] = useState('present')
+  const [status, setStatus] = useState('present')
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -100,34 +101,49 @@ const Home = () => {
     <section>
       {
         logged && (
-          <div className='w-[80vw] py-10 md:py-20 mx-auto'>
+          <div className="px-2 flex flex-col lg:flex-row gap-10 items-center lg:items-stretch justify-evenly">
 
-            {/* //user-details */}
+            {/* //user-info */}
+            <div className="user-info">
+              <div className='w-[95%] mx-auto md:mx-0 md:w-[40vw]'>
 
-            <div className="flex flex-col gap-10 justify-center items-center py-20">
+                {/* //user-details */}
 
-              <div className="rounded-full w-fit shadow-md p-1">
-                <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
-              </div>
+                <div className="w-full flex flex-col gap-10 justify-start items-center py-5">
 
-              <div className="text-center text-2xl font-bold w-fit">
-                <h2>{userData.displayName}</h2>
-              </div>
-              <div className="text-center text-2xl font-bold w-fit">
-                <h2>Web Developer</h2>
+                  <div className="rounded-md w-full shadow-md p-1 flex flex-col items-center gap-10">
+                    <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
+                    <div className="w-full flex flex-col gap-5 py-5">
+                      <div className="text-center text-2xl font-bold w-fit">
+                        <h2>{userData.displayName}</h2>
+                      </div>
+                      <div className="text-center text-2xl font-bold w-fit">
+                        <h2>Web Developer</h2>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                {/* //attendance mark */}
+
+                <div className="mark w-full">
+                  <form className='w-full text-center font-bold text-xl shadow-md p-5  bg-orange-400 rounded-md text-white'>
+                    <button onClick={markAttendance}>mark attendance</button>
+                  </form>
+                </div>
+
               </div>
             </div>
 
-            {/* //attendance mark */}
-
-            <div className="mark">
-              <form className='mx-auto shadow-md p-5 w-fit bg-orange-400 rounded-md text-white'>
-                <button onClick={markAttendance}>mark attendance</button>
-              </form>
+            {/* //user-attendance-info */}
+            <div className="user-attendance w-[40vw]  shadow-md flex items-center justify-center">
+           
+              <CalendarApp />
             </div>
-
           </div>
-        ) 
+        )
 
       }
     </section>
