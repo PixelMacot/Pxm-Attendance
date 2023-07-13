@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { useFormik } from 'formik';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Signup = () => {
     // progress
     const [percent, setPercent] = useState(0);
     // Handles input change event and updates state
-    const [photourl, setPhotoUrl] = useState("")
+    const [photourl, setPhotoUrl] = useState("/boyavatar.png")
     const [name, setName] = useState("")
 
     const onSubmit = async (e) => {
@@ -33,11 +34,12 @@ const Signup = () => {
                 // ..
             });
 
-     navigate("/")
+        navigate("/")
     }
     //image upload
     function handleImageChange(event) {
         setFile(event.target.files[0]);
+        handleImageUpload(event)
     }
     const handleImageUpload = (e) => {
         e.preventDefault()
@@ -76,19 +78,25 @@ const Signup = () => {
             <section>
                 <div>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
-                        <form>
-                            <div className='flex flex-col items-start gap-2  p-5'>
-                                <label htmlFor="email-address">
-                                    profile image
-                                </label>
-                                <input type="file" onChange={handleImageChange} accept="/image/*" />
-                                <button 
-                                onClick={handleImageUpload}
-                                className='bg-orange-400 p-2 rounded-md text-white font-bold'>Upload to Firebase</button>
-                                <p>{percent} "% done"</p>
+                        <form className='flex flex-col items-center' onSubmit={onSubmit}>
 
+                            {/* //image upload functionality */}
+                            <div className=''>
+                                <label for="profileimage" className='hover:cursor-pointer'>
+                                    {photourl && (<img src={photourl} className='rounded-full w-[200px] h-[200px] border' />)}
+                                </label>
+                                <input type="file"
+                                    onChange={handleImageChange}
+                                    accept="/image/*"
+                                    title="Choose a video please"
+                                    id='profileimage'
+                                    className='hidden'
+                                />
+                                {/* //show percentage of image upload  */}
+                                {/* <p>{percent} "% done"</p> */}
                             </div>
 
+                            {/* //user details functionality */}
                             <div className='flex flex-col items-start p-5 gap-1'>
                                 <label htmlFor="name">
                                     Name
@@ -100,7 +108,7 @@ const Signup = () => {
                                     onChange={(e) => setName(e.target.value)}
                                     required
                                     placeholder="your name"
-                                    className='px-2 py-1 border rounded-md w-[80%]'
+                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                                 <label htmlFor="email-address">
                                     Email address
@@ -112,7 +120,8 @@ const Signup = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                     placeholder="Email address"
-                                    className='px-2 py-1 border rounded-md w-[80%]'
+                                    pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
+                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                                 <label htmlFor="password">
                                     Password
@@ -124,20 +133,19 @@ const Signup = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     placeholder="Password"
-                                    className='px-2 py-1 border rounded-md w-[80%]'
+                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                                 <button
-                                    type="submit"
-                                    onClick={onSubmit}
-                                    className='bg-orange-400 p-2 rounded-md text-white font-bold'
+                                    type="submit"                                
+                                    className='bg-[#dd5a69] p-2 rounded-md text-white font-bold w-[100%] my-2'
                                 >
                                     Sign up
                                 </button>
                                 <p>
                                     Already have an account?{' '}
-                                    <NavLink to="/login" >
-                                        Sign in
-                                    </NavLink>
+                                    <Link to="/login" className='text-cyan-700' >
+                                        Login
+                                    </Link>
                                 </p>
                             </div>
                         </form>

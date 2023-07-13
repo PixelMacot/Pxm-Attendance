@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
 import { getAuth, signOut } from "firebase/auth";
@@ -47,7 +47,7 @@ signOut(auth).then(() => {
     <>
       <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white border-b-4 shadow-sm w-full'>
         <div>
-          <NavLink href='/'>
+          <Link to='/'>
             <div className=''>
               <img
                 src='/logo.png'
@@ -56,7 +56,7 @@ signOut(auth).then(() => {
                 alt="PixelMascot"
               />
             </div>
-          </NavLink>
+          </Link>
         </div>
         <div className="mobile_navbar-menu  p-2 hover:cursor-pointer  order-2 ">
           <BiMenuAltRight onClick={() => setToggle(true)}
@@ -84,7 +84,7 @@ signOut(auth).then(() => {
               >
                 <BsPersonFill />
                 {logged ? userData.displayName : (
-                  <NavLink href="/login">Login</NavLink>
+                  <Link to="/login">Login</Link>
                 )}
               </div>
             </li>
@@ -112,13 +112,13 @@ signOut(auth).then(() => {
               ].map((item) => (
                 <li key={item.title} className='p-2 text-white hover:text-gray-100  font-semibold list-none'>
 
-                  <NavLink href={`${item.link}`} onClick={() => setToggle(false)}
+                  <Link to={`${item.link}`} onClick={() => setToggle(false)}
                     className='flex gap-2 items-center'
                     style={{ listStyle: 'none' }}
                   >
                     {<item.icon />}
                     {item.title}
-                  </NavLink>
+                  </Link>
                 </li>
               ))}
             {
@@ -142,7 +142,7 @@ signOut(auth).then(() => {
         </motion.div>
 
       )}
-      <div className='h-[20px]'> </div>
+      <div className='h-[80px]'> </div>
 
     </>
   )

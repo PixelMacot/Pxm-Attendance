@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Attendance from './pages/Attendance';
+import NoPage from './pages/NoPage';
 import Month from './pages/Month';
 import Navbar from './components/Navbar';
 import Location from './components/location';
@@ -22,9 +24,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Month" element={<Month />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route path="*" element={<NoPage />} />
           </Routes>
         </section>
-        <Location/>
+  
       </div>
     </Router>
   );

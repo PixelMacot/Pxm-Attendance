@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
 import { collection, addDoc, doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
@@ -114,7 +114,7 @@ const Home = () => {
   return (
     <section>
       {
-        logged ? (
+        logged && (
           <div className='w-[80vw] py-10 md:py-20 mx-auto'>
 
             {/* //user-details */}
@@ -142,9 +142,7 @@ const Home = () => {
             </div>
 
           </div>
-        ) : (
-          <NavLink to="/login">Login</NavLink>
-        )
+        ) 
 
       }
     </section>
