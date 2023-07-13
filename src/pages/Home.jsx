@@ -101,10 +101,10 @@ const Home = () => {
     <section>
       {
         logged && (
-          <div className="px-2 flex flex-col lg:flex-row gap-10 items-center lg:items-stretch justify-evenly">
+          <div className="px-2 flex flex-col md:flex-row gap-10 items-center lg:items-stretch justify-evenly">
 
             {/* //user-info */}
-            <div className="user-info">
+            <div className="user-info w-[95%] md:w-[40vw]">
               <div className='w-[95%] mx-auto md:mx-0 md:w-[40vw]'>
 
                 {/* //user-details */}
@@ -113,7 +113,7 @@ const Home = () => {
 
                   <div className="rounded-md w-full shadow-md p-1 flex flex-col items-center gap-10">
                     <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
-                    <div className="w-full flex flex-col gap-5 py-5">
+                    <div className="flex flex-col gap-5 py-5">
                       <div className="text-center text-2xl font-bold w-fit">
                         <h2>{userData.displayName}</h2>
                       </div>
