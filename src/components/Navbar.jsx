@@ -103,8 +103,8 @@ signOut(auth).then(() => {
                   "icon": AiOutlineUnorderedList
                 },
                 {
-                  "title": "Profile",
-                  "link": "/profile",
+                  "title": "Dashboard",
+                  "link": "/dashboard",
                   "icon": AiFillContacts
                 }
 

@@ -25,6 +25,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Month" element={<Month />} />
             <Route path="/attendance" element={<Attendance />} />
+        
             <Route path="*" element={<NoPage />} />
           </Routes>
         </section>
