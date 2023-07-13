@@ -40,9 +40,9 @@ const Dashboard = () => {
         setFile(event.target.files[0]);
         handleImageUpload(event)
     }
-    const updateUserProfile = () => {
+    const updateUserProfile = (url) => {
         updateProfile(auth.currentUser, {
-            photoURL: photourl
+            photoURL: url
         }).then(() => {
             alert("profile Updated sucessfully")
         }).catch((error) => {
@@ -82,7 +82,7 @@ const Dashboard = () => {
                     console.log(url);
                     setPhotoUrl(url)
 
-                    updateUserProfile()
+                    updateUserProfile(url)
 
                 });
             }
