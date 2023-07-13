@@ -33,7 +33,7 @@ const Dashboard = () => {
             }
         });
 
-    }, [])
+    }, [photourl])
 
     //image upload
     function handleImageChange(event) {
