@@ -30,8 +30,10 @@ const Login = () => {
             <main >
                 <section>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-10'>
-                        <h1 className='text-center text-2xl'>Login</h1>
-                        <form className='flex flex-col gap-2 ' onSubmit={onLogin}>
+                        <h1 className='text-center text-2xl font-bold'>Login</h1>
+                        
+                        <form className='flex flex-col gap-2 items-center mt-5' onSubmit={onLogin}>
+                        <img src='/login.png' className='w-[120px] md:w-[200px] my-2'/>
                             <div className='flex flex-col gap-1'>
                                 <label htmlFor="email-address">
                                     Email address
@@ -44,6 +46,7 @@ const Login = () => {
                                     required
                                     placeholder="Email address"
                                     onChange={(e) => setEmail(e.target.value)}
+                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                             </div>
 
@@ -58,13 +61,14 @@ const Login = () => {
                                     required
                                     placeholder="Password"
                                     onChange={(e) => setPassword(e.target.value)}
+                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                             </div>
 
-                            <div className='my-5'>
+                            <div className='my-5 '>
                                 <button
                                     onClick={onLogin}
-                                    className='bg-[#dd5a69] px-5 py-2 rounded-md text-white font-bold w-full'
+                                    className='bg-[#dd5a69] px-10 py-2 rounded-md text-white font-bold w-full'
                                 >
                                     Login
                                 </button>
