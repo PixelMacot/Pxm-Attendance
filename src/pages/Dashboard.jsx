@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase';
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { onAuthStateChanged,updateProfile } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 
 //react icons
 import { CiTextAlignCenter } from 'react-icons/ci';
@@ -16,7 +15,7 @@ const Dashboard = () => {
     const [file, setFile] = useState("");
     // Handles input change event and updates state
     const [photourl, setPhotoUrl] = useState("/boyavatar.png")
-
+    const [percent, setPercent] = useState(0);
     //send user to login page when user not logged in
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -41,20 +40,21 @@ const Dashboard = () => {
         setFile(event.target.files[0]);
         handleImageUpload(event)
     }
-    const updateProfile = () => {
+    const updateUserProfile = () => {
         updateProfile(auth.currentUser, {
             photoURL: photourl
-          }).then(() => {
+        }).then(() => {
             alert("profile Updated sucessfully")
-          }).catch((error) => {
+        }).catch((error) => {
             console.log(error)
-          });
+        });
     }
 
-    const handleImageUpload = (e) => {
+    const handleImageUpload = async (e) => {
         e.preventDefault()
         if (!file) {
             alert("Please upload an image first!");
+            return
         }
 
         const storageRef = ref(storage, `/files/${file.name}`);
@@ -71,7 +71,9 @@ const Dashboard = () => {
                 );
 
                 // update progress
-                // setPercent(percent);
+                setPercent(percent);
+
+
             },
             (err) => console.log(err),
             () => {
@@ -79,12 +81,14 @@ const Dashboard = () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                     console.log(url);
                     setPhotoUrl(url)
+
+                    updateUserProfile()
+
                 });
             }
         );
 
-        //update function is called
-        updateProfile()
+
     };
     return (
         <main >
