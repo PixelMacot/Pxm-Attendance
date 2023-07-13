@@ -96,21 +96,6 @@ const Home = () => {
   }
 
 
-
-  const addTodo = async (e) => {
-    e.preventDefault();
-
-    try {
-      await setDoc(doc(db, "attendance", userData.uid), {
-        name: "Los Angeles",
-        state: "CA",
-        country: "USA"
-      });
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-
   return (
     <section>
       {

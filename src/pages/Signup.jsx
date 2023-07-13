@@ -97,7 +97,7 @@ const Signup = () => {
                             </div>
 
                             {/* //user details functionality */}
-                            <div className='flex flex-col items-start p-5 gap-1'>
+                            <div className='flex flex-col items-start p-5 gap-1 w-full'>
                                 <label htmlFor="name">
                                     Name
                                 </label>

@@ -33,8 +33,8 @@ const Login = () => {
                         <h1 className='text-center text-2xl font-bold'>Login</h1>
                         
                         <form className='flex flex-col gap-2 items-center mt-5' onSubmit={onLogin}>
-                        <img src='/login.png' className='w-[120px] md:w-[200px] my-2'/>
-                            <div className='flex flex-col gap-1'>
+                        <img src='/login.png' className='w-[120px] md:w-[200px] my-5'/>
+                            <div className='flex flex-col gap-1 w-full'>
                                 <label htmlFor="email-address">
                                     Email address
                                 </label>
@@ -50,7 +50,7 @@ const Login = () => {
                                 />
                             </div>
 
-                            <div className='flex flex-col gap-1'>
+                            <div className='flex flex-col gap-1 w-full'>
                                 <label htmlFor="password">
                                     Password
                                 </label>
@@ -65,7 +65,7 @@ const Login = () => {
                                 />
                             </div>
 
-                            <div className='my-5 '>
+                            <div className='my-5 w-full'>
                                 <button
                                     onClick={onLogin}
                                     className='bg-[#dd5a69] px-10 py-2 rounded-md text-white font-bold w-full'
