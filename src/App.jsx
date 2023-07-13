@@ -9,7 +9,7 @@ import Attendance from './pages/Attendance';
 import NoPage from './pages/NoPage';
 import Month from './pages/Month';
 import Navbar from './components/Navbar';
-import Location from './components/location';
+
 
 function App() {
 
