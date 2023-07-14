@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
-import { collection, addDoc, doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import CalendarApp from '../components/CalendarApp';
-import { query, where, getDocs } from "firebase/firestore";
+import moment from 'moment';
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
   const [userData, setUserData] = useState({})
-  const [status, setStatus] = useState('present')
+  // const [status, setStatus] = useState('present')
   const [attendance, setAttendance] = useState("dummy")
   const [markdate, setMarkDate] = useState()
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Home = () => {
         SetLogged(true)
         setUserData(user.toJSON())
         getAttendanceData(user)
-       
+
       } else {
         navigate("/login")
       }
@@ -29,10 +29,16 @@ const Home = () => {
 
   }, [])
 
+  //update array of present days of user
 
+  useEffect(() => {
+    markdatefunction()
+  }, [attendance])
+
+  //check Timing of Attendance
   const validTime = () => {
-    var startTime = '06:10:10';
-    var endTime = '18:10:00';
+    let startTime = '06:10:10';
+    let endTime = '18:10:00';
 
     let currentDate = new Date()
 
@@ -46,49 +52,40 @@ const Home = () => {
     endDate.setMinutes(endTime.split(":")[1]);
     endDate.setSeconds(endTime.split(":")[2]);
 
-
     let valid = startDate < currentDate && endDate > currentDate
     return valid
   }
 
 
-  // getting data from cloud firestore 
+  // getting Attendance data from cloud firestore 
   const getAttendanceData = async (user) => {
-    console.log("getattendance data function called", user.uid)
-    const querys = query(doc(db, "attendance", user.uid))
-    const snapshot = await getDoc(querys)
-    console.log("snapshot", snapshot)
+    // console.log("getattendance data function called", user.uid)
     getDoc(doc(db, "attendance", user.uid)).then(docSnap => {
+
       if (docSnap.exists()) {
-        console.log("Document data:", JSON.stringify(docSnap.data()));
-        let arrdate = []
-        // snapshot.forEach((doc) => {
-        //   arrdate.push(doc.data())
-        // })
-        console.log("arrdate", arrdate)
+        // console.log("Document data:", JSON.stringify(docSnap.data()));
         setAttendance(JSON.stringify(docSnap.data()))
         markdatefunction()
       } else {
         console.log("No such document!");
       }
+
     })
 
   }
 
+  //array of present days of user
   let dateMarkArr = []
-  // console.log(JSON.parse(attendance))
-  console.log(attendance.length)
+  //function to push the present days into mark state
   const markdatefunction = () => {
+    // console.log("markdatefunction() called")
     if (attendance.length > 6) {
-
       let jsonp = JSON.parse(attendance)
-      console.log("attendance", jsonp)
       Object.keys(jsonp).map((item) => {
         // console.log(jsonp[item]) ->it will print single object 
         dateMarkArr.push(item)
-
       })
-      console.log(dateMarkArr)
+      // console.log(dateMarkArr)
       setMarkDate(dateMarkArr)
     }
     //push into array dates
@@ -97,50 +94,35 @@ const Home = () => {
     }
   }
 
-
+  //function to post attendance data into cloud firestore
   const markAttendance = async (e) => {
     e.preventDefault()
-
     if (validTime()) {
-      console.log("valid time")
-      let currentDate = new Date()
-
-      let separator = '-'
       let newDate = new Date()
-      let date = newDate.getDate();
-      let month = newDate.getMonth() + 1;
-      let year = newDate.getFullYear();
-      let day = newDate.getDay();
-      // let arrivalDate = `${year}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${date}`
-      let arrivalDate = "06-07-2023"
+      let arrivalDate = moment(newDate).format("DD-MM-YYYY")
+      // let arrivalDate = "14-06-2023"
       console.log(arrivalDate)
       try {
-
         const docData = {
-
           [arrivalDate]: {
             name: userData.displayName,
-            date: date,
-            month: month,
-            year: year,
             markdate: arrivalDate,
             arrivalDate: Timestamp.fromDate(new Date()),
           }
-
         };
-        console.log("datatobeinserted", docData)
+        // console.log("datatobeinserted", docData)
         const docRef = doc(db, "attendance", userData.uid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
+          // console.log("Document data:", docSnap.data());
 
           await updateDoc(doc(db, "attendance", userData.uid), docData);
-          console.log("Document written with ID: ", userData.uid);
+          // console.log("Document written with ID: ", userData.uid);
           getAttendanceData(userData)
         } else {
           await setDoc(doc(db, "attendance", userData.uid), docData);
-          console.log("Document written with ID: ", userData.uid);
+          // console.log("Document written with ID: ", userData.uid);
           getAttendanceData(userData)
         }
 
@@ -152,8 +134,6 @@ const Home = () => {
       console.log("invalid time")
     }
   }
-
-  //add dates to array to highlight the calender
 
 
   return (

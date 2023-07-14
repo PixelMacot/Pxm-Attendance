@@ -14,6 +14,7 @@
     "firebase": "^10.0.0",
     "formik": "^2.4.2",
     "framer-motion": "^10.12.18",
+    "moment": "^2.29.4",
     "postcss": "^8.4.25",
     "react": "^18.2.0",
     "react-calendar": "^4.3.0",
