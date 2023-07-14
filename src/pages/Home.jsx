@@ -170,8 +170,11 @@ const Home = () => {
                   {/* //attendance mark */}
 
                   <div className="mark w-full">
-                    <form className='w-full text-center font-bold text-xl shadow-md p-5  bg-orange-400 rounded-md text-white'>
-                      <button onClick={markAttendance}>mark attendance</button>
+                    <form 
+                    className='w-full text-center font-bold text-xl shadow-md p-5  bg-[#ff445a] rounded-md text-white'
+                    onClick={markAttendance}
+                    >
+                      <button >mark attendance</button>
                     </form>
                   </div>
 
