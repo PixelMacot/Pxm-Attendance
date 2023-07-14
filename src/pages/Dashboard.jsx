@@ -24,11 +24,13 @@ const Dashboard = () => {
                 const uid = user.uid;
                 setUserData(user.toJSON())
                 console.log("user successfully signed in")
-                navigate("/login")
+                
+            }else{
+                console.log("user is logged out")
             }
         });
 
-    }, [photourl])
+    }, [])
 
     //image upload
     function handleImageChange(event) {
