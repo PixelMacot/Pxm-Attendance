@@ -4,7 +4,7 @@ import { auth } from '../firebase';
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-
+import CalendarApp from '../components/CalendarApp';
 //react icons
 import { CiTextAlignCenter } from 'react-icons/ci';
 import { AiOutlineMail } from 'react-icons/ai';
@@ -91,6 +91,8 @@ const Dashboard = () => {
         <main >
             <section>
                 <div>
+                    
+                    {/* //user profile details  */}
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
                         <form className='flex flex-col items-center'>
 
@@ -123,8 +125,12 @@ const Dashboard = () => {
                             </div>
                         </form>
                     </div>
+
+                    {/* //calendar app  */}
+                    
                 </div>
             </section>
+            
         </main>
     )
 }

@@ -6,6 +6,7 @@ import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import CalendarApp from '../components/CalendarApp';
 import moment from 'moment';
+import { ConvertToExcel } from '../components/ConvertToExcel';
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
@@ -140,67 +141,55 @@ const Home = () => {
     <section>
       {
         logged && (
-          <div className="px-2 flex flex-col md:flex-row gap-10 items-center lg:items-stretch justify-evenly">
+          <div className="">
+            <div className="px-2 flex flex-col md:flex-row gap-10 items-center lg:items-stretch justify-evenly">
 
-            {/* //user-info */}
-            <div className="user-info w-[95%] md:w-[40vw]">
-              <div className='w-[95%] mx-auto md:mx-0 md:w-[40vw]'>
+              {/* //user-info */}
+              <div className="user-info w-[95%] md:w-[40vw]">
+                <div className='w-[95%] mx-auto md:mx-0 md:w-[40vw]'>
 
-                {/* //user-details */}
+                  {/* //user-details */}
 
-                <div className="w-full flex flex-col gap-10 justify-start items-center py-5">
+                  <div className="w-full flex flex-col gap-10 justify-start items-center py-5">
 
-                  <div className="rounded-md w-full shadow-md p-1 flex flex-col items-center gap-10">
-                    <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
-                    <div className="flex flex-col gap-5 py-5">
-                      <div className="text-center text-2xl font-bold w-fit">
-                        <h2>{userData.displayName}</h2>
-                      </div>
-                      <div className="text-center text-2xl font-bold w-fit">
-                        <h2>Web Developer</h2>
+                    <div className="rounded-md w-full shadow-md p-1 flex flex-col items-center gap-10">
+                      <img src={userData.photoURL} className='rounded-full w-[200px] h-[200px]' />
+                      <div className="flex flex-col gap-5 py-5">
+                        <div className="text-center text-2xl font-bold w-fit">
+                          <h2>{userData.displayName}</h2>
+                        </div>
+                        <div className="text-center text-2xl font-bold w-fit">
+                          <h2>Web Developer</h2>
+                        </div>
                       </div>
                     </div>
+
+
                   </div>
 
+                  {/* //attendance mark */}
+
+                  <div className="mark w-full">
+                    <form className='w-full text-center font-bold text-xl shadow-md p-5  bg-orange-400 rounded-md text-white'>
+                      <button onClick={markAttendance}>mark attendance</button>
+                    </form>
+                  </div>
 
                 </div>
+              </div>
 
-                {/* //attendance mark */}
-
-                <div className="mark w-full">
-                  <form className='w-full text-center font-bold text-xl shadow-md p-5  bg-orange-400 rounded-md text-white'>
-                    <button onClick={markAttendance}>mark attendance</button>
-                  </form>
-                </div>
-
+              {/* //user-attendance-info */}
+              <div className="user-attendance w-[40vw]  shadow-md flex items-center justify-center">
+                {
+                  markdate && (
+                    <CalendarApp arr={markdate} />
+                  )
+                }
               </div>
             </div>
-
-            {/* //user-attendance-info */}
-            <div className="user-attendance w-[40vw]  shadow-md flex items-center justify-center">
-              {
-                markdate && (
-                  <CalendarApp arr={markdate} />
-                )
-              }
-            </div>
-
-
-
-
-            //user present info
-            <div>
-              {/* {
-              attendance.map((date)=>{
-                return(
-                  <li>{date}</li>
-                )
-              })
-            } */}
-            </div>
+           
 
           </div>
-
 
         )
 

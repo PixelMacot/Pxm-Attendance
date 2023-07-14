@@ -3,19 +3,20 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'
 import moment from 'moment';
+import { ConvertToExcel } from '../components/ConvertToExcel';
 
 const CalendarApp = ({ arr }) => {
   const [value, onChange] = useState(new Date());
   const [presentdays, setPresentDays] = useState(0)
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
-
+  const [filtereddays, setFilteredDays] = useState()
   console.log("from calendarapp", arr)
   let currentDate = currentMonth.slice(3, 10)
   let countdays = 0
 
   useEffect(() => {
     countDays()
-  }, [currentMonth,arr])
+  }, [currentMonth, arr])
 
   const countDays = () => {
     let pday = arr.filter((date) => {
@@ -24,7 +25,7 @@ const CalendarApp = ({ arr }) => {
     })
     console.log(pday.length)
     setPresentDays(pday.length)
-
+    setFilteredDays(pday.sort())
   }
 
   const onActiveStartDateChangeHandler = ({ activeStartDate, value, view }) => {
@@ -33,20 +34,34 @@ const CalendarApp = ({ arr }) => {
   };
 
   return (
-    <div>
-      <Calendar
-        onChange={onChange}
-        value={new Date()}
-        view={"month"}
-        onActiveStartDateChange={onActiveStartDateChangeHandler}
-        tileClassName={({ date, view }) => {
-          if (arr.find(x => x === moment(date).format("DD-MM-YYYY"))) {
-            return 'highlight'
+    <>
+      <div className='p-5'>
+        <Calendar
+          onChange={onChange}
+          value={new Date()}
+          view={"month"}
+          onActiveStartDateChange={onActiveStartDateChangeHandler}
+          tileClassName={({ date, view }) => {
+            if (arr.find(x => x === moment(date).format("DD-MM-YYYY"))) {
+              return 'highlight'
+            }
+          }}
+        />
+        <div className="my-5 py-2 border border-transparent border-t-gray-500 ">
+          Present days: {presentdays}
+        </div>
+        <div className="my-10 py-2 border border-transparent border-t-gray-500">
+          {
+            filtereddays && (
+              <ConvertToExcel arr={filtereddays} />
+            )
+
           }
-        }}
-      />
-      Present days: {presentdays}
-    </div>
+        </div>
+      </div>
+
+
+    </>
   )
 }
 
