@@ -9,6 +9,7 @@ import Attendance from './pages/Attendance';
 import NoPage from './pages/NoPage';
 import Month from './pages/Month';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
             <Route path="*" element={<NoPage />} />
           </Routes>
         </section>
-  
+  <Footer/>
       </div>
     </Router>
   );

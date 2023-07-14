@@ -8,15 +8,41 @@ import CalendarApp from '../components/CalendarApp';
 //react icons
 import { CiTextAlignCenter } from 'react-icons/ci';
 import { AiOutlineMail } from 'react-icons/ai';
+import Loader from '../components/Loader';
+import Quotes from '../components/Quotes';
+
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({})
     const [file, setFile] = useState();
+    const [loader, setLoader] = useState(false)
     // Handles input change event and updates state
     const [photourl, setPhotoUrl] = useState("/boyavatar.png")
     const [percent, setPercent] = useState(0);
-    
+    const [quote, setQuote] = useState()
+
+    //function quotes
+    const fetchQuotes = async () => {
+        const url = 'https://quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com/quote?token=ipworld.info';
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'fcdda6022amsh08abef535ef806dp1dc73cjsn0a23d1eeca9a',
+                'X-RapidAPI-Host': 'quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com'
+            }
+        };
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            setQuote(result)
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
     //send user to login page when user not logged in
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -25,14 +51,16 @@ const Dashboard = () => {
                 const uid = user.uid;
                 setUserData(user.toJSON())
                 console.log("user successfully signed in")
-
+                fetchQuotes()
             } else {
                 console.log("user is logged out")
             }
         });
 
+        //quote api
+
     }, [])
-  
+
     //image upload
     function handleImageChange(event) {
         handleImageUpload(event.target.files[0]);
@@ -44,6 +72,7 @@ const Dashboard = () => {
             photoURL: url
         }).then(() => {
             alert("profile Updated sucessfully")
+            setLoader(false)
         }).catch((error) => {
             console.log(error)
         });
@@ -55,7 +84,7 @@ const Dashboard = () => {
             alert("Please upload an image first!");
             return
         }
-
+        setLoader(true)
         const storageRef = ref(storage, `/files/${f.name}`);
 
         // progress can be paused and resumed. It also exposes progress updates.
@@ -81,7 +110,7 @@ const Dashboard = () => {
                     updateUserProfile(url)
 
                 });
-               
+
             }
         );
 
@@ -93,7 +122,7 @@ const Dashboard = () => {
                 <div>
 
                     {/* //user profile details  */}
-                    <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
+                    <div className='w-[90%] md:w-[70%] lg:w-[50%] mx-auto shadow-lg rounded-md p-5 my-5 bg-[#ff445aa8] '>
                         <form className='flex flex-col items-center'>
 
                             {/* //image upload functionality */}
@@ -108,25 +137,32 @@ const Dashboard = () => {
                                     id='profileimage'
                                     className='hidden'
                                 />
-                                {/* //show percentage of image upload  */}
-                                {/* <p>{percent} "% done"</p> */}
+                                {/* //show Loader when profile image is being updated  */}
+                                <div className="flex items-center justify-center">
+
+                                    {loader ? (<Loader />) : ""}
+
+                                </div>
                             </div>
 
                             {/* //user details functionality */}
-                            <div className='flex flex-col items-start p-5 gap-4 '>
+                            <div className=' flex flex-col items-start p-5 gap-4 '>
                                 <div className="flex flex-row items-center gap-2  rounded-md">
-                                    <div><CiTextAlignCenter /></div>
+                                    <div><CiTextAlignCenter className='text-2xl' /></div>
                                     <div className=' px-2 w-full'>{userData.displayName}</div>
                                 </div>
                                 <div className="flex flex-row items-center gap-2  rounded-md">
-                                    <div><AiOutlineMail /></div>
+                                    <div><AiOutlineMail className='text-2xl' /></div>
                                     <div className=' px-2 w-full'>{userData.email}</div>
                                 </div>
                             </div>
                         </form>
                     </div>
 
-                    {/* //calendar app  */}
+                    {/* //quotes app  */}
+                    <div className="shadow-lg quote-container w-[90%] md:w-[70%] lg:w-[50%] mx-auto  rounded-sm p-10 my-5">
+                        {quote && (<Quotes quote={quote} />)}
+                    </div>
 
                 </div>
             </section>
