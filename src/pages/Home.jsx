@@ -38,8 +38,8 @@ const Home = () => {
 
   //check Timing of Attendance
   const validTime = () => {
-    let startTime = '06:10:10';
-    let endTime = '18:10:00';
+    let startTime = '01:00:10';
+    let endTime = '24:00:00';
 
     let currentDate = new Date()
 
