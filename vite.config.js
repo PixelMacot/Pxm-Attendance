@@ -18,7 +18,7 @@ export default defineConfig({
         name: 'PixelMascot',
         short_name: 'PxM',
         description: 'Pixel Mascot Attendance Website',
-        theme_color: '#ffffff',
+        theme_color: '#ff3951',
         start_url: '/',
         icons: [
           {
