@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, json, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase';
 import { collection, addDoc, doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import CalendarApp from '../components/CalendarApp';
+import { query, where, getDocs } from "firebase/firestore";
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
   const [userData, setUserData] = useState({})
   const [status, setStatus] = useState('present')
-  const [attendance, setAttendance] = useState({})
-
+  const [attendance, setAttendance] = useState("dummy")
+  const [markdate, setMarkDate] = useState()
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
+        // User is signed in
         SetLogged(true)
         setUserData(user.toJSON())
-        console.log(user.toJSON())
-        console.log("uid", uid)
-        getAttendanceData()
+        getAttendanceData(user)
+       
       } else {
         navigate("/login")
       }
     });
 
   }, [])
+
+
   const validTime = () => {
-    var startTime = '10:10:10';
+    var startTime = '06:10:10';
     var endTime = '18:10:00';
 
     let currentDate = new Date()
@@ -51,19 +51,49 @@ const Home = () => {
     return valid
   }
 
-  //array of present dates
-  const mark = []
+
   // getting data from cloud firestore 
-  const getAttendanceData = () => {
-    console.log("getattendance data function called")
-    const docRef = doc(db, "attendance", userData.uid);
-    const docSnap = getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("document data from getAttendance:", docSnap.data());
-      setAttendance(docSnap.data())
-      console.log("attendance state data",attendance)
-    } else {
-      console.log("new user mark attendance to begin your journey")
+  const getAttendanceData = async (user) => {
+    console.log("getattendance data function called", user.uid)
+    const querys = query(doc(db, "attendance", user.uid))
+    const snapshot = await getDoc(querys)
+    console.log("snapshot", snapshot)
+    getDoc(doc(db, "attendance", user.uid)).then(docSnap => {
+      if (docSnap.exists()) {
+        console.log("Document data:", JSON.stringify(docSnap.data()));
+        let arrdate = []
+        // snapshot.forEach((doc) => {
+        //   arrdate.push(doc.data())
+        // })
+        console.log("arrdate", arrdate)
+        setAttendance(JSON.stringify(docSnap.data()))
+        markdatefunction()
+      } else {
+        console.log("No such document!");
+      }
+    })
+
+  }
+
+  let dateMarkArr = []
+  // console.log(JSON.parse(attendance))
+  console.log(attendance.length)
+  const markdatefunction = () => {
+    if (attendance.length > 6) {
+
+      let jsonp = JSON.parse(attendance)
+      console.log("attendance", jsonp)
+      Object.keys(jsonp).map((item) => {
+        // console.log(jsonp[item]) ->it will print single object 
+        dateMarkArr.push(item)
+
+      })
+      console.log(dateMarkArr)
+      setMarkDate(dateMarkArr)
+    }
+    //push into array dates
+    const markdates = () => {
+      console.log(markdates.length)
     }
   }
 
@@ -107,11 +137,11 @@ const Home = () => {
 
           await updateDoc(doc(db, "attendance", userData.uid), docData);
           console.log("Document written with ID: ", userData.uid);
-          getAttendanceData()
+          getAttendanceData(userData)
         } else {
           await setDoc(doc(db, "attendance", userData.uid), docData);
           console.log("Document written with ID: ", userData.uid);
-          getAttendanceData()
+          getAttendanceData(userData)
         }
 
       } catch (e) {
@@ -168,10 +198,30 @@ const Home = () => {
 
             {/* //user-attendance-info */}
             <div className="user-attendance w-[40vw]  shadow-md flex items-center justify-center">
-
-              <CalendarApp />
+              {
+                markdate && (
+                  <CalendarApp arr={markdate} />
+                )
+              }
             </div>
+
+
+
+
+            //user present info
+            <div>
+              {/* {
+              attendance.map((date)=>{
+                return(
+                  <li>{date}</li>
+                )
+              })
+            } */}
+            </div>
+
           </div>
+
+
         )
 
       }

@@ -20,15 +20,10 @@ const Dashboard = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
+                // User is signed in
                 const uid = user.uid;
-
                 setUserData(user.toJSON())
-                console.log(user.toJSON())
-                // ...
-                console.log("uid", uid)
-            } else {
+                console.log("user successfully signed in")
                 navigate("/login")
             }
         });

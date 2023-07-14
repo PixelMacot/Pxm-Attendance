@@ -1,9 +1,17 @@
 .react-calendar {
     width: 350px;
     max-width: 100%;
-    background: rgb(221, 169, 92);
+    background: rgb(255, 255, 255);
     border: 1px solid transparent;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.125em;
   }
-  
+  .react-calendar__tile--now{
+    color:rgb(255, 81, 0);
+  }
+  .react-calendar__tile--now:hover{
+    color:white
+  }
+  .highlight {
+    color:green;
+ }
