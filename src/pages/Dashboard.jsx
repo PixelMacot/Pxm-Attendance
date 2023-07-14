@@ -12,10 +12,11 @@ import { AiOutlineMail } from 'react-icons/ai';
 const Dashboard = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({})
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState();
     // Handles input change event and updates state
     const [photourl, setPhotoUrl] = useState("/boyavatar.png")
     const [percent, setPercent] = useState(0);
+    
     //send user to login page when user not logged in
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -24,19 +25,20 @@ const Dashboard = () => {
                 const uid = user.uid;
                 setUserData(user.toJSON())
                 console.log("user successfully signed in")
-                
-            }else{
+
+            } else {
                 console.log("user is logged out")
             }
         });
 
     }, [])
-
+  
     //image upload
     function handleImageChange(event) {
-        setFile(event.target.files[0]);
-        handleImageUpload(event)
+        handleImageUpload(event.target.files[0]);
+        setFile(event.target.files[0])
     }
+
     const updateUserProfile = (url) => {
         updateProfile(auth.currentUser, {
             photoURL: url
@@ -47,18 +49,18 @@ const Dashboard = () => {
         });
     }
 
-    const handleImageUpload = async (e) => {
-        e.preventDefault()
-        if (!file) {
+    const handleImageUpload = async (f) => {
+
+        if (!f) {
             alert("Please upload an image first!");
             return
         }
 
-        const storageRef = ref(storage, `/files/${file.name}`);
+        const storageRef = ref(storage, `/files/${f.name}`);
 
         // progress can be paused and resumed. It also exposes progress updates.
         // Receives the storage reference and the file to upload.
-        const uploadTask = uploadBytesResumable(storageRef, file);
+        const uploadTask = uploadBytesResumable(storageRef, f);
 
         uploadTask.on(
             "state_changed",
@@ -66,10 +68,8 @@ const Dashboard = () => {
                 const percent = Math.round(
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                 );
-
                 // update progress
                 setPercent(percent);
-
 
             },
             (err) => console.log(err),
@@ -78,10 +78,10 @@ const Dashboard = () => {
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                     console.log(url);
                     setPhotoUrl(url)
-
                     updateUserProfile(url)
 
                 });
+               
             }
         );
 
@@ -91,15 +91,15 @@ const Dashboard = () => {
         <main >
             <section>
                 <div>
-                    
+
                     {/* //user profile details  */}
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
                         <form className='flex flex-col items-center'>
 
                             {/* //image upload functionality */}
-                            <div className=''>
+                            <div className='cursor-pointer'>
                                 <label for="profileimage" className='hover:cursor-pointer'>
-                                    {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border' />}
+                                    {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />}
                                 </label>
                                 <input type="file"
                                     onChange={handleImageChange}
@@ -127,10 +127,10 @@ const Dashboard = () => {
                     </div>
 
                     {/* //calendar app  */}
-                    
+
                 </div>
             </section>
-            
+
         </main>
     )
 }
