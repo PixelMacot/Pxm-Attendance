@@ -7,6 +7,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState()
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ const Login = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setError(errorMessage)
                 console.log(errorCode, errorMessage)
             });
 
@@ -31,9 +33,15 @@ const Login = () => {
                 <section>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-10'>
                         <h1 className='text-center text-2xl font-bold'>Login</h1>
-                        
+
                         <form className='flex flex-col gap-2 items-center mt-5' onSubmit={onLogin}>
-                        <img src='/login.png' className='w-[120px] md:w-[200px] my-5'/>
+                            <img src='/login.png' className='w-[120px] md:w-[200px] my-5' />
+                            {
+                                error && (
+                                    <div className="w-full mb-4 text-red-500">Error: {error}</div>
+                                )
+
+                            }
                             <div className='flex flex-col gap-1 w-full'>
                                 <label htmlFor="email-address">
                                     Email address
@@ -44,6 +52,7 @@ const Login = () => {
                                     type="email"
                                     pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
                                     required
+                                    autoComplete="off"
                                     placeholder="Email address"
                                     onChange={(e) => setEmail(e.target.value)}
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
@@ -59,6 +68,7 @@ const Login = () => {
                                     name="password"
                                     type="password"
                                     required
+                                    autoComplete="off"
                                     placeholder="Password"
                                     onChange={(e) => setPassword(e.target.value)}
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
@@ -75,13 +85,12 @@ const Login = () => {
                             </div>
                         </form>
 
-                        <p className="text-sm text-cyan-700 text-center">
+                        <p className="text-sm  text-center">
                             No account yet? {' '}
                             <Link to="/signup">
-                                Sign up
+                                <span className='text-cyan-700'>Sign up</span>
                             </Link>
                         </p>
-
                     </div>
                 </section>
             </main>

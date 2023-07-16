@@ -10,7 +10,15 @@ import Profile from '../components/Profile';
 
 const Home = () => {
   const [logged, SetLogged] = useState(false)
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({
+    "username":"user",
+    "position":"Web Developer",
+    "skills":"Html Css ,Javascript,Webflow",
+    "profileimg":"/boyavatar.png",
+    "backgroundimg":"/profilebg.jpg",
+    "dummyData":true
+  })
+  let [useruid,setUserUid]=useState()
   // const [status, setStatus] = useState('present')
   const [attendance, setAttendance] = useState("dummy")
   const [markdate, setMarkDate] = useState()
@@ -20,8 +28,9 @@ const Home = () => {
       if (user) {
         // User is signed in
         SetLogged(true)
-        setUserData(user.toJSON())
-        getAttendanceData(user)
+        setUserUid(user.uid)
+        getUserProfileData(user)
+        getAttendanceData(user.uid)
 
       } else {
         navigate("/login")
@@ -35,6 +44,26 @@ const Home = () => {
   useEffect(() => {
     markdatefunction()
   }, [attendance])
+
+
+
+  //function to post profile data into cloud firestore
+  const getUserProfileData = async (user) => {
+    // console.log("getattendance data function called", user.uid)
+    getDoc(doc(db, "users", user.uid)).then(docSnap => {
+
+        if (docSnap.exists()) {
+            console.log("Document data:", JSON.stringify(docSnap.data()));
+            setUserData(docSnap.data())
+
+        } else {
+            console.log("Please update profile");
+        }
+    })
+
+}
+
+
 
   //check Timing of Attendance
   const validTime = () => {
@@ -59,9 +88,9 @@ const Home = () => {
 
 
   // getting Attendance data from cloud firestore 
-  const getAttendanceData = async (user) => {
+  const getAttendanceData = async (useruid) => {
     // console.log("getattendance data function called", user.uid)
-    getDoc(doc(db, "attendance", user.uid)).then(docSnap => {
+    getDoc(doc(db, "attendance", useruid)).then(docSnap => {
 
       if (docSnap.exists()) {
         // console.log("Document data:", JSON.stringify(docSnap.data()));
@@ -106,29 +135,29 @@ const Home = () => {
       try {
         const docData = {
           [arrivalDate]: {
-            name: userData.displayName,
+            name: userData.username,
             markdate: arrivalDate,
             arrivalDate: Timestamp.fromDate(new Date()),
           }
         };
         // console.log("datatobeinserted", docData)
-        const docRef = doc(db, "attendance", userData.uid);
+        const docRef = doc(db, "attendance", useruid);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           // console.log("Document data:", docSnap.data());
 
-          await updateDoc(doc(db, "attendance", userData.uid), docData);
+          await updateDoc(doc(db, "attendance", useruid), docData);
           // console.log("Document written with ID: ", userData.uid);
-          getAttendanceData(userData)
+          getAttendanceData(useruid)
         } else {
-          await setDoc(doc(db, "attendance", userData.uid), docData);
+          await setDoc(doc(db, "attendance", useruid), docData);
           // console.log("Document written with ID: ", userData.uid);
-          getAttendanceData(userData)
+          getAttendanceData(useruid)
         }
 
-      } catch (e) {
-        console.error("Error adding document: ", e);
+      } catch (err) {
+        console.error("Error adding document: ", err);
       }
     } else {
       alert("time for attendance is ended")
@@ -136,24 +165,16 @@ const Home = () => {
     }
   }
 
-
   return (
-    <section>
+    <section className='min-h-[100vh]'>
       {
         logged && (
           <div className="">
-            {userData && (<Profile userData={userData} />)}
+            <Profile userData={userData} markAttendance={markAttendance} />
             {/* //attendance mark */}
-            <div className="mark w-full">
-              <form
-                className='w-full text-center font-bold text-xl shadow-md p-5  bg-[#ff445a] rounded-md text-white'
-                onClick={markAttendance}
-              >
-                <button >mark attendance</button>
-              </form>
-            </div>
+          
             {/* //user-attendance-info */}
-            <div className="user-attendance border w-[95%] md:w-[40vw]  shadow-md flex items-center justify-center">
+            <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
               {
                 markdate && (
                   <CalendarApp arr={markdate} />

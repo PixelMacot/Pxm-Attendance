@@ -17,11 +17,19 @@ const Signup = () => {
     // Handles input change event and updates state
     const [photourl, setPhotoUrl] = useState("/boyavatar.png")
     const [name, setName] = useState("")
+    const [error, setError] = useState()
 
     const onSubmit = async (e) => {
         e.preventDefault()
 
-        const { user } = await createUserWithEmailAndPassword(auth, email, password)
+        try {
+            const { user } = await createUserWithEmailAndPassword(auth, email, password)
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setError(errorMessage)
+            console.log(errorCode, errorMessage)
+        }
         console.log(`User ${user.uid} created`)
         await updateProfile(user, {
             displayName: name,
@@ -30,8 +38,8 @@ const Signup = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-                // ..
+                setError(errorMessage)
+                console.log(errorCode, errorMessage)
             });
 
         navigate("/")
@@ -78,7 +86,7 @@ const Signup = () => {
             <section>
                 <div>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
-                        <form className='flex flex-col items-center' onSubmit={onSubmit}>
+                        <form className='flex flex-col items-center ' onSubmit={onSubmit}>
 
                             {/* //image upload functionality */}
                             <div className=''>
@@ -95,9 +103,14 @@ const Signup = () => {
                                 {/* //show percentage of image upload  */}
                                 {/* <p>{percent} "% done"</p> */}
                             </div>
+                            {
+                                error && (
+                                    <div className="px-5 my-4 text-red-500">Error: {error}</div>
+                                )
 
+                            }
                             {/* //user details functionality */}
-                            <div className='flex flex-col items-start p-5 gap-1 w-full'>
+                            <div className='flex flex-col items-start p-5 gap-2 w-full'>
                                 <label htmlFor="name">
                                     Name
                                 </label>
@@ -107,6 +120,7 @@ const Signup = () => {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
+                                    autoComplete="off"
                                     placeholder="your name"
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
@@ -119,6 +133,7 @@ const Signup = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
+                                    autoComplete="off"
                                     placeholder="Email address"
                                     pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
@@ -132,11 +147,12 @@ const Signup = () => {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
+                                    autoComplete="off"
                                     placeholder="Password"
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
                                 />
                                 <button
-                                    type="submit"                                
+                                    type="submit"
                                     className='bg-[#dd5a69] p-2 rounded-md text-white font-bold w-[100%] my-2'
                                 >
                                     Sign up

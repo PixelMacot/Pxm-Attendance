@@ -10,6 +10,7 @@ import NoPage from './pages/NoPage';
 import Month from './pages/Month';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Admin from './pages/Admin';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/Month" element={<Month />} />
             <Route path="/attendance" element={<Attendance />} />
-        
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
         </section>

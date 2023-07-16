@@ -7,7 +7,7 @@ import { BiMenuAltRight, BiCopyAlt, BiLogOut } from 'react-icons/bi';
 import { BsPersonFill } from 'react-icons/bs'
 import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts } from 'react-icons/ai'
-import { GiPapers } from 'react-icons/gi'
+import { AiOutlineFileProtect} from 'react-icons/ai'
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
@@ -35,12 +35,12 @@ const Navbar = () => {
 
   const handleSignOut = () => {
     const auth = getAuth();
-signOut(auth).then(() => {
-  // Sign-out successful.
-  alert("you have signed out succesfully")
-}).catch((error) => {
-  // An error happened.
-});
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      alert("you have signed out succesfully")
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 
   return (
@@ -58,26 +58,29 @@ signOut(auth).then(() => {
             </div>
           </Link>
         </div>
-        <div className="mobile_navbar-menu  p-2 hover:cursor-pointer  order-2 ">
-          <BiMenuAltRight onClick={() => setToggle(true)}
-            className='text-2xl'
-          />
+        {
+          logged && (
+            <div className="mobile_navbar-menu  p-2 hover:cursor-pointer  order-2 ">
+              <BiMenuAltRight onClick={() => setToggle(true)}
+                className='text-2xl'
+              />
 
-        </div>
+            </div>
+          )
+        }
       </div>
       {/* mobile navigation  */}
       {toggle && (
         <motion.div
           transition={{ duration: 0.45, ease: 'easeOut' }}
           initial={{ width: 0 }} animate={{ width: 300 }}
-          className='transition ease-in-out delay-150 duration-300 p-5 bg-gradient-to-r from-[#dd5a69] to-[#fa0421] fixed z-40 w-[70%] md:w-[60%] top-0 right-0 h-full'
+          className='transition ease-in-out delay-150 duration-300 p-5 bg-cyan-900 fixed z-40 w-[70%] md:w-[60%] top-0 right-0 h-full'
         >
-          <HiX onClick={() => setToggle(false)} className='text-white hover:text-cyan-200 float-right text-3xl m-2 hover:cursor-pointer hover:text-red-500' />
+          <HiX onClick={() => setToggle(false)} className='text-white float-right text-3xl m-2 hover:cursor-pointer hover:text-red-500' />
           <ul className='my-10 flex flex-col gap-2 justify-evenly'>
 
 
-
-            <li className='p-2 cursor-pointer hover:text-white  font-semibold list-none'>
+            <li className='p-2 cursor-pointer font-semibold list-none'>
               <div onClick={() => setToggle(false)}
                 className='flex gap-2 items-center text-white'
                 style={{ listStyle: 'none' }}
@@ -106,11 +109,16 @@ signOut(auth).then(() => {
                   "title": "Dashboard",
                   "link": "/dashboard",
                   "icon": AiFillContacts
+                },
+                {
+                  "title": "Admin",
+                  "link": "/admin",
+                  "icon": AiOutlineFileProtect
                 }
 
 
               ].map((item) => (
-                <li key={item.title} className='p-2 text-white hover:text-gray-100  font-semibold list-none'>
+                <li key={item.title} className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
 
                   <Link to={`${item.link}`} onClick={() => setToggle(false)}
                     className='flex gap-2 items-center'
