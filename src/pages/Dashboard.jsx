@@ -207,7 +207,7 @@ const Dashboard = () => {
 
                     {/* //quotes app  */}
                     
-                        {quote.text && (<Quotes quote={quote} />)}
+                        {/* {quote.text && (<Quotes quote={quote} />)} */}
                 
 
                 </div>

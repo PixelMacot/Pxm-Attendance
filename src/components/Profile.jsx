@@ -7,7 +7,7 @@ const Profile = ({ userData }) => {
     return (
         <>
             <div className=" w-[90%] mx-auto rounded-md shadow-md flex flex-col gap-10  py-5">
-                <div className="bg-[#ff445a9e] h-[100px] lg:h-[150px] w-full rounded-md"></div>
+                <div className="bg-[url('/profilebg.jpg')] bg-cover h-[100px] lg:h-[150px] w-full rounded-md"></div>
                 <div className="   p-5 flex flex-col  gap-10">
                     <div className="avatar border-[3px] border-white w-[120px] h-[130px] md:w-[170px] md:h-[180px] rounded-full  -mt-36 lg:-mt-44">
                     <Avatar
