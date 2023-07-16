@@ -142,7 +142,7 @@ signOut(auth).then(() => {
         </motion.div>
 
       )}
-      <div className='h-[80px]'> </div>
+      <div className='h-[60px]'> </div>
 
     </>
   )

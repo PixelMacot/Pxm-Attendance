@@ -10,7 +10,7 @@ import { CiTextAlignCenter } from 'react-icons/ci';
 import { AiOutlineMail } from 'react-icons/ai';
 import Loader from '../components/Loader';
 import Quotes from '../components/Quotes';
-
+import Avatar from '@mui/material/Avatar';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Dashboard = () => {
     const [photourl, setPhotoUrl] = useState("/boyavatar.png")
     const [percent, setPercent] = useState(0);
     const [quote, setQuote] = useState()
-
+    const [formData, setFormData] = useState({ position: '', backgroundimg: '', address: '', phoneno: '' });
     //function quotes
     const fetchQuotes = async () => {
         const url = 'https://quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com/quote?token=ipworld.info';
@@ -116,19 +116,35 @@ const Dashboard = () => {
 
 
     };
+
+    const handleChangeInput = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        console.log(name,value)
+    };
+
     return (
         <main >
             <section>
                 <div>
 
                     {/* //user profile details  */}
-                    <div className='w-[90%] md:w-[70%] lg:w-[50%] mx-auto shadow-lg rounded-md p-5 my-5 bg-[#ff445aa8] '>
+                    <div className='w-[90%]  mx-auto shadow-lg rounded-md mt-2'>
+                        <div className="bg-[url('/profilebg.jpg')] h-[100px] md:h-[200px] w-full bg-cover rounded-t-md">
+                        </div>
                         <form className='flex flex-col items-center'>
 
                             {/* //image upload functionality */}
                             <div className='cursor-pointer'>
                                 <label for="profileimage" className='hover:cursor-pointer'>
-                                    {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />}
+                                    <div className="avatar border-[3px] border-white w-[120px] h-[130px] md:w-[170px] md:h-[180px] rounded-full  -mt-20 md:-mt-24">
+                                        <Avatar
+                                            alt={userData.displayName}
+                                            src={userData.photoURL ? userData.photoURL : photourl}
+                                            sx={{ width: '100%', height: '100%' }}
+                                        />
+                                    </div>
+                                    {/* {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />} */}
                                 </label>
                                 <input type="file"
                                     onChange={handleImageChange}
@@ -148,21 +164,51 @@ const Dashboard = () => {
                             {/* //user details functionality */}
                             <div className=' flex flex-col items-start p-5 gap-4 '>
                                 <div className="flex flex-row items-center gap-2  rounded-md">
-                                    <div><CiTextAlignCenter className='text-2xl' /></div>
-                                    <div className=' px-2 w-full'>{userData.displayName}</div>
-                                </div>
-                                <div className="flex flex-row items-center gap-2  rounded-md">
-                                    <div><AiOutlineMail className='text-2xl' /></div>
-                                    <div className=' px-2 w-full'>{userData.email}</div>
+                                    <div className='px-2 w-full text-2xl'>{userData.displayName}</div>
                                 </div>
                             </div>
                         </form>
                     </div>
 
-                    {/* //quotes app  */}
-                    <div className="shadow-lg quote-container w-[90%] md:w-[70%] lg:w-[50%] mx-auto  rounded-sm p-10 my-5">
-                        {quote && (<Quotes quote={quote} />)}
+                    {/* //user  profile  */}
+
+                    <div className="w-[90%] mx-auto shadow-lg p-5 my-8">
+                        <form className='flex flex-col gap-4'>
+                            <input
+                                name="position"
+                                onChange={handleChangeInput}
+                                placeholder='Your Position'
+                                className='border p-2 rounded-md'
+                                required
+                                minLength="2"
+                                maxLength="32"
+                            />
+                            <input
+                                name="address"
+                                onChange={handleChangeInput}
+                                placeholder='Address'
+                                className='border p-2 rounded-md'
+                                required
+                                minLength="2"
+                                maxLength="32"
+                            />
+                            <input
+                                name="phoneno"
+                                onChange={handleChangeInput}
+                                placeholder='phoneno'
+                                className='border p-2 rounded-md'
+                                required
+                                minLength="2"
+                                maxLength="32"
+                            />
+                            <button className='bg-[#ff445a] px-5 py-2 w-fit mx-auto rounded-md text-white'>Update Profile</button>
+                        </form>
                     </div>
+
+                    {/* //quotes app  */}
+                    
+                        {quote.text && (<Quotes quote={quote} />)}
+                
 
                 </div>
             </section>

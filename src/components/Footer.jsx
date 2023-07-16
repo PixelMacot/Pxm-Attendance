@@ -77,7 +77,7 @@ const Footer = () => {
     <div className="bg-neutral-300 p-4 text-center text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
       © 2023 Copyright:
       <a
-        className="text-neutral-800 dark:text-neutral-400"
+        className="text-neutral-800 dark:text-neutral-400 px-2"
         href="https://pixelmascot.com/"
       >
         PixelMascot
