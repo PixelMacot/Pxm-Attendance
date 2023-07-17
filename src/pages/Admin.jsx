@@ -52,9 +52,10 @@ const Admin = () => {
 
         docsSnap.forEach(doc => {
             obj.push(doc.data())
+            console.log(doc.data())
         })
         setUsersData(obj)
-        console.log(obj)
+        // console.log(usersData)
     }
 
 
@@ -99,63 +100,65 @@ const Admin = () => {
     }
 
     return (
-        <div className="min-h-[100vh]">
+        <div className="min-h-[100vh] py-10">
             <div className="flex flex-row flex-wrap items-center justify-center gap-10 rounded-md">
                 {
 
 
-                    usersData.length > 2 && (
+                    usersData.length>2 && (
                         // console.log(Object.entries(usersData))
+                        // console.log(usersData) 
 
-                        (Object.entries(usersData)).map(user => {
-                            console.log(user[1].username)
-                            return (
+                        // console.log(new Set(Object.entries(usersData)))
+                            (Object.entries(usersData)).map(user => {
+                                // console.log("user",user)
+                                return (
 
 
-                                <div className="shadow-md rounded-md w-[350px]">
-                                    <div
-                                        style={{ backgroundImage: user[1].backgroundimg ? `url('${user[1].backgroundimg}')` : `url('/profilebg.jpg')` }}
-                                        className={`bg-[url('${user[1].backgroundimg}')] h-[100px] w-full bg-cover rounded-t-md`}>
+                                    <div className="shadow-md rounded-md w-[350px]" key={user[1].username}>
+                                        <div
+                                            style={{ backgroundImage: user[1].backgroundimg ? `url('${user[1].backgroundimg}')` : `url('/profilebg.jpg')` }}
+                                            className={`bg-[url('${user[1].backgroundimg}')] h-[100px] w-full bg-cover rounded-t-md`}>
+                                        </div>
+
+
+                                        <div className="px-5 pb-5">
+                                            <div className="avatar border-[3px] border-white w-[100px] h-[100px]  rounded-full  -mt-8 md:-mt-12">
+                                                <Avatar
+                                                    alt={user[1].username}
+                                                    src={user[1].profileimg ? user[1].profileimg : '/boyavatar.png'}
+                                                    sx={{ width: '100%', height: '100%' }}
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <div className="text-center text-lg font-bold w-fit">
+                                                    <span>{user[1].username ? user[1].username : "Username"}</span>
+                                                </div>
+                                                <div className="flex flex-row items-center gap-2 text-center text-sm  text-gray-600 w-fit">
+                                                    <FaSuitcase />
+                                                    <span>{user[1].position ? user[1].position : "Web Developer"}</span>
+                                                </div>
+                                                <div className="flex flex-row items-center gap-2 text-center text-sm  text-gray-600 break-words w-fit">
+                                                    <AiFillSetting />
+                                                    <span>{user[1].skills ? user[1].skills : "Html Css"}</span>
+                                                </div>
+                                                <Link to={`/attendance/${user[1].uid ? user[1].uid : "notfound"}`}>
+                                                    <button
+                                                        id={user[1].uid ? user[1].uid : "notfound"}
+                                                        onClick={viewAttendance}
+                                                        className='w-fit text-center  text-sm my-2 shadow-md p-2 bg-cyan-800 rounded-md text-white'
+                                                    >
+                                                        View Attendance
+                                                    </button>
+                                                </Link>
+
+                                            </div>
+                                        </div>
                                     </div>
 
+                                )
 
-                                    <div className="px-5 pb-5">
-                                        <div className="avatar border-[3px] border-white w-[100px] h-[100px]  rounded-full  -mt-8 md:-mt-12">
-                                            <Avatar
-                                                alt={user[1].username}
-                                                src={user[1].profileimg ? user[1].profileimg : '/boyavatar.png'}
-                                                sx={{ width: '100%', height: '100%' }}
-                                            />
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <div className="text-center text-lg font-bold w-fit">
-                                                <span>{user[1].username ? user[1].username : "Username"}</span>
-                                            </div>
-                                            <div className="flex flex-row items-center gap-2 text-center text-sm  text-gray-600 w-fit">
-                                                <FaSuitcase />
-                                                <span>{user[1].position ? user[1].position : "Web Developer"}</span>
-                                            </div>
-                                            <div className="flex flex-row items-center gap-2 text-center text-sm  text-gray-600 break-words w-fit">
-                                                <AiFillSetting />
-                                                <span>{user[1].skills ? user[1].skills : "Html Css"}</span>
-                                            </div>
-                                            <Link to={`/attendance/${user[1].uid ? user[1].uid : "notfound"}`}>
-                                                <button
-                                                    id={user[1].uid ? user[1].uid : "notfound"}
-                                                    onClick={viewAttendance}
-                                                    className='w-fit text-center  text-sm my-2 shadow-md p-2 bg-cyan-800 rounded-md text-white'
-                                                >
-                                                    View Attendance
-                                                </button>
-                                            </Link>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-                            )
-
-                        })
+                            })
 
                     )
 
