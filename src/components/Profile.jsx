@@ -49,7 +49,7 @@ const Profile = ({ userData, markAttendance, show }) => {
                                     <button
                                         onClick={markAttendance}
                                         className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
-                                        style={{ display: show ? 'block' : 'none' }}
+                                        style={{ display: show ? 'flex' : 'none' }}
                                     >mark attendance</button>)
                             }
                             {/* <button

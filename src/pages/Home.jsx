@@ -170,7 +170,7 @@ const Home = () => {
       {
         logged && (
           <div className="">
-            <Profile userData={userData} markAttendance={markAttendance} />
+            <Profile userData={userData} markAttendance={markAttendance} show={true} />
             {/* //attendance mark */}
           
             {/* //user-attendance-info */}
