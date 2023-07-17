@@ -24,11 +24,6 @@ const CalendarApp = ({ arr,user }) => {
   }, [currentMonth, arr])
 
 
-
-
-
-
-
   const countDays = () => {
     let pday = arr.filter((date) => {
       console.log(date.slice(3, 10), currentDate)

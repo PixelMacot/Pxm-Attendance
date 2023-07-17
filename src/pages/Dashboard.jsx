@@ -23,7 +23,8 @@ const Dashboard = () => {
     const [photourl, setPhotoUrl] = useState()
     const [percent, setPercent] = useState(0);
     const [quote, setQuote] = useState()
-    const [formData, setFormData] = useState({username:'', profileimg: '', position: '', skills: '', backgroundimg: '', address: '', phoneno: '' });
+    const [formData, setFormData] = useState({username:'', profileimg: '/boyavatar.png', position: '', skills: '', backgroundimg: '/profilebg.jpg', address: '', phoneno: '' });
+    
     //function quotes
     const fetchQuotes = async () => {
         const url = 'https://quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com/quote?token=ipworld.info';
@@ -60,6 +61,7 @@ const Dashboard = () => {
                 console.log(formData.profileimg)
             } else {
                 console.log("user is logged out")
+                navigate("/login")
             }
         });
     }, [])
@@ -83,15 +85,27 @@ const Dashboard = () => {
 
     async function updateProfileDetails(e) {
         console.log(formData)
+        console.log(userData.uid)
         e.preventDefault()
         setLoader(true)
         try {
             // console.log("datatobeinserted", docData)
             const docRef = doc(db, "users", userData.uid);
             const docSnap = await getDoc(docRef);
+            let docdta = {
+                uid:userData.uid,
+                    username: formData.username,
+                    profileimg: userData.photoURL,
+                    position: formData.position,
+                    skills: formData.skills,
+                    address: formData.address,
+                    phoneno: formData.phoneno,
+                    backgroundimg: formData.backgroundimg,
+                    prevelege:"employee"
+            }
 
             if (docSnap.exists()) {
-                // console.log("Document data:", docSnap.data());
+                console.log("Docdta data:", docdta);
 
                 await updateDoc(doc(db, "users", userData.uid), {
                     uid:userData.uid,
@@ -108,6 +122,7 @@ const Dashboard = () => {
             } else {
                 await setDoc(doc(db, "users", userData.uid),
                     {
+                        uid:userData.uid,
                         username: formData.username,
                         profileimg: formData.profileimg,
                         position: formData.position,

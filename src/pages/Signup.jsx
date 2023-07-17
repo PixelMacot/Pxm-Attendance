@@ -24,25 +24,14 @@ const Signup = () => {
 
         try {
             const { user } = await createUserWithEmailAndPassword(auth, email, password)
+            console.log(`User ${user.uid} created`)
+            navigate("/")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             setError(errorMessage)
             console.log(errorCode, errorMessage)
-        }
-        console.log(`User ${user.uid} created`)
-        await updateProfile(user, {
-            displayName: name,
-            photoURL: photourl
-        })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setError(errorMessage)
-                console.log(errorCode, errorMessage)
-            });
-
-        navigate("/")
+        }     
     }
     //image upload
     function handleImageChange(event) {
@@ -93,13 +82,13 @@ const Signup = () => {
                                 <label for="profileimage" className='hover:cursor-pointer'>
                                     {photourl && (<img src={photourl} className='rounded-full w-[200px] h-[200px] border' />)}
                                 </label>
-                                <input type="file"
+                                {/* <input type="file"
                                     onChange={handleImageChange}
                                     accept="/image/*"
                                     title="Choose a video please"
                                     id='profileimage'
                                     className='hidden'
-                                />
+                                /> */}
                                 {/* //show percentage of image upload  */}
                                 {/* <p>{percent} "% done"</p> */}
                             </div>
@@ -111,7 +100,7 @@ const Signup = () => {
                             }
                             {/* //user details functionality */}
                             <div className='flex flex-col items-start p-5 gap-2 w-full'>
-                                <label htmlFor="name">
+                                {/* <label htmlFor="name">
                                     Name
                                 </label>
                                 <input
@@ -123,7 +112,7 @@ const Signup = () => {
                                     autoComplete="off"
                                     placeholder="your name"
                                     className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
-                                />
+                                /> */}
                                 <label htmlFor="email-address">
                                     Email address
                                 </label>

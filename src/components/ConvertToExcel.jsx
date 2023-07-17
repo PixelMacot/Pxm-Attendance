@@ -6,7 +6,7 @@ export const ConvertToExcel = ({arr}) => {
   };
   return (
     <div>
-      <h2>Dates on which day you are present</h2>
+      <h2>Present Dates</h2>
      {
       arr.map((item)=>{
         return(

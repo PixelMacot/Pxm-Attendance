@@ -165,12 +165,14 @@ const Home = () => {
     }
   }
 
+
+
   return (
     <section className='min-h-[100vh]'>
       {
         logged && (
           <div className="">
-            <Profile userData={userData} markAttendance={markAttendance} show={true} />
+            <Profile userData={userData} markAttendance={markAttendance} show={true} datearr={markdate}/>
             {/* //attendance mark */}
           
             {/* //user-attendance-info */}
@@ -182,7 +184,6 @@ const Home = () => {
               }
             </div>
           </div>
-
         )
       }
     </section>

@@ -1,12 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './profile.css'
 import Avatar from '@mui/material/Avatar';
 // import {IoBagSharp} from 'react-icons/io'
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
+import moment from 'moment';
 
-const Profile = ({ userData, markAttendance, show }) => {
+const Profile = ({ userData, markAttendance, show, datearr }) => {
+    const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))
+    const [showattendancebtn,setShowAttendancebtn] = useState(true)
+    useEffect(()=>{
+        // setShowAttendancebtn(show)
+       if(datearr){
+        checkCurrentDayPresent(show)
+       }else{
+        setShowAttendancebtn(show)
+       }
+    },[datearr])
+   
+    const checkCurrentDayPresent = (show) => {
+        let today = datearr.filter((date) => {
+            console.log(date, currentDate)
+            return date == currentDate
+        })
+        console.log(today.length)
+        if(today.length>0){
+            setShowAttendancebtn(false)
+        }else{
+            setShowAttendancebtn(true)
+        }
+    }
+    
     console.log("profile page btn", show)
+    
     return (
         <>
             <div className="w-[90%] mx-auto rounded-md shadow-md flex flex-col gap-10  py-5">
@@ -49,7 +75,7 @@ const Profile = ({ userData, markAttendance, show }) => {
                                     <button
                                         onClick={markAttendance}
                                         className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
-                                        style={{ display: show ? 'flex' : 'none' }}
+                                        style={{ display: showattendancebtn ? 'flex' : 'none' }}
                                     >mark attendance</button>)
                             }
                             {/* <button
