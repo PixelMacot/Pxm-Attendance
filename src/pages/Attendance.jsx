@@ -10,11 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const Attendance = () => {
   // console.log("Attendance",userData)
   const { id } = useParams();
-  if (id == "notfound") {
-    alert("Update profile to see attendance")
-  }
-  console.log("attendance", id)
-
+  
   //send user to login page when user not logged in
   const [attendance, setAttendance] = useState("dummy")
   const [markdate, setMarkDate] = useState()
@@ -107,10 +103,19 @@ const reloadCalendar = ()=>{
             ) :(
               <button 
               onClick={reloadCalendar}
+              style={{display:id=="notfound"?'none':'flex'}}
               className="reload-btn bg-cyan-700 px-5 py-2 rounded-md text-white"
               >
                 Reload Calendar
               </button>
+            )
+          }
+          {
+            id=="notfound" && (
+              <div className="shodow-md rounded-md flex flex-col items-center">
+                <img src="/warning.png" className='w-[20%]'/>
+                <div className="text-red-500 py-5 text-center">Sorry we can't find user please update profile</div>
+              </div>
             )
           }
         </div>
