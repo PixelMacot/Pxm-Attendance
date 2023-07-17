@@ -83,7 +83,7 @@ const Signup = () => {
     };
     return (
         <main >
-            <section>
+            <section className='min-h-[80vh]'>
                 <div>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-5'>
                         <form className='flex flex-col items-center ' onSubmit={onSubmit}>

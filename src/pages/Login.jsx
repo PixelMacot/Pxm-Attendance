@@ -30,7 +30,7 @@ const Login = () => {
     return (
         <>
             <main >
-                <section>
+                <section className='min-h-[80vh]'>
                     <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-10'>
                         <h1 className='text-center text-2xl font-bold'>Login</h1>
 

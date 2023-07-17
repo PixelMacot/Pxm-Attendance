@@ -100,11 +100,11 @@ const Navbar = () => {
                   "link": "/",
                   "icon": AiFillHome
                 },
-                {
-                  "title": "Attendance",
-                  "link": "/attendance",
-                  "icon": AiOutlineUnorderedList
-                },
+                // {
+                //   "title": "Attendance",
+                //   "link": "/attendance",
+                //   "icon": AiOutlineUnorderedList
+                // },
                 {
                   "title": "Dashboard",
                   "link": "/dashboard",
