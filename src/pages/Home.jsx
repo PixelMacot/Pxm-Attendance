@@ -177,7 +177,7 @@ const Home = () => {
             <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
               {
                 markdate && (
-                  <CalendarApp arr={markdate} />
+                  <CalendarApp arr={markdate} user={userData}/>
                 )
               }
             </div>

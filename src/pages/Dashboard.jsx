@@ -94,6 +94,7 @@ const Dashboard = () => {
                 // console.log("Document data:", docSnap.data());
 
                 await updateDoc(doc(db, "users", userData.uid), {
+                    uid:userData.uid,
                     username: formData.username,
                     profileimg: userData.photoURL,
                     position: formData.position,

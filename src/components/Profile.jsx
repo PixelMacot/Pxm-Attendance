@@ -5,8 +5,8 @@ import Avatar from '@mui/material/Avatar';
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
 
-const Profile = ({ userData, markAttendance }) => {
-    console.log("profile page", userData)
+const Profile = ({ userData, markAttendance, show }) => {
+    console.log("profile page btn", show)
     return (
         <>
             <div className="w-[90%] mx-auto rounded-md shadow-md flex flex-col gap-10  py-5">
@@ -49,6 +49,7 @@ const Profile = ({ userData, markAttendance }) => {
                                     <button
                                         onClick={markAttendance}
                                         className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
+                                        style={{ display: show ? 'block' : 'none' }}
                                     >mark attendance</button>)
                             }
                             {/* <button

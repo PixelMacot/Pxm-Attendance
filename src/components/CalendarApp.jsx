@@ -5,20 +5,29 @@ import './calendar.css'
 import moment from 'moment';
 import { ConvertToExcel } from '../components/ConvertToExcel';
 
-const CalendarApp = ({ arr }) => {
+const CalendarApp = ({ arr,user }) => {
+
   const [value, onChange] = useState(new Date());
   const [presentdays, setPresentDays] = useState(0)
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [filtereddays, setFilteredDays] = useState()
   console.log("from calendarapp", arr)
   let currentDate = currentMonth.slice(3, 10)
-  let month,year
+  
+  // useEffect(() => {
+  //   getAttendanceData(user.uid)
+  // }, [])
+
   useEffect(() => {
     countDays()
     console.log("current month",)
-    // month=currentMonth.substring(4,5)
-    // year = currentMonth.substring(6,10)
   }, [currentMonth, arr])
+
+
+
+
+
+
 
   const countDays = () => {
     let pday = arr.filter((date) => {
@@ -61,14 +70,14 @@ const CalendarApp = ({ arr }) => {
             {/* Absent days: {totalabsent} */}
           </div>
           {/* //list of  present days  */}
-          {/* <div className="my-10 py-2 border border-transparent border-t-gray-500">
+          <div className="my-10 py-2 border border-transparent border-t-gray-500">
             {
               filtereddays && (
                 <ConvertToExcel arr={filtereddays} />
               )
 
             }
-          </div> */}
+          </div>
         </div>
 
       </div>
