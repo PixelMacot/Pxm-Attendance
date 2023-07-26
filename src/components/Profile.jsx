@@ -73,7 +73,7 @@ const Profile = ({ userData, markAttendance, show, datearr }) => {
                                     " update profile to Mark attendance"
                                 ) : (
                                     <button
-                                        onClick={markAttendance}
+                                        onClick={(e)=>markAttendance(e,userData)}
                                         className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
                                         style={{ display: showattendancebtn ? 'flex' : 'none' }}
                                     >Mark Attendance</button>)

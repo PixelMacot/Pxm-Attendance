@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet,Navigate} from "react-router-dom";
+// import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
 import NoPage from './pages/NoPage';
@@ -11,30 +11,95 @@ import Month from './pages/Month';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Admin from './pages/Admin';
-
+import { Counter } from './features/counter/counter';
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
+import NotVerified from './pages/NotVerified';
+import Pages from './pages/Pages';
+import Test from './pages/Test';
 
 function App() {
+  const { currentUser } = useContext(AuthContext);
 
-  return (
-    <Router>
-      <div>
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+    // else{
+    //   if(currentUser.isverified){
+    //     console.log("user is verified")
+    //   }else{
+    //     console.log("user is not verified")
+    //     return <Navigate to="/notverified" />;
+    //   }
+    // }
+
+    return children
+  };
+
+  const Layout = () => {
+    return (
+      <div className="main">
         <Navbar />
-        <section>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/Month" element={<Month />} />
-            <Route path="/attendance/:id" element={<Attendance />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
-        </section>
-  <Footer/>
+        <div className="container">
+          <div className="menuContainer">
+          </div>
+          <div className="contentContainer">
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          </div>
+        </div>
+        <Footer />
       </div>
-    </Router>
-  );
+    );
+  };
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "/admin",
+          element: <Admin />,
+        },
+        {
+          path: "/adminpanel",
+          element: <Pages />,
+        },
+        {
+          path: "/attendance/:id",
+          element: < Attendance />,
+        }
+      ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    {
+      path: "/apptest",
+      element: <Test/>,
+    },
+    {
+      path: "/notverified",
+      element: <NotVerified/>,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

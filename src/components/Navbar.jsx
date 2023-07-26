@@ -111,8 +111,13 @@ const Navbar = () => {
                   "icon": AiFillContacts
                 },
                 {
-                  "title": "Admin",
+                  "title": "Team",
                   "link": "/admin",
+                  "icon": AiOutlineFileProtect
+                },
+                {
+                  "title": "Admin",
+                  "link": "/adminpanel",
                   "icon": AiOutlineFileProtect
                 }
 

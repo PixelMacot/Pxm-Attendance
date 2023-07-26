@@ -31,7 +31,7 @@ const CalendarApp = ({ arr,user }) => {
     })
     console.log(pday.length)
     setPresentDays(pday.length)
-    setFilteredDays(pday.sort())
+    setFilteredDays([...new Set(pday)].sort())
   }
 
   const onActiveStartDateChangeHandler = ({ activeStartDate, value, view }) => {
@@ -39,11 +39,7 @@ const CalendarApp = ({ arr,user }) => {
     setCurrentMonth(moment(activeStartDate).format("DD-MM-YYYY"))
   };
 
-  function daysInMonth(month, year) {
-    console.log(month,year)
-    return new Date(year, month, 0).getDate();
-  }
-  
+
   return (
     <>
       <div className='flex flex-col md:flex-row justify-evenly w-full'>

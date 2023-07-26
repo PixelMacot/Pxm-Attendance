@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { login } from '../features/users/userSlice'
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState()
-
+    const count = useSelector((state) => state.counter.value)
+    const dispatch = useDispatch()
     const onLogin = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
@@ -17,6 +20,7 @@ const Login = () => {
                 const user = userCredential.user;
                 navigate("/")
                 console.log(user);
+                dispatch(login(user))
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -24,7 +28,7 @@ const Login = () => {
                 setError(errorMessage)
                 console.log(errorCode, errorMessage)
             });
-
+        
     }
 
     return (

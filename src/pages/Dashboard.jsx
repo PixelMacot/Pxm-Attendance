@@ -1,87 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import CalendarApp from '../components/CalendarApp';
+import { updateProfile } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
-//react icons
-import { CiTextAlignCenter } from 'react-icons/ci';
-import { AiOutlineMail } from 'react-icons/ai';
 import Loader from '../components/Loader';
-import Quotes from '../components/Quotes';
 import Avatar from '@mui/material/Avatar';
+import { AuthContext } from '../context/AuthContext'
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState({})
+
     const [file, setFile] = useState();
     const [loader, setLoader] = useState(false)
     // Handles input change event and updates state
     const [photourl, setPhotoUrl] = useState()
     const [percent, setPercent] = useState(0);
-    const [quote, setQuote] = useState()
-    const [formData, setFormData] = useState({username:'', profileimg: '/boyavatar.png', position: '', skills: '', backgroundimg: '/profilebg.jpg', address: '', phoneno: '' });
-    
-    //function quotes
-    const fetchQuotes = async () => {
-        const url = 'https://quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com/quote?token=ipworld.info';
-        const options = {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'fcdda6022amsh08abef535ef806dp1dc73cjsn0a23d1eeca9a',
-                'X-RapidAPI-Host': 'quotes-inspirational-quotes-motivational-quotes.p.rapidapi.com'
-            }
-        };
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            console.log(result);
-            setQuote(result)
-        } catch (error) {
-            console.error(error);
-        }
-
-    }
+    const [formData, setFormData] = useState(
+        {
+            username: '',
+            profileimg: '/boyavatar.png',
+            position: '',
+            skills: '',
+            backgroundimg: '/profilebg.jpg',
+            address: '', phoneno: ''
+        });
+    const { currentUser, userData ,getUserProfileData} = useContext(AuthContext)
 
     //send user to login page when user not logged in
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in
-                const uid = user.uid;
-                setUserData(user.toJSON())
-                console.log("user successfully signed in")
-                // fetchQuotes()
-                //User Profile update data
-                getUserProfileData(user)
-                setPhotoUrl(formData.profileimg)
-                console.log(formData.profileimg)
-            } else {
-                console.log("user is logged out")
-                navigate("/login")
-            }
-        });
+
+        if (currentUser) {
+            setFormData(userData)
+            setPhotoUrl(formData.profileimg)
+        }
     }, [])
 
-    //function to post profile data into cloud firestore
-    const getUserProfileData = async (user) => {
-        // console.log("getattendance data function called", user.uid)
-        getDoc(doc(db, "users", user.uid)).then(docSnap => {
 
-            if (docSnap.exists()) {
-                console.log("Document data:", JSON.stringify(docSnap.data()));
-                setFormData(docSnap.data())
-
-            } else {
-                console.log("Please update profile");
-            }
-
-        })
-
-    }
 
     async function updateProfileDetails(e) {
         console.log(formData)
@@ -89,58 +46,25 @@ const Dashboard = () => {
         e.preventDefault()
         setLoader(true)
         try {
-            // console.log("datatobeinserted", docData)
-            const docRef = doc(db, "users", userData.uid);
-            const docSnap = await getDoc(docRef);
-            let docdta = {
-                uid:userData.uid,
+            await setDoc(doc(db, "users", userData.uid),
+                {
+                    uid: userData.uid,
                     username: formData.username,
-                    profileimg: userData.photoURL,
+                    profileimg: formData.profileimg,
                     position: formData.position,
                     skills: formData.skills,
                     address: formData.address,
                     phoneno: formData.phoneno,
                     backgroundimg: formData.backgroundimg,
-                    prevelege:"employee"
-            }
-
-            if (docSnap.exists()) {
-                console.log("Docdta data:", docdta);
-
-                await updateDoc(doc(db, "users", userData.uid), {
-                    uid:userData.uid,
-                    username: formData.username,
-                    profileimg: userData.photoURL,
-                    position: formData.position,
-                    skills: formData.skills,
-                    address: formData.address,
-                    phoneno: formData.phoneno,
-                    backgroundimg: formData.backgroundimg,
-                    prevelege:"employee"
-                });
-
-            } else {
-                await setDoc(doc(db, "users", userData.uid),
-                    {
-                        uid:userData.uid,
-                        username: formData.username,
-                        profileimg: formData.profileimg,
-                        position: formData.position,
-                        skills: formData.skills,
-                        address: formData.address,
-                        phoneno: formData.phoneno,
-                        backgroundimg: formData.backgroundimg,
-                        prevelege:"employee"
-                    }
-                );
-
-            }
+                    prevelege: "employee"
+                }
+            );
+            //call function to get updated data
+            getUserProfileData(userData)
             setLoader(false)
-
         } catch (e) {
             console.error("Error adding document: ", e);
         }
-
     }
 
     // profile image upload
@@ -158,7 +82,7 @@ const Dashboard = () => {
         console.log("user profile img update", url)
         updateProfile(auth.currentUser, {
             photoURL: url,
-            displayName:formData.username
+            displayName: formData.username
         }).then(() => {
             setPhotoUrl(url)
             setFormData({ ...formData, profileimg: url });
