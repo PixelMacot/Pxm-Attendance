@@ -11,15 +11,12 @@ const Home = () => {
   const { currentUser, userData } = useContext(AuthContext)
   const { getAttendanceData, markAttendance, markdate, attendance, markdatefunction } = useContext(CalendarContext)
 
+
   useEffect(() => {
-  
-        getAttendanceData(currentUser.uid)
-        
-     
+    getAttendanceData(currentUser.uid)
     return () => {
-      
     };
-  }, [attendance]);
+  }, [currentUser]);
 
 
 
