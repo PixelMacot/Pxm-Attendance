@@ -15,6 +15,7 @@ const Home = () => {
     const unsub = () => {
       if (currentUser) {
         getAttendanceData(currentUser.uid)
+        markdatefunction()
       }
     }
     return () => {
@@ -22,10 +23,6 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    markdatefunction()
-    return () => { }
-  }, [attendance])
 
 
   return (
@@ -36,13 +33,13 @@ const Home = () => {
         {/* //attendance mark */}
 
         {/* //user-attendance-info */}
-        {/* <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
+        <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
           {
             markdate && (
               <CalendarApp arr={markdate} user={userData} />
             )
           }
-        </div> */}
+        </div>
       </div>
 
     </section>
