@@ -19,12 +19,11 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    markdatefunction()
     return () => {
-      markdatefunction()
+     
     };
   }, [attendance]);
-
-
 
   return (
     <section className='min-h-[100vh]'>
@@ -37,7 +36,7 @@ const Home = () => {
         <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
           {
             markdate && (
-              <CalendarApp arr={markdate} user={userData} />
+              <CalendarApp arr={markdate}/>
             )
           }
         </div>

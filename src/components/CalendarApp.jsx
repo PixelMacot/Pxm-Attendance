@@ -5,7 +5,7 @@ import './calendar.css'
 import moment from 'moment';
 import { ConvertToExcel } from '../components/ConvertToExcel';
 
-const CalendarApp = ({ arr,user }) => {
+const CalendarApp = ({ arr}) => {
 
   const [value, onChange] = useState(new Date());
   const [presentdays, setPresentDays] = useState(0)

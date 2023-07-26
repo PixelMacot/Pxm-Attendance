@@ -32,8 +32,8 @@ export const CalendarContextProvider = ({ children }) => {
     return valid
   }
 
-  // getting Attendance data from cloud firestore 
-  const getAttendanceData = async (useruid) => {
+// getting Attendance data from cloud firestore 
+const getAttendanceData = async (useruid) => {
     // console.log("getattendance data function called", user.uid)
     getDoc(doc(db, "attendance", useruid)).then(docSnap => {
 
@@ -47,7 +47,7 @@ export const CalendarContextProvider = ({ children }) => {
     })
 }
 
-  //array of present days of user
+//array of present days of user
   let dateMarkArr = []
   //function to push the present days into mark state
   const markdatefunction = () => {
