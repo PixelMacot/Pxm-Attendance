@@ -9,7 +9,7 @@ const Location = () => {
   const targetLatitude = 28.6292;
   const targetLongitude = 77.3840;
   // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
-  const geofenceRadius = 8;
+  const geofenceRadius = 10;
 
   // Function to handle successful retrieval of user's location
   const successHandler = (position) => {
