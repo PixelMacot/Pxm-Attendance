@@ -16,7 +16,7 @@ const Home = () => {
     getAttendanceData(currentUser.uid)
     return () => {
     };
-  }, [currentUser]);
+  }, [userData]);
 
 
 
