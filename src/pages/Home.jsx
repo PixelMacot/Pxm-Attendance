@@ -31,10 +31,10 @@ const Home = () => {
     };
   }, []);
   useEffect(() => {
-    const unsub =  markdatefunction()
+    markdatefunction()
   
     return () => {
-      unsub
+   
     }
   }, [attendance])
   
