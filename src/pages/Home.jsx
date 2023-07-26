@@ -14,12 +14,8 @@ const Home = () => {
   useEffect(() => {
     const unsub = () => {
       if (currentUser) {
-        // User is signed in
-        SetLogged(true)
         getAttendanceData(currentUser.uid)
-
       }
-
     }
     return () => {
       unsub();
