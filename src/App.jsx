@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -6,13 +6,9 @@ import { createBrowserRouter, RouterProvider, Outlet,Navigate} from "react-route
 // import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
-import NoPage from './pages/NoPage';
-import Month from './pages/Month';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Admin from './pages/Admin';
-import { Counter } from './features/counter/counter';
-import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import NotVerified from './pages/NotVerified';
 import Pages from './pages/Pages';
