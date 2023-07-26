@@ -1,19 +1,39 @@
 import React, { useEffect, useState } from 'react';
 
 const Location = () => {
-  const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
+  const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
 
   useEffect(() => {
+    // Replace these with the latitude and longitude of your target location
+    const targetLatitude = 28.6292;
+    const targetLongitude = 77.3840
+
+    // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
+    const geofenceRadius = 10;
+
     // Function to handle successful retrieval of user's location
     const successHandler = (position) => {
       const { latitude, longitude } = position.coords;
-      setLocation({ latitude, longitude });
+      const distanceToTarget = getDistanceFromLatLonInMeters(
+        latitude,
+        longitude,
+        targetLatitude,
+        targetLongitude
+      );
+
+      // Check if the user is inside the geofence
+      const insideGeofence = distanceToTarget <= geofenceRadius;
+      setIsUserInsideGeofence(insideGeofence);
+
+      // Run your function when the user is inside the geofence
+      if (insideGeofence) {
+        handleUserInsideGeofence();
+      }
     };
 
     // Function to handle errors when trying to retrieve user's location
     const errorHandler = (error) => {
-      setError('Error fetching location. Please allow location access.');
+      console.error('Error fetching location: ', error);
     };
 
     // Check if geolocation is available in the browser
@@ -21,20 +41,38 @@ const Location = () => {
       // Get the user's location
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     } else {
-      setError('Geolocation is not available in this browser.');
+      console.error('Geolocation is not available in this browser.');
     }
   }, []);
 
+  // Function to calculate the distance between two sets of latitude and longitude
+  const getDistanceFromLatLonInMeters = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c * 1000; // Convert distance to meters
+    return distance;
+  };
+
+  // Function to convert degrees to radians
+  const deg2rad = (deg) => deg * (Math.PI / 180);
+
+  // Function to run when the user is inside the geofence
+  const handleUserInsideGeofence = () => {
+    console.log('User is inside the geofence. Run your function here.');
+    // Your custom logic or function call when the user is inside the geofence
+  };
+
   return (
     <div>
-      {location ? (
-        <div>
-          <h2>Your Location:</h2>
-          <p>Latitude: {location.latitude}</p>
-          <p>Longitude: {location.longitude}</p>
-        </div>
+      {isUserInsideGeofence ? (
+        <p>You are inside the geofence!</p>
       ) : (
-        <p>{error || 'Fetching your location...'}</p>
+        <p>You are outside the geofence.</p>
       )}
     </div>
   );
