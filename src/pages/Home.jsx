@@ -12,16 +12,14 @@ const Home = () => {
   const { getAttendanceData, markAttendance, markdate, attendance, markdatefunction } = useContext(CalendarContext)
 
   useEffect(() => {
-    const unsub = () => {
-      if (currentUser) {
+  
         getAttendanceData(currentUser.uid)
-        markdatefunction()
-      }
-    }
+        
+     
     return () => {
-      unsub();
+      
     };
-  }, []);
+  }, [attendance]);
 
 
 
