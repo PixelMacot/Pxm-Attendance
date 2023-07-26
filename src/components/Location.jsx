@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 const Location = () => {
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
   const [error, setError] = useState(null);
-
+  const [lat, setLan] = useState()
+  const [lon, setLon] = useState()
   // Replace these with the latitude and longitude of your target location
   const targetLatitude = 28.6292;
   const targetLongitude = 77.3840;
@@ -19,7 +20,8 @@ const Location = () => {
       targetLatitude,
       targetLongitude
     );
-
+    setLan(latitude)
+    setLon(longitude)
     // Check if the user is inside the geofence
     const insideGeofence = distanceToTarget <= geofenceRadius;
     setIsUserInsideGeofence(insideGeofence);
@@ -91,15 +93,23 @@ const Location = () => {
     <div className='flex flex-col gap-20 justify-center p-10'>
       {error && <p>Error: {error}</p>}
       {isUserInsideGeofence ? (
-        <p>You are inside the geofence!</p>
+        <div className="flex flex-col gap-5">
+          <p>You are inside the geofence!</p>
+          <p>latitude {lat}</p>
+          <p>longitude {lon}</p>
+        </div >
       ) : (
-        <p>You are outside the geofence.</p>
+        <div className="flex flex-col gap-5">
+          <p>You are outside the geofence!</p>
+          <p>latitude {lat}</p>
+          <p>longitude {lon}</p>
+        </div >
       )}
 
       <button onClick={reverifyLocation}
         className="w-fit border bg-cyan-700 text-white p-2 rounded-md shadow-md"
       >Reverify Location</button>
-    </div>
+    </div >
   );
 };
 
