@@ -23,14 +23,14 @@ function App() {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }
-    // else{
-    //   if(currentUser.isverified){
-    //     console.log("user is verified")
-    //   }else{
-    //     console.log("user is not verified")
-    //     return <Navigate to="/notverified" />;
-    //   }
-    // }
+    else{
+      if(currentUser.isverified){
+        console.log("user is verified")
+      }else{
+        console.log("user is not verified")
+        return <Navigate to="/notverified" />;
+      }
+    }
 
     return children
   };

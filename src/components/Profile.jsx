@@ -1,38 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './profile.css'
 import Avatar from '@mui/material/Avatar';
-// import {IoBagSharp} from 'react-icons/io'
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
 import moment from 'moment';
+import { LocationContext } from '../context/LocationContext'
 
 const Profile = ({ userData, markAttendance, show, datearr }) => {
     const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))
-    const [showattendancebtn,setShowAttendancebtn] = useState(true)
-    useEffect(()=>{
+    const [showattendancebtn, setShowAttendancebtn] = useState({})
+    const [btnerr, setBtnErr] = useState("")
+
+    const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
+    useEffect(() => {
         // setShowAttendancebtn(show)
-       if(datearr){
-        checkCurrentDayPresent(show)
-       }else{
-        setShowAttendancebtn(show)
-       }
-    },[datearr])
-   
-    const checkCurrentDayPresent = (show) => {
+        if (show) {
+            if (datearr) {
+                checkCurrentDayPresent(show)
+            }
+        }
+
+    }, [show, datearr])
+
+    useEffect(() => {
+        attendanceBtn()
+        return () => {
+
+        }
+    }, [lat, lon])
+
+
+    const checkCurrentDayPresent = () => {
         let today = datearr.filter((date) => {
             console.log(date, currentDate)
             return date == currentDate
         })
         console.log(today.length)
-        if(today.length>0){
+        if (today.length > 0) {
             setShowAttendancebtn(false)
-        }else{
+        } else {
             setShowAttendancebtn(true)
         }
     }
-    
+
+    const attendanceBtn = () => {
+        console.log("btn err called")
+        console.log(isUserInsideGeofence)
+        if (userData.dummyData) {
+            setBtnErr("Please update your profile by going to dashboard")
+        } else {
+            if (!isUserInsideGeofence) {
+                
+                setBtnErr("please head inside office and refresh page")
+                console.log("head inside office")
+            }
+        }
+        console.log(btnerr)
+    }
+
     console.log("profile page btn", show)
-    
+
     return (
         <>
             <div className="w-[90%] mx-auto rounded-md shadow-md flex flex-col gap-10  py-5">
@@ -69,11 +96,12 @@ const Profile = ({ userData, markAttendance, show, datearr }) => {
                     <div className="mark w-full my-5">
                         <form className='flex gap-2'>
                             {
-                                userData.dummyData ? (
-                                    " update profile to Mark attendance"
+                                btnerr ? (
+                                    <p>{btnerr}</p>
                                 ) : (
+
                                     <button
-                                        onClick={(e)=>markAttendance(e,userData)}
+                                        onClick={(e) => markAttendance(e, userData)}
                                         className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
                                         style={{ display: showattendancebtn ? 'flex' : 'none' }}
                                     >Mark Attendance</button>)
