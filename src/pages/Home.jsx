@@ -13,10 +13,16 @@ const Home = () => {
 
 
   useEffect(() => {
-    getAttendanceData(currentUser.uid)
     return () => {
+      getAttendanceData(currentUser.uid)
     };
-  }, [userData]);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      markdatefunction()
+    };
+  }, [attendance]);
 
 
 

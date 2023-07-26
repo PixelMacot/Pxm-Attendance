@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { auth, db } from "../firebase";
+import { auth ,db} from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import moment from 'moment';
@@ -7,13 +7,12 @@ export const CalendarContext = createContext();
 
 export const CalendarContextProvider = ({ children }) => {
 
-  const [attendance, setAttendance] = useState("dummy")
-  const [markdate, setMarkDate] = useState()
+    const [attendance, setAttendance] = useState("dummy")
+    const [markdate, setMarkDate] = useState()
 
 
-
-  //check Timing of Attendance
-  const validTime = () => {
+//check Timing of Attendance
+   const validTime = () => {
     let startTime = '01:00:10';
     let endTime = '24:00:00';
 
@@ -46,7 +45,7 @@ export const CalendarContextProvider = ({ children }) => {
         console.log("No such document!");
       }
     })
-  }
+}
 
   //array of present days of user
   let dateMarkArr = []
@@ -69,7 +68,7 @@ export const CalendarContextProvider = ({ children }) => {
   }
 
   //function to post attendance data into cloud firestore
-  const markAttendance = async (e, userData) => {
+  const markAttendance = async (e,userData) => {
     e.preventDefault()
     if (validTime()) {
       let newDate = new Date()
@@ -111,7 +110,7 @@ export const CalendarContextProvider = ({ children }) => {
 
 
   return (
-    <CalendarContext.Provider value={{ getAttendanceData, markAttendance, markdate, attendance, markdatefunction }}>
+    <CalendarContext.Provider value={{ getAttendanceData,markAttendance,markdate,attendance,markdatefunction}}>
       {children}
     </CalendarContext.Provider>
   );
