@@ -12,7 +12,7 @@ import { AiFillSetting } from 'react-icons/ai'
 import CalendarApp from '../components/CalendarApp';
 // import { useNavigate } from 'react-router-dom';
 
-const Admin = () => {
+const Team = () => {
     //send user to login page when user not logged in
     const [attendance, setAttendance] = useState("dummy")
     const [markdate, setMarkDate] = useState()
@@ -169,4 +169,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default Team

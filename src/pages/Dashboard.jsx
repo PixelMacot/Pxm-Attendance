@@ -26,15 +26,14 @@ const Dashboard = () => {
             skills: '',
             backgroundimg: '/profilebg.jpg',
             address: '', phoneno: ''
-        });
-    const { currentUser, userData ,getUserProfileData} = useContext(AuthContext)
+        }
+       );
+    const { currentUser, userData, getUserProfileData } = useContext(AuthContext)
 
     //send user to login page when user not logged in
     useEffect(() => {
-
-        if (currentUser) {
+        if (userData) {
             setFormData(userData)
-            setPhotoUrl(formData.profileimg)
         }
     }, [])
 
@@ -42,25 +41,58 @@ const Dashboard = () => {
 
     async function updateProfileDetails(e) {
         console.log(formData)
-        console.log(userData.uid)
+        console.log(currentUser.uid)
         e.preventDefault()
         setLoader(true)
+        let docdta = {
+            uid: currentUser.uid,
+            username: formData.username,
+            profileimg: formData.profileimg,
+            position: formData.position,
+            skills: formData.skills,
+            address: formData.address,
+            phoneno: formData.phoneno,
+            backgroundimg: formData.backgroundimg,
+            prevelege: "employee"
+        }
+        console.log(docdta)
         try {
-            await setDoc(doc(db, "users", userData.uid),
-                {
-                    uid: userData.uid,
-                    username: formData.username,
-                    profileimg: formData.profileimg,
-                    position: formData.position,
-                    skills: formData.skills,
-                    address: formData.address,
-                    phoneno: formData.phoneno,
-                    backgroundimg: formData.backgroundimg,
-                    prevelege: "employee"
-                }
-            );
+            const docRef = doc(db, "users", currentUser.uid);
+            const docSnap = await getDoc(docRef);
+           
+            if (docSnap.exists()) {
+                await updateDoc(doc(db, "users", currentUser.uid),
+                    {
+                        uid: currentUser.uid,
+                        username: formData.username,
+                        profileimg: formData.profileimg,
+                        position: formData.position,
+                        skills: formData.skills,
+                        address: formData.address,
+                        phoneno: formData.phoneno,
+                        backgroundimg: formData.backgroundimg,
+                        prevelege: "employee"
+                    }
+                );
+            } else {
+                console.log(docdta)
+                await setDoc(doc(db, "users", currentUser.uid),
+                    {
+                        uid: currentUser.uid,
+                        username: formData.username,
+                        profileimg: formData.profileimg,
+                        position: formData.position,
+                        skills: formData.skills,
+                        address: formData.address,
+                        phoneno: formData.phoneno,
+                        backgroundimg: formData.backgroundimg,
+                        prevelege: "employee"
+                    }
+                );
+            }
+
             //call function to get updated data
-            getUserProfileData(userData)
+            getUserProfileData(currentUser)
             setLoader(false)
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -143,7 +175,7 @@ const Dashboard = () => {
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // console.log(name, value)
+        console.log(formData.profileimg)
     };
     return (
         <main >
@@ -242,7 +274,7 @@ const Dashboard = () => {
                                 className='border p-2 rounded-md'
                                 required
                                 minLength="2"
-                                maxLength="32"
+                                maxLength="50"
                                 value={formData.skills}
                             />
                             <input
@@ -252,7 +284,7 @@ const Dashboard = () => {
                                 className='border p-2 rounded-md'
                                 required
                                 minLength="2"
-                                maxLength="32"
+                                maxLength="50"
                                 value={formData.address}
                             />
                             <input

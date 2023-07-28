@@ -1,37 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import { createBrowserRouter, RouterProvider, Outlet,Navigate} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 // import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Attendance from './pages/Attendance';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Admin from './pages/Admin';
+import Team from './pages/Team';
 
 import { AuthContext } from "./context/AuthContext";
 import NotVerified from './pages/NotVerified';
 import Pages from './pages/Pages';
 import Test from './pages/Test';
+import AdminHome from './adminpages/home/AdminHome';
+import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
+import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
+import Sidebar from './components/admin/sidebar/Sidebar';
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
-
+  const { currentUser,userverified} = useContext(AuthContext)
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }
-    else{
-      if(currentUser.isverified){
-        console.log("user is verified")
-      }else{
-        console.log("user is not verified")
-        return <Navigate to="/notverified" />;
-      }
-    }
-
     return children
   };
 
@@ -52,6 +46,35 @@ function App() {
       </div>
     );
   };
+  const AdminLayout = () => {
+    return (
+      <div className="main">
+        <Navbar />
+        <Sidebar/>
+        <div className="container">
+          <div className="menuContainer">
+          </div>
+          <div className="contentContainer">
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  };
+  const BasicLayout = () => {
+    return (
+      <div className="main">
+        <Navbar />
+        <div className="container">
+        <Outlet />
+        </div>
+        <Footer />
+      </div>
+    );
+  };
   const router = createBrowserRouter([
     {
       path: "/",
@@ -67,7 +90,7 @@ function App() {
         },
         {
           path: "/admin",
-          element: <Admin />,
+          element: <Team />,
         },
         {
           path: "/adminpanel",
@@ -76,25 +99,50 @@ function App() {
         {
           path: "/attendance/:id",
           element: < Attendance />,
+        },
+        {
+          path: "/apptest",
+          element: <Test/>,
         }
       ],
     },
     {
-      path: "/login",
-      element: <Login />,
+      path: "/",
+      element: <BasicLayout />,
+      children: [
+        {
+          path: "/login",
+          element: <Login />,
+        },
+        {
+          path: "/signup",
+          element: <Signup />,
+        },
+        {
+          path: "/notverified",
+          element: <NotVerified />,
+        },
+      ],
     },
     {
-      path: "/signup",
-      element: <Signup />,
+      path: "/admin",
+      element: <AdminLayout/>,
+      children: [
+        {
+          path: "/admin/home",
+          element: <AdminHome/>,
+        },
+        {
+          path: "/admin/calendar",
+          element: <HolidayCalendar/>,
+        },
+        {
+          path: "/admin/notverified",
+          element: <EmployeeAttendance/>,
+        },
+      ],
     },
-    {
-      path: "/apptest",
-      element: <Test/>,
-    },
-    {
-      path: "/notverified",
-      element: <NotVerified/>,
-    },
+    
   ]);
 
   return <RouterProvider router={router} />;

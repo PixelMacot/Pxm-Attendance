@@ -1,66 +1,55 @@
 import React, { useState } from 'react';
-import "../App.css";
-import { collection, addDoc } from "firebase/firestore";
-import {db} from '../firebase';
-   
-  
+import Papa from 'papaparse';
+import { HolidaysContext } from '../context/HolidaysContext'
+import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { db } from '../firebase';
+// Replace this with your Firebase configuration
+
 
 const Month = () => {
-    const [todo, setTodo] = useState("")
-   
-    const addTodo = async (e) => {
-        e.preventDefault();  
-       
-        try {
-            const userProjectsColRef = collection(db, 'attendance', userData.uid, 'date');
-            const newProjectDocRef = doc(userProjectsColRef);
-            addDoc(collection(newProjectDocRef, 'tasks'), {
-             "data":"data is inserted"
-            });
-            // const docRef = await addDoc(collection(db, "attendance"), {
-            //   todo: todo,    
-            // });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
+  const [csvFile, setCsvFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setCsvFile(file);
+  };
+
+  const handleImportData = () => {
+    if (csvFile) {
+      Papa.parse(csvFile, {
+        header: true,
+        complete: (results) => {
+          const json_data = results.data;
+          uploadToFirestore(json_data);
+        },
+      });
     }
- 
-    return (
-        <section className="todo-container">
-            <div className="todo">
-                <h1 className="header">
-                    Todo-App
-                </h1>
-   
-                <div>
-   
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="What do you have to do today?"
-                            onChange={(e)=>setTodo(e.target.value)}
-                        />
-                    </div>
-   
-                    <div className="btn-container">
-                        <button
-                            type="submit"
-                            className="btn"
-                            onClick={addTodo}
-                        >
-                            Submit
-                        </button>
-                    </div>
-   
-                </div>
-   
-                <div className="todo-content">
-                    ...
-                </div>
-            </div>
-        </section>
-    )
-}
- 
-export default Month
+  };
+
+  const uploadToFirestore = (json_data) => {
+    json_data.forEach((data) => {
+      firestore.collection("your_collection_name").add(data);
+    });
+  };
+
+  const fetchDataFromFirestore = async () => {
+    try {
+      const collectionRef = firestore.collection("your_collection_name");
+      const snapshot = await collectionRef.get();
+      const fetched_data = snapshot.docs.map((doc) => doc.data());
+      console.log(fetched_data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleImportData}>Import Data to Firestore</button>
+      <button onClick={fetchDataFromFirestore}>Fetch Data from Firestore</button>
+    </div>
+  );
+};
+
+export default Month;
