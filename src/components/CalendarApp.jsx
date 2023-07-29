@@ -3,21 +3,17 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'
 import moment from 'moment';
-import { ConvertToExcel } from '../components/ConvertToExcel';
+import  PresentDates  from '../components/PresentDates';
 
 const CalendarApp = ({ arr}) => {
 
   const [value, onChange] = useState(new Date());
   const [presentdays, setPresentDays] = useState(0)
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
-  const [filtereddays, setFilteredDays] = useState()
+  const [filtereddays, setFilteredDays] = useState(0)
   console.log("from calendarapp", arr)
   let currentDate = currentMonth.slice(3, 10)
   
-  // useEffect(() => {
-  //   getAttendanceData(user.uid)
-  // }, [])
-
   useEffect(() => {
     countDays()
     console.log("current month",)
@@ -30,8 +26,9 @@ const CalendarApp = ({ arr}) => {
       return date.slice(3, 10) == currentDate
     })
     console.log(pday.length)
-    setPresentDays(pday.length)
+    
     setFilteredDays([...new Set(pday)].sort())
+    setPresentDays(filtereddays.length)
   }
 
   const onActiveStartDateChangeHandler = ({ activeStartDate, value, view }) => {
@@ -42,8 +39,9 @@ const CalendarApp = ({ arr}) => {
 
   return (
     <>
-      <div className='flex flex-col md:flex-row justify-evenly w-full'>
-        <Calendar
+      <div className='flex flex-wrap  md:flex-row justify-evenly w-full'>
+      <div className="w-[500px]">
+      <Calendar
           onChange={onChange}
           value={new Date()}
           view={"month"}
@@ -54,6 +52,7 @@ const CalendarApp = ({ arr}) => {
             }
           }}
         />
+      </div>
         <div className="">
           {/* //total present days  */}
           <div className="my-5 py-2">

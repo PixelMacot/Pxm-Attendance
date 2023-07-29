@@ -1,108 +1,134 @@
-import React, { useState,useContext } from 'react';
-import Papa from 'papaparse';
-import { HolidaysContext } from '../context/HolidaysContext'
-import { doc, setDoc, getDocs, updateDoc,collection,addDoc} from "firebase/firestore";
+import React, { useContext, useEffect, useState } from 'react'
+import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
-
+import { AuthContext } from '../context/AuthContext'
+import moment from 'moment';
+import { CalendarContext } from '../context/CalendarContext'
 
 const Test = () => {
-  const [csvFile, setCsvFile] = useState(null);
-  const [fetchedData, setFetchedData] = useState([]);
-  const { holidaysData, setHolidaysData } = useContext(HolidaysContext)
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setCsvFile(file);
-  };
+  const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))
+  const [showattendancebtn, setShowAttendancebtn] = useState(true)
+  const [showexit, setShowExit] = useState(true)
+  const { currentUser, userData } = useContext(AuthContext)
+  const { getAttendanceData, markdate, attendance, markdatefunction } = useContext(CalendarContext)
+  useEffect(() => {
+    // setShowAttendancebtn(show)  
+    return () => {
+      if (markdate) {
+        checkCurrentDayPresent()
+      }
+    };
+  }, [markdate])
 
-  const handleImportData = () => {
-    if (csvFile) {
-      Papa.parse(csvFile, {
-        header: true,
-        complete: (results) => {
-          const json_data = results.data;
-          uploadToFirestore(json_data);
-        },
-      });
+  useEffect(() => {
+    markdatefunction()
+    return () => {
+
+    };
+  }, [attendance]);
+
+  const checkCurrentDayPresent = () => {
+    console.log(attendance)
+    let ata = JSON.parse(attendance)
+    console.log("filter called")
+    let today = markdate.filter((date) => {
+      console.log(date, currentDate)
+      return date == currentDate
+    })
+    console.log(today)
+    if (today.length > 0) {
+      setShowAttendancebtn(false)
+      // console.log(ata[today].exit)
+      if (ata[today[0]].exit) {
+        setShowExit(false)
+      }
+    } else {
+      setShowAttendancebtn(true)
     }
-  };
+  }
 
-  const uploadToFirestore = (json_data) => {
-    json_data.forEach( async(data) => {
-      const docRef = await addDoc(collection(db, "holidays"), {
-      data
-      });
-      console.log("Document written with ID: ", docRef.id);
-    });
-  };
-
-  const fetchDataFromFirestore = async () => {
+  //function to post attendance data into cloud firestore
+  const markAttendance = async (e, type) => {
+    e.preventDefault()
+    console.log(userData)
+    let newDate = new Date()
+    let arrivalDate = moment(newDate).format("DD-MM-YYYY")
+    // let arrivalDate = "14-06-2023"
+    console.log(arrivalDate)
     try {
-      const collectionRef = collection(db,"holidays");
-      const snapshot = await getDocs(collectionRef);
-      const fetched_data = snapshot.docs.map((doc) => doc.data());
-     setFetchedData(fetched_data);
-     //below function convert data into json
-     convertDataToJSON()
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  const flattenData = (data) => {
-    const flattenedData = data.map((item) => {
-      const flatItem = { ...item };
-      Object.keys(flatItem).forEach((key) => {
-        if (typeof flatItem[key] === 'object') {
-          flatItem[key] = JSON.stringify(flatItem[key]);
+      let docExitData = {
+        [arrivalDate]: {
+          name: userData.username,
+          markdate: arrivalDate,
+          arrivalDate: Timestamp.fromDate(new Date()),
+          entry: moment(newDate).format("HH-mm-ss"),
         }
-      });
-      return flatItem;
-    });
-    return flattenedData;
-  };
-  
-  const convertDataToCSV = () => {
-    const flattenedData = flattenData(fetchedData);
-    const csv = Papa.unparse(flattenedData, { header: true });
-    const csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const csvURL = window.URL.createObjectURL(csvData);
-    const tempLink = document.createElement('a');
-    tempLink.href = csvURL;
-    tempLink.setAttribute('download', 'fetched_data.csv');
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-  };
+      };
+      // console.log("datatobeinserted", docData)
+      const docRef = doc(db, "attendance", userData.uid);
+      const docSnap = await getDoc(docRef);
 
-  const convertDataToJSON = () => {
-    const jsonData = fetchedData.map((item) => {
-      // Check if date and name properties exist in the object
-      console.log(item.data.Date.replace(/["']/g, ""))
-      const date = item.date || (item.data && item.data.Date.replace(/["']/g, "")) || null;
-      const name = item.name || (item.data && item.data.Holiday) || null;
-      
-      return { date, name };
-    });
-  
-    setHolidaysData(jsonData)
-  };
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        let exits = docSnap.data().hasOwnProperty(moment(newDate).format("DD-MM-YYYY"))
+        console.log(exits)
+        if (exits) {
+          let entry = docSnap.data()[moment(newDate).format("DD-MM-YYYY")].entry
+           docExitData = {
+            [arrivalDate]: {
+              name: userData.username,
+              markdate: arrivalDate,
+              arrivalDate: Timestamp.fromDate(new Date()),
+              entry: entry,
+              exit: moment(newDate).format("HH-mm-ss"),
+            }
+          }
+        }else{
+           docExitData = {
+            [arrivalDate]: {
+              name: userData.username,
+              markdate: arrivalDate,
+              arrivalDate: Timestamp.fromDate(new Date()),
+              entry: moment(newDate).format("HH-mm-ss"),
+            }
+          }
+        }
+        await updateDoc(doc(db, "attendance", userData.uid), docExitData);
+        // console.log("Document written with ID: ", userData.uid);
+        getAttendanceData(userData.uid)
+      } else {
+        await setDoc(doc(db, "attendance", userData.uid), docExitData);
+        // console.log("Document written with ID: ", userData.uid);
+        getAttendanceData(userData.uid)
+      }
+
+    } catch (err) {
+      console.error("Error adding document: ", err);
+    }
+
+  }
 
   return (
-    <div className='min-h-[70vh] py-10 flex flex-col justify-center items-center gap-10'>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleImportData}>Import Data to Firestore</button>
-      <button onClick={fetchDataFromFirestore}>Fetch Data from Firestore</button>
-      <button onClick={convertDataToCSV}>Download CSV</button>
-      <button onClick={convertDataToJSON}>Convert to JSON</button>
-      <div>
-        <h2>Fetched Data:</h2>
-        <ul>
-          {fetchedData.map((data, index) => (
-            <li key={index}>{JSON.stringify(data)}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+    <div className="min-h-[70vh]">
+      {
+        showattendancebtn && (
+          <button
+            onClick={(e) => markAttendance(e, "entry")}
+            className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
+          >Entry</button>
+        )
+      }
+      {
+        showexit && (
+          <button
+            onClick={(e) => markAttendance(e, "entry")}
+            className='w-fit text-center  text-sm md:text-lg shadow-md p-2 bg-cyan-800 rounded-md text-white'
+          >Exit</button>
+        )
+      }
 
-export default Test;
+    </div>
+  )
+}
+
+export default Test

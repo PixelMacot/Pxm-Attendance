@@ -7,10 +7,8 @@ export const CalendarContext = createContext();
 
 export const CalendarContextProvider = ({ children }) => {
 
-  const [attendance, setAttendance] = useState("dummy")
+  const [attendance, setAttendance] = useState()
   const [markdate, setMarkDate] = useState()
-
-
   useEffect(() => {
     markdatefunction()
     return () => {
@@ -45,7 +43,7 @@ export const CalendarContextProvider = ({ children }) => {
     getDoc(doc(db, "attendance", useruid)).then(docSnap => {
 
       if (docSnap.exists()) {
-        // console.log("Document data:", JSON.stringify(docSnap.data()));
+        console.log("Document data:", docSnap.data());
         setAttendance(JSON.stringify(docSnap.data()))
         markdatefunction()
       } else {
@@ -59,7 +57,7 @@ export const CalendarContextProvider = ({ children }) => {
   //function to push the present days into mark state
   const markdatefunction = () => {
     // console.log("markdatefunction() called")
-    if (attendance.length > 6) {
+    if (attendance) {
       let jsonp = JSON.parse(attendance)
       Object.keys(jsonp).map((item) => {
         // console.log(jsonp[item]) ->it will print single object 

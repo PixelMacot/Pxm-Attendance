@@ -91,11 +91,11 @@ return (
                 "link": "/",
                 "icon": AiFillHome
               },
-              // {
-              //   "title": "Attendance",
-              //   "link": "/attendance",
-              //   "icon": AiOutlineUnorderedList
-              // },
+              {
+                "title": "Attendance",
+                "link": "/attendancedashboard",
+                "icon": AiOutlineUnorderedList
+              },
               {
                 "title": "Dashboard",
                 "link": "/dashboard",
@@ -107,8 +107,13 @@ return (
                 "icon": AiOutlineFileProtect
               },
               {
+                "title": "Test",
+                "link": "/apptest",
+                "icon": AiOutlineFileProtect
+              },
+              {
                 "title": "Admin",
-                "link": "/adminpanel",
+                "link": "/admin",
                 "icon": AiOutlineFileProtect
               }
 

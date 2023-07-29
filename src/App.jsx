@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import './styles/global.scss'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -19,9 +20,24 @@ import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
 import Sidebar from './components/admin/sidebar/Sidebar';
+import Projects from './adminpages/projects/Projects';
+import Notes from './adminpages/Notes/Notes';
+import SingleAttendance from './pages/SingleAttendance';
+import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
+import { ErrorBoundary } from "react-error-boundary";
+
+function MyFallbackComponent({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
 
 function App() {
-  const { currentUser,userverified} = useContext(AuthContext)
+  const { currentUser, userverified } = useContext(AuthContext)
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
@@ -31,12 +47,12 @@ function App() {
 
   const Layout = () => {
     return (
-      <div className="main">
+      <div className="">
         <Navbar />
-        <div className="container">
-          <div className="menuContainer">
+        <div className="">
+          <div className="">
           </div>
-          <div className="contentContainer">
+          <div className="">
             <ProtectedRoute>
               <Outlet />
             </ProtectedRoute>
@@ -48,16 +64,18 @@ function App() {
   };
   const AdminLayout = () => {
     return (
-      <div className="main">
+      <div className="">
         <Navbar />
-        <Sidebar/>
-        <div className="container">
-          <div className="menuContainer">
-          </div>
-          <div className="contentContainer">
-            <ProtectedRoute>
-              <Outlet />
-            </ProtectedRoute>
+        <div className="main">
+          <div className=" container">
+            <div className="menuContainer">
+              <Sidebar />
+            </div>
+            <div className="contentContainer">
+              <ProtectedRoute>
+                <Outlet />
+              </ProtectedRoute>
+            </div>
           </div>
         </div>
         <Footer />
@@ -66,15 +84,16 @@ function App() {
   };
   const BasicLayout = () => {
     return (
-      <div className="main">
+      <div className="">
         <Navbar />
-        <div className="container">
-        <Outlet />
+        <div className="">
+          <Outlet />
         </div>
         <Footer />
       </div>
     );
   };
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -97,12 +116,21 @@ function App() {
           element: <Pages />,
         },
         {
+          path: "/attendance",
+          element: <SingleAttendance />,
+        },
+        {
           path: "/attendance/:id",
           element: < Attendance />,
         },
         {
           path: "/apptest",
-          element: <Test/>,
+          element: <Test />,
+        },
+
+        {
+          path: "/attendancedashboard",
+          element: <AttendanceDashboard />,
         }
       ],
     },
@@ -126,26 +154,37 @@ function App() {
     },
     {
       path: "/admin",
-      element: <AdminLayout/>,
+      element: <AdminLayout />,
       children: [
         {
-          path: "/admin/home",
-          element: <AdminHome/>,
+          path: "/admin",
+          element: <AdminHome />,
         },
         {
           path: "/admin/calendar",
-          element: <HolidayCalendar/>,
+          element: <HolidayCalendar />,
         },
         {
-          path: "/admin/notverified",
-          element: <EmployeeAttendance/>,
+          path: "/admin/employees",
+          element: <EmployeeAttendance />,
+        },
+
+        {
+          path: "/admin/projects",
+          element: <Projects />,
+
+        },
+        {
+          path: "/admin/notes",
+          element: <Notes />,
         },
       ],
     },
-    
+
   ]);
 
   return <RouterProvider router={router} />;
+  
 }
 
 export default App;
