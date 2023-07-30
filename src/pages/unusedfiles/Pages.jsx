@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './holiday.css';
+// import './holiday.css';
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import moment from 'moment';
-import ExcelJson from '../components/ExcelJson';
-import { HolidaysContext } from '../context/HolidaysContext'
+import ExcelJson from '../../components/ExcelJson/ExcelJson';
+import { HolidaysContext } from '../../context/HolidaysContext'
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase';
+import { db } from '../../firebase';
    
 const Pages = () => {
   const { holidaysData, setHolidaysData } = useContext(HolidaysContext)

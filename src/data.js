@@ -10,11 +10,12 @@ export const menu = [
           icon: "home.svg",
         },
         {
-          id: 2,
-          title: "Employees",
-          url: "/admin/employees",
-          icon: "user.svg",
-        },
+          id:2,
+          title: "Calendar",
+          url: "/admin/calendar",
+          icon: "calendar.svg",
+        }
+      
       ],
     },
     {
@@ -41,9 +42,9 @@ export const menu = [
         },
         {
           id: 4,
-          title: "Calendar",
-          url: "/admin/calendar",
-          icon: "calendar.svg",
+          title: "Employees",
+          url: "/admin/employees",
+          icon: "user.svg",
         },
       ],
     },

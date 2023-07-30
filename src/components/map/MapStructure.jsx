@@ -14,7 +14,22 @@ const MapStructure = () => {
 
     useEffect(() => {
         setMapCenter([lat, lon])
+        const fetchAddress = async () => {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+                );
+                const data = await response.json();
+                setPlaceName(data.display_name);
+            } catch (error) {
+                console.error('Error fetching address:', error);
+                setPlaceName('Your Location.');
+            }
+        };
+        fetchAddress(lat ,lon)
     }, [])
+  
+  
 
     if (!mapCenter) {
         return <div>Loading...</div>;
@@ -39,7 +54,7 @@ const MapStructure = () => {
                         </Marker>
                     </MapContainer>
 
-                </div>               
+                </div>
             </div>
         </div>
     )

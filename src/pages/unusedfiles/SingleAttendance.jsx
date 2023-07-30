@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { LocationContext } from '../context/LocationContext'
-import { AuthContext } from '../context/AuthContext'
-import { CalendarContext } from '../context/CalendarContext'
+import { LocationContext } from '../../context/LocationContext'
+import { AuthContext } from '../../context/AuthContext'
+import { CalendarContext } from '../../context/CalendarContext'
 import moment from 'moment';
-import CalendarApp from '../components/CalendarApp';
+import CalendarApp from '../../components/calenda/CalendarApp';
 
 const SingleAttendance = () => {
 

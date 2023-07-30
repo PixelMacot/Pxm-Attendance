@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { HolidaysContext } from '../context/HolidaysContext'
+import { HolidaysContext } from '../../context/HolidaysContext'
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase';
+import { db } from '../../firebase';
 // Replace this with your Firebase configuration
 
 

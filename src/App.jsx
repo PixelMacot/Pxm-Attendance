@@ -1,28 +1,28 @@
 import React, { useContext, useEffect } from 'react';
 import './styles/global.scss'
-import Home from './pages/Home';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
+import Home from './pages/home/Home';
+import Signup from './pages/signup/Signup';
+import Login from './pages/login/Login';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 // import { Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import Profile from './pages/profile/Profile';
 import Attendance from './pages/Attendance';
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Team from './pages/Team';
+import Navbar from './components/navbar/Navbar';
+import Footer from './components/footer/Footer';
+import Team from './pages/team/Team';
 
 import { AuthContext } from "./context/AuthContext";
-import NotVerified from './pages/NotVerified';
-import Pages from './pages/Pages';
-import Test from './pages/Test';
+import NotVerified from './pages/notverified/NotVerified';
+import Pages from './pages/unusedfiles/Pages';
+import Test from './pages/unusedfiles/Test';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
 import Sidebar from './components/admin/sidebar/Sidebar';
 import Projects from './adminpages/projects/Projects';
 import Notes from './adminpages/Notes/Notes';
-import SingleAttendance from './pages/SingleAttendance';
+import SingleAttendance from './pages/unusedfiles/SingleAttendance';
 import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -104,20 +104,12 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/dashboard",
-          element: <Dashboard />,
+          path: "/profile",
+          element: <Profile/>,
         },
         {
-          path: "/admin",
+          path: "/team",
           element: <Team />,
-        },
-        {
-          path: "/adminpanel",
-          element: <Pages />,
-        },
-        {
-          path: "/attendance",
-          element: <SingleAttendance />,
         },
         {
           path: "/attendance/:id",
@@ -127,7 +119,6 @@ function App() {
           path: "/apptest",
           element: <Test />,
         },
-
         {
           path: "/attendancedashboard",
           element: <AttendanceDashboard />,

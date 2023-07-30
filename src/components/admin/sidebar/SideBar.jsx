@@ -5,17 +5,17 @@ import { Link } from "react-router-dom"
 
 const Sidebar = () => {
   return (
-    <div className="menu">
+    <div className="menu min-h-[70vh]">
 
       {
         menu.map((item) => (
           <div className="item" key={item.id}>
-            <span className="title">{item.title}</span>
+            <span className="d-none hidden">{item.title}</span>
 
             {item.listItems.map((listItem) => (
               <Link className='listItem' to={listItem.url} key={listItem.id}>
                 <img src={listItem.icon} alt="" />
-                <span className="listItem">{listItem.title}</span>
+                <span className="hidden md:flex">{listItem.title}</span>
               </Link>
             ))}
 

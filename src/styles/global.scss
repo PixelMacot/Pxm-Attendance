@@ -1,4 +1,5 @@
 @import "./variable.scss";
+@import "./responsive.scss";
 
 
 * {
@@ -30,9 +31,13 @@ a {
   // @include lg{
   //   width: max-content;
   // }
+  @include sm{
+    width: 80px;
+  }
 }
 
 .contentContainer {
   padding: 5px 20px;
-  width: 80%;
+  width: 90%;
+ 
 }

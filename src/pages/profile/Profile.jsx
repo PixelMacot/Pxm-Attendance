@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { storage } from "../firebase";
+import { auth } from '../../firebase';
+import { storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase';
-import Loader from '../components/Loader';
+import { db } from '../../firebase';
+import Loader from '../../components/loader/Loader';
 import Avatar from '@mui/material/Avatar';
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext'
 
-const Dashboard = () => {
+const Profile = () => {
     const navigate = useNavigate();
 
     const [file, setFile] = useState();
@@ -315,4 +315,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Profile

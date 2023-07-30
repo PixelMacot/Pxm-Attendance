@@ -1,6 +1,6 @@
 import React, { useState,useContext } from 'react';
 import * as XLSX from 'xlsx';
-import { HolidaysContext } from '../context/HolidaysContext'
+import { HolidaysContext } from '../../context/HolidaysContext'
 
 
 const ExcelJson = () => {

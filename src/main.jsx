@@ -9,7 +9,7 @@ import { CalendarContextProvider } from "./context/CalendarContext";
 import { LocationContextProvider } from "./context/LocationContext";
 import { HolidaysContextProvider } from "./context/HolidaysContext";
 
-import Navbar from './components/Navbar';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <AuthContextProvider>

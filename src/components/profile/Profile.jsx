@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './profile.css'
+// import './profile.css'
 import Avatar from '@mui/material/Avatar';
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
@@ -9,7 +9,7 @@ const Profile = ({ userData }) => {
 
     return (
         <>
-            <div className="flex flex-col gap-10  py-5">
+            <div className="flex flex-col gap-10  pb-5">
                 <div
                     style={{ backgroundImage: userData.backgroundimg ? `url('${userData.backgroundimg}')` : `url('/profilebg.jpg')` }}
                     className={`bg-[url('${userData.backgroundimg}')] h-[100px] md:h-[200px] w-full bg-cover rounded-t-md`}>

@@ -6,9 +6,11 @@ import moment from 'moment';
 export const CalendarContext = createContext();
 
 export const CalendarContextProvider = ({ children }) => {
-
+  const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [attendance, setAttendance] = useState()
   const [markdate, setMarkDate] = useState()
+  const [currentMonthPresentDays, setCurrentMonthPresentDays] = useState()
+
   useEffect(() => {
     markdatefunction()
     return () => {
@@ -115,7 +117,18 @@ export const CalendarContextProvider = ({ children }) => {
 
 
   return (
-    <CalendarContext.Provider value={{ getAttendanceData, markAttendance, markdate, attendance, markdatefunction }}>
+    <CalendarContext.Provider value={
+      {
+        currentMonth,
+        setCurrentMonth,
+        getAttendanceData,
+        markAttendance,
+        markdate,
+        attendance,
+        markdatefunction,
+        currentMonthPresentDays,
+        setCurrentMonthPresentDays
+      }}>
       {children}
     </CalendarContext.Provider>
   );

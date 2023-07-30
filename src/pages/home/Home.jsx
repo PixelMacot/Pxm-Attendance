@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase';
-import CalendarApp from '../components/CalendarApp';
+import CalendarApp from '../../components/calenda/CalendarApp';
 import moment from 'moment';
-import Profile from '../components/Profile';
-import { AuthContext } from '../context/AuthContext'
-import { CalendarContext } from '../context/CalendarContext'
-import { LocationContext } from '../context/LocationContext'
+import Profile from '../../components/profile/Profile';
+import { AuthContext } from '../../context/AuthContext'
+import { CalendarContext } from '../../context/CalendarContext'
+import CalendarComponent from '../../components/calendar/Calendar'
 
 const Home = () => {
   const { currentUser, userData } = useContext(AuthContext)
   const { getAttendanceData, markAttendance, markdate, attendance, markdatefunction } = useContext(CalendarContext)
-  
+
 
   useEffect(() => {
     return () => {
@@ -30,24 +28,19 @@ const Home = () => {
   return (
     <section className='min-h-[100vh]'>
 
-      <div className="">
-
-
+      <div className="shadow-md w-[90%] mx-auto py-5">
         <Profile userData={userData}
           markAttendance={markAttendance}
           show={true}
           datearr={markdate} />
-
-        {/* //user-attendance-info */}
-        <div className="user-attendance border w-[90%] mx-auto my-8 p-5 shadow-md flex items-center justify-center">
-          {
-            markdate && (
-              <CalendarApp arr={markdate} />
-            )
-          }
-        </div>
       </div>
-
+     <div className="shadow-md w-[90%] mx-auto my-5">
+     {
+        markdate && (
+          <CalendarComponent />
+        )
+      }
+     </div>
     </section>
   )
 }

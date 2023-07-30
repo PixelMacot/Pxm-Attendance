@@ -10,21 +10,24 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 
 
 const CalendarComponent = () => {
-
+  const { currentMonth, setCurrentMonth,markdate,setCurrentMonthPresentDays } = useContext(CalendarContext)
+  const { holidaysDataLoading, holidaysData, setHolidaysData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON } = useContext(HolidaysContext)
   const [presentdays, setPresentDays] = useState(0)
-  const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
+  // const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [filtereddays, setFilteredDays] = useState(0)
   let currentDate = currentMonth.slice(3, 10)
-  const { markdate } = useContext(CalendarContext)
-  const { holidaysData } = useContext(HolidaysContext)
+  
   // console.log(markdate)
-
-
+  console.log(holidaysData)
+  if (holidaysDataLoading) {
+    return <div>Loading Data...</div>
+  }
 
   useEffect(() => {
     countDays()
+    fetchHolidays()
     // console.log("current month",)
-  }, [currentMonth, markdate])
+  }, [currentMonth, markdate, holidaysDataLoading])
 
 
   const countDays = () => {
@@ -35,6 +38,7 @@ const CalendarComponent = () => {
     // console.log(pday.length)
 
     setFilteredDays([...new Set(pday)].sort())
+    setCurrentMonthPresentDays([...new Set(pday)].sort())
     setPresentDays(filtereddays.length)
   }
 
@@ -46,9 +50,9 @@ const CalendarComponent = () => {
 
   const tileContent = ({ date }) => {
     const formattedDate = moment(date).format("DD-MM-YYYY")
-    // console.log("holidaysData", isHoliday(formattedDate))
+    console.log("holidaysData", isHoliday(formattedDate))
     if (isHoliday(formattedDate)) {
-      // console.log("holiday date", formattedDate)
+      console.log("holiday date", formattedDate)
       return <div className="holiday-mark yellow-date" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getOccasion(formattedDate)}
       ></div>;
@@ -58,11 +62,11 @@ const CalendarComponent = () => {
   };
 
   const isHoliday = (date) => {
-    return holidaysData.some((holiday) => moment(holiday.date).format("DD-MM-YYYY") === date);
+    return holidaysData.some((holiday) => holiday.date === date);
   };
 
   const getOccasion = (date) => {
-    const holiday = holidaysData.find((holiday) => moment(holiday.date).format("DD-MM-YYYY") === date);
+    const holiday = holidaysData.find((holiday) => holiday.date === date);
     return holiday ? holiday.name : '';
   };
 
@@ -83,7 +87,7 @@ const CalendarComponent = () => {
               if (markdate.find(x => x === moment(date).format("DD-MM-YYYY"))) {
                 return 'greencolor'
               } else {
-                if (holidaysData.find(x => moment(x.date).format("DD-MM-YYYY") === moment(date).format("DD-MM-YYYY"))) {
+                if (holidaysData.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
                   return 'yellowDate'
                 }
               }

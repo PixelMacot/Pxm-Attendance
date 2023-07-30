@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Navbar from '../components/Navbar'
-import { AuthContext } from '../context/AuthContext'
+import Navbar from '../../components/navbar/Navbar'
+import { AuthContext } from '../../context/AuthContext'
 
 
 const NotVerified = () => {

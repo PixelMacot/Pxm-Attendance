@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { CalendarContext } from '../context/CalendarContext'
+import { CalendarContext } from '../../context/CalendarContext'
 import Box from '@mui/material/Box';
-import { DataGrid,GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import './presentdates.scss'
 
 const columns = [
   {
@@ -24,8 +25,10 @@ function CustomToolbar() {
 }
 const PresentDates = ({ arr }) => {
 
-  const { getAttendanceData, markdate, attendance, markdatefunction } = useContext(CalendarContext)
+  const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
+  // console.log(JSON.parse(currentMonthPresentDays))
   let attn = JSON.parse(attendance)
+  // let sortedattendancedata = attn .
   console.log("attn", JSON.parse(attendance))
   let rows = []
   // attn.forEach((item) => {
@@ -34,15 +37,21 @@ const PresentDates = ({ arr }) => {
   //     workinghours: calculateWorkingTime(attn[item].entry, attn[item].exit)
   //   })
   // })
+  let currentDate = currentMonth.slice(3, 10)
   Object.keys(attn).forEach(function (key, index) {
-    rows.push({
-      id: index,
-      date: attn[key].markdate,
-      workinghours: calculateWorkingTime(attn[key].entry, attn[key].exit)
-    })
-    console.log()
+    if (attn[key].markdate.slice(3, 10) != currentDate) {
+      //dont push dates of next month in array
+    }else{
+      rows.push({
+        id: index,
+        date: attn[key].markdate,
+        workinghours: calculateWorkingTime(attn[key].entry, attn[key].exit)
+      })
+    }
+    
+    // console.log()
   });
-  console.log(rows)
+  // console.log()
   function calculateWorkingTime(arrivalDateStr = "17-01-47", departureDateStr = "17-01-47") {
     if (arrivalDateStr != "17-01-47" && departureDateStr == "17-01-47") {
       departureDateStr = arrivalDateStr
@@ -75,6 +84,9 @@ const PresentDates = ({ arr }) => {
             paginationModel: {
               pageSize: 5,
             },
+          },
+          sorting: {
+            sortModel: [{ field: 'date', sort: 'desc' }],
           },
         }}
         pageSizeOptions={[5]}

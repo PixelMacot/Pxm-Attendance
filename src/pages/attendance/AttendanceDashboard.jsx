@@ -5,8 +5,8 @@ import CalendarComponent from '../../components/calendar/Calendar'
 import { ErrorBoundary } from "react-error-boundary";
 import { AuthContext } from '../../context/AuthContext'
 import { CalendarContext } from '../../context/CalendarContext'
-import Profile from '../../components/Profile'
-import PresentDates from '../../components/PresentDates'
+import Profile from '../../components/profile/Profile'
+import PresentDates from '../../components/presentdates/PresentDates'
 
 const AttendanceDashboard = () => {
     const { currentUser, userData } = useContext(AuthContext)
@@ -28,7 +28,7 @@ const AttendanceDashboard = () => {
             <div className="maincontainer min-h-[70vh]">
                 <div className="attendancedashboard-wrapper flex flex-col gap-5">
                     <div className="w-[90%] mx-auto rounded-md shadow-md ">
-                        <div className="profile-wrapper ">
+                        <div className="profile-wrapper py-5">
                             <Profile userData={userData} />
                         </div>
                         <div className="markattendance-btn px-5 pb-5">
@@ -37,9 +37,9 @@ const AttendanceDashboard = () => {
                     </div>
                     {
                         markdate && (
-                            <div className="calendarandpresentdays flex flex-wrap gap-5 px-2 ">
+                            <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
 
-                                <div className="calendarapp w mx-auto rounded-md shadow-md ">
+                                <div className="calendarapp w-fit p-2 border border-gray-200 ">
 
                                     <ErrorBoundary fallback={<div>Something went wrong</div>}>
                                         <CalendarComponent />

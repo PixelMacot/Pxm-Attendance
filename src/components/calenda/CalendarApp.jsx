@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'
 import moment from 'moment';
-import  PresentDates  from '../components/PresentDates';
+import  PresentDates  from '../presentdates/PresentDates';
 
 const CalendarApp = ({ arr}) => {
 
@@ -61,12 +61,6 @@ const CalendarApp = ({ arr}) => {
           </div>
           {/* //list of  present days  */}
           <div className="my-10 py-2 border border-transparent border-t-gray-500">
-            {
-              filtereddays && (
-                <ConvertToExcel arr={filtereddays} />
-              )
-
-            }
           </div>
         </div>
 

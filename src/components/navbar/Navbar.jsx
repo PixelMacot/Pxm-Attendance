@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { getAuth, signOut } from "firebase/auth";
 import { BiMenuAltRight, BiCopyAlt, BiLogOut } from 'react-icons/bi';
 import { BsPersonFill } from 'react-icons/bs'
@@ -9,7 +9,7 @@ import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts } from 'react-icons/ai'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { motion } from 'framer-motion';
-import { AuthContext } from '../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext'
 
 const Navbar = () => {
   const [logged, SetLogged] = useState(false)
@@ -97,13 +97,13 @@ return (
                 "icon": AiOutlineUnorderedList
               },
               {
-                "title": "Dashboard",
-                "link": "/dashboard",
+                "title": "Profile",
+                "link": "/profile",
                 "icon": AiFillContacts
               },
               {
                 "title": "Team",
-                "link": "/admin",
+                "link": "/team",
                 "icon": AiOutlineFileProtect
               },
               {

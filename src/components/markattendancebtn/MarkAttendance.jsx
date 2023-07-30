@@ -150,6 +150,11 @@ const MarkAttendance = () => {
 
                     <div className="markattendance-buttons">
                         {
+                            btnerr && (
+                                <p>{btnerr}</p>
+                            )
+                        }
+                        {
                             showattendancebtn && (
                                 <button
                                     onClick={(e) => markAttendance(e, "entry")}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { login } from '../features/users/userSlice'
+import { login } from '../../features/users/userSlice'
 
 const Login = () => {
     const navigate = useNavigate();

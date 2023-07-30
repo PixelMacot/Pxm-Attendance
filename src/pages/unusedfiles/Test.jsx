@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import { db } from '../firebase';
-import { AuthContext } from '../context/AuthContext'
+import { db } from '../../firebase';
+import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
-import { CalendarContext } from '../context/CalendarContext'
+import { CalendarContext } from '../../context/CalendarContext'
 
 const Test = () => {
   const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))

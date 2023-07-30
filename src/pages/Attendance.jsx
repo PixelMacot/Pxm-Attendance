@@ -4,8 +4,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, getDoc, getDocs, updateDoc, collection } from "firebase/firestore";
 import { db } from '../firebase';
 import { auth } from '../firebase';
-import Profile from '../components/Profile';
-import CalendarApp from '../components/CalendarApp';
+import Profile from '../components/profile/Profile';
+import CalendarApp from '../components/calenda/CalendarApp';
 import { useNavigate } from 'react-router-dom';
 const Attendance = () => {
   // console.log("Attendance",userData)
