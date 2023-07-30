@@ -74,13 +74,13 @@ const Signup = () => {
         <main >
             <section className='min-h-[80vh]'>
                 <div>
-                    <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm p-5 my-8'>
+                    <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm px-5 py-20 my-5'>
                         <form className='flex flex-col items-center ' onSubmit={onSubmit}>
 
                             {/* //image upload functionality */}
                             <div className=''>
                                 <label for="profileimage" className='hover:cursor-pointer'>
-                                    {photourl && (<img src={photourl} className='rounded-full w-[200px] h-[200px] border' />)}
+                                    {photourl && (<img src={photourl} className='rounded-full w-[120px] h-[120px] border' />)}
                                 </label>
                                 {/* <input type="file"
                                     onChange={handleImageChange}
@@ -142,7 +142,7 @@ const Signup = () => {
                                 />
                                 <button
                                     type="submit"
-                                    className='bg-[#dd5a69] p-2 rounded-md text-white font-bold w-[100%] my-2'
+                                    className='bg-cyan-700 p-2 rounded-md text-white font-bold w-[100%] my-2'
                                 >
                                     Sign up
                                 </button>

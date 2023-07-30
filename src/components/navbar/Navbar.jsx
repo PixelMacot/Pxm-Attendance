@@ -12,9 +12,10 @@ import { motion } from 'framer-motion';
 import { AuthContext } from '../../context/AuthContext'
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [logged, SetLogged] = useState(false)
   const [toggle, setToggle] = useState(false);
-  const {currentUser, userData, getUserProfileData } = useContext(AuthContext)
+  const {currentUser,setCurrentUser, userData, getUserProfileData } = useContext(AuthContext)
 
   useEffect(() => {
     if (currentUser) {
@@ -29,6 +30,8 @@ const handleSignOut = () => {
   signOut(auth).then(() => {
     // Sign-out successful.
     console.log("you have signed out succesfully")
+    return navigate('/login')
+    setCurrentUser()
   }).catch((error) => {
     // An error happened.
   });
@@ -151,7 +154,7 @@ return (
       </motion.div>
 
     )}
-    <div className='h-[60px]'> </div>
+    <div className='h-[45px]'> </div>
 
   </>
 )

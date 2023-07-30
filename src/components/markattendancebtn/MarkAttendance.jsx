@@ -19,30 +19,26 @@ const MarkAttendance = () => {
     const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
     console.log(lat, lon)
 
-    // if (!isUserInsideGeofence) {
-    //     setBtnErr(true)
-    // }
- console.log("markrenderr")
+
+    console.log("markrenderr")
     useEffect(() => {
         // setShowAttendancebtn(show)  
         return () => {
-            if (markdate) {
-                checkCurrentDayPresent()
+            if (!isUserInsideGeofence) {
+                setBtnErr("You are not at office please visit office to mark attendance")
+                setShowAttendancebtn(false)
+                setShowExit(false)
+            } else {
+                if (markdate) {
+                    checkCurrentDayPresent()
+                }
             }
         };
     }, [markdate])
 
-
-    useEffect(() => {
-        disableBtn()
-        return () => {
-
-        }
-    }, [lat, lon])
-
     const checkCurrentDayPresent = () => {
         console.log(attendance)
-        let ata = JSON.parse(attendance)
+        let ata = attendance
         console.log("filter called")
         let today = markdate.filter((date) => {
             console.log(date, currentDate)

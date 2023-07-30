@@ -9,112 +9,33 @@ export const CalendarContextProvider = ({ children }) => {
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [attendance, setAttendance] = useState()
   const [markdate, setMarkDate] = useState()
+  const [datesLoader,setDatesLoader] = useState(true)
   const [currentMonthPresentDays, setCurrentMonthPresentDays] = useState()
-
-  useEffect(() => {
-    markdatefunction()
-    return () => {
-
-    };
-  }, [attendance]);
-
-  //check Timing of Attendance
-  const validTime = () => {
-    let startTime = '01:00:10';
-    let endTime = '24:00:00';
-
-    let currentDate = new Date()
-
-    let startDate = new Date(currentDate.getTime());
-    startDate.setHours(startTime.split(":")[0]);
-    startDate.setMinutes(startTime.split(":")[1]);
-    startDate.setSeconds(startTime.split(":")[2]);
-
-    let endDate = new Date(currentDate.getTime());
-    endDate.setHours(endTime.split(":")[0]);
-    endDate.setMinutes(endTime.split(":")[1]);
-    endDate.setSeconds(endTime.split(":")[2]);
-
-    let valid = startDate < currentDate && endDate > currentDate
-    return valid
-  }
-
+  
   // getting Attendance data from cloud firestore 
   const getAttendanceData = async (useruid) => {
     // console.log("getattendance data function called", user.uid)
     getDoc(doc(db, "attendance", useruid)).then(docSnap => {
-
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
-        setAttendance(JSON.stringify(docSnap.data()))
-        markdatefunction()
+        setAttendance(docSnap.data())
+        convertDataToJSON(docSnap.data())
       } else {
         console.log("No such document!");
+        setDatesLoader(false)
       }
     })
   }
+  let presentDatesArray=[]
+  const convertDataToJSON = (attendance) => {
 
-  //array of present days of user
-  let dateMarkArr = []
-  //function to push the present days into mark state
-  const markdatefunction = () => {
-    // console.log("markdatefunction() called")
-    if (attendance) {
-      let jsonp = JSON.parse(attendance)
-      Object.keys(jsonp).map((item) => {
-        // console.log(jsonp[item]) ->it will print single object 
-        dateMarkArr.push(item)
-      })
-      // console.log(dateMarkArr)
-      setMarkDate(dateMarkArr)
-    }
-    //push into array dates
-    const markdates = () => {
-      console.log(markdates.length)
-    }
-  }
-
-  //function to post attendance data into cloud firestore
-  const markAttendance = async (e, userData) => {
-    e.preventDefault()
-    if (validTime()) {
-      let newDate = new Date()
-      let arrivalDate = moment(newDate).format("DD-MM-YYYY")
-      // let arrivalDate = "14-06-2023"
-      console.log(arrivalDate)
-      try {
-        const docData = {
-          [arrivalDate]: {
-            name: userData.username,
-            markdate: arrivalDate,
-            arrivalDate: Timestamp.fromDate(new Date()),
-          }
-        };
-        // console.log("datatobeinserted", docData)
-        const docRef = doc(db, "attendance", userData.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          // console.log("Document data:", docSnap.data());
-
-          await updateDoc(doc(db, "attendance", userData.uid), docData);
-          // console.log("Document written with ID: ", userData.uid);
-          getAttendanceData(userData.uid)
-        } else {
-          await setDoc(doc(db, "attendance", userData.uid), docData);
-          // console.log("Document written with ID: ", userData.uid);
-          getAttendanceData(userData.uid)
-        }
-
-      } catch (err) {
-        console.error("Error adding document: ", err);
-      }
-    } else {
-      alert("time for attendance is ended")
-      console.log("invalid time")
-    }
-  }
-
+    Object.keys(attendance).forEach(function (key, index) {
+      console.log(attendance[key])
+      presentDatesArray.push(attendance[key].markdate)
+    });
+    setMarkDate(presentDatesArray)
+    setDatesLoader(false)
+  };
 
   return (
     <CalendarContext.Provider value={
@@ -122,12 +43,9 @@ export const CalendarContextProvider = ({ children }) => {
         currentMonth,
         setCurrentMonth,
         getAttendanceData,
-        markAttendance,
-        markdate,
         attendance,
-        markdatefunction,
-        currentMonthPresentDays,
-        setCurrentMonthPresentDays
+        datesLoader,
+        markdate
       }}>
       {children}
     </CalendarContext.Provider>

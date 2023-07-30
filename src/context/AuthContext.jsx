@@ -2,11 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-
+import {Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  // const navigate = useNavigate();
+  const [userDataLoading, setUserDataLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
   const [userverified, setUserVerified] = useState(false)
   const [userData, setUserData] = useState({
@@ -23,15 +25,21 @@ export const AuthContextProvider = ({ children }) => {
       if (user) {
         setCurrentUser(user);
         getUserProfileData(user)
+        setUserDataLoading(false)
         if (user.emailVerified) {
           setUserVerified(true)
+          return <Navigate to="/" />
         }
         console.log(user);
+      
       }else{
         console.log("user is not signed in")
+        setUserDataLoading(false)
+        return <Navigate to="/login" />
+
       }
     });
-
+    
     return () => {
       unsub();
     };
@@ -74,7 +82,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
+    <AuthContext.Provider value={{userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
       {children}
     </AuthContext.Provider>
   );

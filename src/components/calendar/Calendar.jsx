@@ -17,19 +17,6 @@ const CalendarComponent = () => {
   const [filtereddays, setFilteredDays] = useState(0)
   let currentDate = currentMonth.slice(3, 10)
   
-  // console.log(markdate)
-  console.log(holidaysData)
-  if (holidaysDataLoading) {
-    return <div>Loading Data...</div>
-  }
-
-  useEffect(() => {
-    countDays()
-    fetchHolidays()
-    // console.log("current month",)
-  }, [currentMonth, markdate, holidaysDataLoading])
-
-
   const countDays = () => {
     let pday = markdate.filter((date) => {
       // console.log(date.slice(3, 10), currentDate)

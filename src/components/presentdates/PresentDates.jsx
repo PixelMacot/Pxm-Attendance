@@ -27,9 +27,9 @@ const PresentDates = ({ arr }) => {
 
   const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
   // console.log(JSON.parse(currentMonthPresentDays))
-  let attn = JSON.parse(attendance)
+  let attn = attendance
   // let sortedattendancedata = attn .
-  console.log("attn", JSON.parse(attendance))
+  // console.log("attn", JSON.parse(attendance))
   let rows = []
   // attn.forEach((item) => {
   //   rows.push({

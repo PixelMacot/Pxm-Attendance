@@ -10,16 +10,10 @@ export const HolidaysContextProvider = ({ children }) => {
   const [holidaysDataLoading, setHolidaysDataLoading] = useState(true);
   const [holidaysData, setHolidaysData] = useState(
     [
-      { "date": "2023-07-04", "name": "Independence Day" },
-      { "date": "2023-07-08", "name": "Second Saturday" }
+      { "date": "05-07-2023", "name": "Independence Day" },
+      { "date": "15-07-2023", "name": "Second Saturday" }
     ]
   )
-
-  useEffect(() => {
-    fetchHolidays()
-  }, [])
-
-
 
   const handleCsvData = () => {
     if (csvFile) {

@@ -14,30 +14,23 @@ import Team from './pages/team/Team';
 
 import { AuthContext } from "./context/AuthContext";
 import NotVerified from './pages/notverified/NotVerified';
-import Pages from './pages/unusedfiles/Pages';
 import Test from './pages/unusedfiles/Test';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
 import Projects from './adminpages/projects/Projects';
 import Notes from './adminpages/Notes/Notes';
-import SingleAttendance from './pages/unusedfiles/SingleAttendance';
 import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
-import { ErrorBoundary } from "react-error-boundary";
 import Sidebar from './components/sidebar/SideBar'
+import HomePageLoader from './components/loader/HomePageLoader';
 
-function MyFallbackComponent({ error, resetErrorBoundary }) {
-  return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  )
-}
 
 function App() {
-  const { currentUser, userverified } = useContext(AuthContext)
+
+  const { currentUser, userverified, userDataLoading } = useContext(AuthContext)
+  if (userDataLoading) {
+    return <div><HomePageLoader/></div>
+  }
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
@@ -105,7 +98,7 @@ function App() {
         },
         {
           path: "/profile",
-          element: <Profile/>,
+          element: <Profile />,
         },
         {
           path: "/team",
@@ -175,7 +168,7 @@ function App() {
   ]);
 
   return <RouterProvider router={router} />;
-  
+
 }
 
 export default App;

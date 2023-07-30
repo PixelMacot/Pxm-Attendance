@@ -7,22 +7,26 @@ import { AuthContext } from '../../context/AuthContext'
 import { CalendarContext } from '../../context/CalendarContext'
 import Profile from '../../components/profile/Profile'
 import PresentDates from '../../components/presentdates/PresentDates'
+import { HolidaysContext } from '../../context/HolidaysContext'
 
 const AttendanceDashboard = () => {
+    const [loader, setLoader] = useState(true)
     const { currentUser, userData } = useContext(AuthContext)
-    const { getAttendanceData, markAttendance, markdate, attendance, markdatefunction } = useContext(CalendarContext)
+    const { getAttendanceData, datesLoader, markdate, attendance} = useContext(CalendarContext)
+    const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
+
 
     useEffect(() => {
-        return () => {
-            getAttendanceData(currentUser.uid)
-        };
+
+        fetchHolidays()
+        getAttendanceData(currentUser.uid)
+
+        if (!holidaysDataLoading && !datesLoader) {
+            console.log("data is  loaded")
+            setLoader(false)
+        }
     }, []);
 
-    useEffect(() => {
-        markdatefunction()
-        return () => {
-        };
-    }, [attendance]);
     return (
         <div className="AttendanceDashboard pb-5">
             <div className="maincontainer min-h-[70vh]">
@@ -36,20 +40,18 @@ const AttendanceDashboard = () => {
                         </div>
                     </div>
                     {
-                        markdate && (
+                        loader ? (
+                            <div>Loading...</div>
+                        ): (
                             <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
-
-                                <div className="calendarapp w-fit p-2 border border-gray-200 ">
-
+                               <div className="calendarapp w-fit p-2 border border-gray-200 ">
                                     <ErrorBoundary fallback={<div>Something went wrong</div>}>
                                         <CalendarComponent />
                                     </ErrorBoundary>
-
                                 </div>
-                                <div className="presentdayswrapper px-2 mx-auto w-fit">
+                                <div className="presentdayswrapper px-2  w-fit">
                                     <PresentDates arr={markdate} />
                                 </div>
-
                             </div>
                         )
                     }
