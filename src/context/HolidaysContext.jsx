@@ -15,6 +15,19 @@ export const HolidaysContextProvider = ({ children }) => {
     ]
   )
 
+  const handleImportData = () => {
+    if (csvFile) {
+      Papa.parse(csvFile, {
+        header: true,
+        complete: (results) => {
+          const json_data = results.data;
+          console.log(json_data)
+          uploadToFirestore(json_data);
+        },
+      });
+    }
+  };
+
   const handleCsvData = () => {
     if (csvFile) {
       Papa.parse(csvFile, {
@@ -88,7 +101,7 @@ export const HolidaysContextProvider = ({ children }) => {
     setHolidaysData(jsonData)
   };
   return (
-    <HolidaysContext.Provider value={{ holidaysDataLoading, setHolidaysDataLoading, holidaysData, setHolidaysData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON }}>
+    <HolidaysContext.Provider value={{ holidaysDataLoading, setHolidaysDataLoading, holidaysData, setHolidaysData,handleImportData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON }}>
       {children}
     </HolidaysContext.Provider>
   );
