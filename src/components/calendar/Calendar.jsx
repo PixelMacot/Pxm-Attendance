@@ -32,7 +32,7 @@ const CalendarComponent = () => {
 
   const countDays = () => {
     let pday = markdate.filter((date) => {
-      console.log(date.slice(3, 10), currentDate)
+      // console.log(date.slice(3, 10), currentDate)
       return date.slice(3, 10) == currentDate
     })
     // console.log(pday.length)
@@ -50,9 +50,9 @@ const CalendarComponent = () => {
 
   const tileContent = ({ date }) => {
     const formattedDate = moment(date).format("DD-MM-YYYY")
-    console.log("holidaysData", isHoliday(formattedDate))
+    // console.log("holidaysData", isHoliday(formattedDate))
     if (isHoliday(formattedDate)) {
-      console.log("holiday date", formattedDate)
+      // console.log("holiday date", formattedDate)
       return <div className="holiday-mark yellow-date" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getOccasion(formattedDate)}
       ></div>;

@@ -7,13 +7,14 @@ export const LocationContextProvider = ({ children }) => {
 
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
   const [error, setError] = useState(null);
-  const [lat, setLan] = useState()
+  const [lat, setLat] = useState()
   const [lon, setLon] = useState()
   // Replace these with the latitude and longitude of your target location
   const targetLatitude = 28.6292;
   const targetLongitude = 77.3840;
   // const targetLatitude = 38.6292;
   // const targetLongitude = 57.3840;
+
   // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
   const geofenceRadius = 10;
 
@@ -26,7 +27,7 @@ export const LocationContextProvider = ({ children }) => {
       targetLatitude,
       targetLongitude
     );
-    setLan(latitude)
+    setLat(latitude)
     setLon(longitude)
     // Check if the user is inside the geofence
     const insideGeofence = distanceToTarget <= geofenceRadius;
@@ -42,6 +43,8 @@ export const LocationContextProvider = ({ children }) => {
   const errorHandler = (error) => {
     console.error('Error fetching location: ', error);
     setError('Error fetching location. Please allow location access.');
+    setLat(38.6292)
+    setLon(57.3840)
   };
 
   // Function to calculate the distance between two sets of latitude and longitude
@@ -75,6 +78,8 @@ export const LocationContextProvider = ({ children }) => {
     } else {
       console.error('Geolocation is not available in this browser.');
       setError('Geolocation is not available in this browser.');
+      setLat(38.6292)
+      setLon(57.3840)
     }
   }, []);
 
@@ -93,7 +98,7 @@ export const LocationContextProvider = ({ children }) => {
 
 
   return (
-    <LocationContext.Provider value={{ isUserInsideGeofence,error,lat,lon,reverifyLocation}}>
+    <LocationContext.Provider value={{ isUserInsideGeofence, error, lat, lon, reverifyLocation }}>
       {children}
     </LocationContext.Provider>
   );

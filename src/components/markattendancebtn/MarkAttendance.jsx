@@ -19,6 +19,10 @@ const MarkAttendance = () => {
     const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
     console.log(lat, lon)
 
+    // if (!isUserInsideGeofence) {
+    //     setBtnErr(true)
+    // }
+ console.log("markrenderr")
     useEffect(() => {
         // setShowAttendancebtn(show)  
         return () => {
