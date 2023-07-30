@@ -19,7 +19,7 @@ import Test from './pages/unusedfiles/Test';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
-import Sidebar from './components/admin/sidebar/Sidebar';
+import Sidebar from './components/admin/sidebar/Sidebar.jsx';
 import Projects from './adminpages/projects/Projects';
 import Notes from './adminpages/Notes/Notes';
 import SingleAttendance from './pages/unusedfiles/SingleAttendance';
