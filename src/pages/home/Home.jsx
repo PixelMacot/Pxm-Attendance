@@ -10,7 +10,7 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 const Home = () => {
   const [loader, setLoader] = useState(true)
   const { currentUser, userData } = useContext(AuthContext)
-  const { datesLoader, getAttendanceData,attendance } = useContext(CalendarContext)
+  const { datesLoader, getAttendanceData, attendance } = useContext(CalendarContext)
   const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
 
 
@@ -25,9 +25,6 @@ const Home = () => {
     }
   }, []);
 
-
-
-
   return (
     <section className='min-h-[100vh]'>
 
@@ -36,14 +33,9 @@ const Home = () => {
       </div>
       <div className="shadow-md w-[90%] mx-auto my-5">
         {
-          loader ? (
-            <div className="">Loading...</div>
-          ) : (
-
+          !loader && (
             <CalendarComponent />
           )
-
-
         }
 
       </div>
