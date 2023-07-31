@@ -298,7 +298,7 @@ const Profile = () => {
                                 value={formData.phoneno}
                             />
                             <button
-                                onClick={updateProfileDetails}
+                                // onClick={updateProfileDetails}
                                 className='bg-[#ff445a] px-5 py-2 w-fit mx-auto rounded-md text-white'>Update Profile</button>
                         </form>
                     </div>
