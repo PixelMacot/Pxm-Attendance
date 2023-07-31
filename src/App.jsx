@@ -72,7 +72,7 @@ function App() {
       <div className="">
         <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
         <Navbar />
-        <div className="flex md:w-[100vw] w-[95vw] min-h-[70vh] px-5 md:px-0">
+        <div className="flex md:w-[100vw] w-[95vw] min-h-[70vh] mx-auto overflow-hidden">
           <div className="">
             <div className="">
               <Sidebar />
