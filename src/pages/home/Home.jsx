@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <section className='min-h-[100vh]'>
 
-      <div className="shadow-md w-[90%] mx-auto py-5">
+      <div className="shadow-md w-[90%] mx-auto py-5 my-2">
         <Profile userData={userData} />
       </div>
       <div className="shadow-md w-[90%] mx-auto my-5">
