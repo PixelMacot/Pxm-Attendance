@@ -63,13 +63,15 @@ function App() {
   const AdminLayout = () => {
     return (
       <div className="">
+         <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
         <Navbar />
-        <div className="main">
-          <div className=" container">
-            <div className="menuContainer">
+        <div className="flex flec-col justify-center">
+          <div className="">
+            <div className="">
               <Sidebar />
             </div>
-            <div className="contentContainer">
+            <div className="">
+             
               <ProtectedRoute>
                 <Outlet />
               </ProtectedRoute>
@@ -108,10 +110,6 @@ function App() {
         {
           path: "/team",
           element: <Team />,
-        },
-        {
-          path: "/attendance/:id",
-          element: < Attendance />,
         },
         {
           path: "/apptest",
@@ -159,7 +157,10 @@ function App() {
           path: "/admin/employees",
           element: <EmployeeAttendance />,
         },
-
+        {
+          path: "/admin/employee/:id",
+          element: < Attendance />,
+        },
         {
           path: "/admin/projects",
           element: <Projects />,

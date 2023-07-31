@@ -7,7 +7,7 @@ import {useNavigate } from 'react-router-dom';
 
 // import { useNavigate } from 'react-router-dom';
 import Profile from '../../components/profile/Profile';
-
+ 
 const Team = () => {
     //send user to login page when user not logged in
     const [attendance, setAttendance] = useState("dummy")

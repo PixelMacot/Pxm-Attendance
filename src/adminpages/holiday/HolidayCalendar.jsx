@@ -4,7 +4,7 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import Loader from '../../components/loader/Loader';
-
+import './holiday.scss'
 
 const HolidayCalendar = () => {
   const [loader, setLoader] = useState(false)
@@ -74,17 +74,22 @@ const HolidayCalendar = () => {
         )
       }
       <div>
-        <h2>Fetched Data:</h2>
-        <ul>
-          {
-            holidaysData.map((item) => {
-              console.log(item)
-              return (
-                <li>{item.date}:{item.name}</li>
-              )
-            })
-          }
-        </ul>
+        <h2>Total Holidays</h2>
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>Holiday</th>
+          </tr>
+
+          {holidaysData.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.date}</td>
+                <td>{item.name}</td>
+              </tr>
+            );
+          })}
+        </table>
       </div>
     </div>
   );

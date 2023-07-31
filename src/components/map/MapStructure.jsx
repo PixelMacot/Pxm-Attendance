@@ -20,7 +20,7 @@ const MapStructure = () => {
                     `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
                 );
                 const data = await response.json();
-                setPlaceName(data.display_name);
+                setPlaceName(data.display_name.slice(0,50));
             } catch (error) {
                 console.error('Error fetching address:', error);
                 setPlaceName('Your Location.');
@@ -34,6 +34,7 @@ const MapStructure = () => {
     if (!mapCenter) {
         return <div>Loading...</div>;
     }
+    
     return (
         <div className="map">
             <div className="maincontainer">
@@ -48,7 +49,9 @@ const MapStructure = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={mapCenter}>
+                            
                             <Popup>
+                            <img src="/logo.png" alt="" className='w-[40%]'/>
                                 {placeName || 'Loading...'}
                             </Popup>
                         </Marker>

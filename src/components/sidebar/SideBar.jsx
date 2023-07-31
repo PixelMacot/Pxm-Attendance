@@ -1,31 +1,24 @@
-import React from 'react'
-import './sidebar.scss'
-import { menu } from '../../data'
-import { Link } from "react-router-dom"
+// Sidebar.js
+import React from 'react';
+import { FaHome, FaUser, FaCog, FaSignOutAlt,FaCalendarAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="menu min-h-[70vh]">
-
-      {
-        menu.map((item) => (
-          <div className="item" key={item.id}>
-            <span className="d-none hidden">{item.title}</span>
-
-            {item.listItems.map((listItem) => (
-              <Link className='listItem' to={listItem.url} key={listItem.id}>
-                <img src={listItem.icon} alt="" />
-                <span className="hidden md:flex">{listItem.title}</span>
-              </Link>
-            ))}
-
-
-          </div>
-        ))
-      }
-
+    <div className="w-full my-5  border border-gray-200 bg-white border-r-2 text-black  px-2 flex  gap-10  items-center py-4">
+      <div className="mb-4">
+        <Link to="/admin" className="text-black">
+          <FaHome size={24} />
+        </Link>
+      </div>
+      <div className="mb-4">
+        <Link to="/admin/calendar" className="text-black">
+          <FaCalendarAlt size={24} />
+        </Link>
+      </div>
+    
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
