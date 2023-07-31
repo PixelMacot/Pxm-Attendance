@@ -32,7 +32,7 @@ const Profile = ({ userData }) => {
                                 <FaSuitcase />
                                 <span>{userData.position ? userData.position : "Web Developer"}</span>
                             </div>
-                            <div className="flex flex-row items-center gap-2 text-center text-sm md:text-lg text-gray-600 break-words w-fit">
+                            <div className="flex flex-row items-center gap-2  text-sm md:text-lg text-gray-600 break-words w-fit">
                                 <AiFillSetting />
                                 <span>{userData.skills ? userData.skills : "Html Css"}</span>
                             </div>
