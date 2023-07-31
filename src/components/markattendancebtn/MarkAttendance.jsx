@@ -67,21 +67,7 @@ const MarkAttendance = () => {
 
         }
     }
-    const disableBtn = () => {
-        console.log("btn err called")
-        console.log(isUserInsideGeofence)
-        if (userData.dummyData) {
-            setBtnErr("Please update your profile by going to dashboard")
-        } else {
-            if (!isUserInsideGeofence) {
-
-                setBtnErr("please head inside office and refresh page")
-                console.log("head inside office")
-            }
-        }
-        console.log(btnerr)
-    }
-
+ 
     //function to post attendance data into cloud firestore
     const markAttendance = async (e, type) => {
         e.preventDefault()
@@ -118,6 +104,7 @@ const MarkAttendance = () => {
                             exit: moment(newDate).format("HH-mm-ss"),
                         }
                     }
+                    setShowAttendancebtn(false)
                 } else {
                     docExitData = {
                         [arrivalDate]: {
@@ -130,6 +117,7 @@ const MarkAttendance = () => {
                 }
                 await updateDoc(doc(db, "attendance", userData.uid), docExitData);
                 // console.log("Document written with ID: ", userData.uid);
+                setShowExit(false)
                 getAttendanceData(userData.uid)
             } else {
                 await setDoc(doc(db, "attendance", userData.uid), docExitData);

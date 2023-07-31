@@ -8,24 +8,38 @@ import { CalendarContext } from '../../context/CalendarContext'
 import Profile from '../../components/profile/Profile'
 import PresentDates from '../../components/presentdates/PresentDates'
 import { HolidaysContext } from '../../context/HolidaysContext'
+import { LocationContext } from '../../context/LocationContext'
+import moment from 'moment';
 
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
     const { currentUser, userData } = useContext(AuthContext)
     const { getAttendanceData, datesLoader, markdate, attendance } = useContext(CalendarContext)
     const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
-
+    const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
 
     useEffect(() => {
 
         fetchHolidays()
         getAttendanceData(currentUser.uid)
-
         if (!holidaysDataLoading && !datesLoader) {
             console.log("data is  loaded")
             setLoader(false)
         }
+
     }, []);
+
+    const reload = () => {
+        fetchHolidays()
+        getAttendanceData(currentUser.uid)
+        if (!holidaysDataLoading && !datesLoader) {
+            console.log("data is  loaded")
+            setLoader(false)
+        }
+    }
+
+    
+
 
     return (
         <div className="AttendanceDashboard pb-5">
@@ -47,7 +61,12 @@ const AttendanceDashboard = () => {
                     </div>
                     {
                         loader ? (
-                            <div>Loading...</div>
+                            <div className="w-fit mx-auto">
+                                <button
+                                    onClick={reload}
+                                    className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
+                                >Reload Calendar</button>
+                            </div>
                         ) : (
                             <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
                                 <div className="calendarapp w-fit p-2 border border-gray-200 ">

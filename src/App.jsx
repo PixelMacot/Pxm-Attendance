@@ -24,10 +24,10 @@ import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
 
-
 function App() {
 
-  const { currentUser, userverified, userDataLoading, userData } = useContext(AuthContext)
+  const { currentUser, userDataLoading, userData } = useContext(AuthContext)
+
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
   }

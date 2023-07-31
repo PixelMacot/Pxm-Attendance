@@ -56,6 +56,7 @@ export const HolidaysContextProvider = ({ children }) => {
       const fetched_data = snapshot.docs.map((doc) => doc.data());
       setFetchedData(fetched_data);
       //below function convert data into json
+      console.log(fetched_data)
       convertDataToJSON()
       setHolidaysDataLoading(false)
     } catch (error) {
@@ -93,7 +94,7 @@ export const HolidaysContextProvider = ({ children }) => {
       // Check if date and name properties exist in the object
       console.log(item.data.Date.replace(/["']/g, ""))
       const date = item.date || (item.data && item.data.Date.replace(/["']/g, "")) || null;
-      const name = item.name || (item.data && item.data.Holiday) || null;
+      const name = item.name || (item.data && item.data.name) || null;
 
       return { date, name };
     });
