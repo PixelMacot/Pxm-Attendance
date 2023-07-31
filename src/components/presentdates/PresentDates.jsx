@@ -27,6 +27,12 @@ const PresentDates = ({ arr }) => {
 
   const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
   // console.log(JSON.parse(currentMonthPresentDays))
+  
+   if(!attendance){
+    return <div>Not Attendance Data Found</div>
+   }
+  
+  
   let attn = attendance
   // let sortedattendancedata = attn .
   // console.log("attn", JSON.parse(attendance))

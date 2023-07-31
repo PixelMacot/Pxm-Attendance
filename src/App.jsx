@@ -29,13 +29,18 @@ function App() {
 
   const { currentUser, userverified, userDataLoading } = useContext(AuthContext)
   if (userDataLoading) {
-    return <div><HomePageLoader/></div>
+    return <div><HomePageLoader /></div>
   }
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to="/login" />;
+    } else {
+      if (currentUser.emailVerified) {
+        return children
+      } else {
+        return <Navigate to="/notverified" />;
+      }
     }
-    return children
   };
 
   const Layout = () => {
@@ -112,6 +117,7 @@ function App() {
           path: "/apptest",
           element: <Test />,
         },
+      
         {
           path: "/attendancedashboard",
           element: <AttendanceDashboard />,
@@ -134,6 +140,7 @@ function App() {
           path: "/notverified",
           element: <NotVerified />,
         },
+
       ],
     },
     {

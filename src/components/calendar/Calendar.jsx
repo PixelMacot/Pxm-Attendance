@@ -10,13 +10,13 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 
 
 const CalendarComponent = () => {
-  const { currentMonth, setCurrentMonth,markdate,setCurrentMonthPresentDays } = useContext(CalendarContext)
+  const { currentMonth, setCurrentMonth, markdate, setCurrentMonthPresentDays } = useContext(CalendarContext)
   const { holidaysDataLoading, holidaysData, setHolidaysData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON } = useContext(HolidaysContext)
   const [presentdays, setPresentDays] = useState(0)
   // const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [filtereddays, setFilteredDays] = useState(0)
   let currentDate = currentMonth.slice(3, 10)
-  
+
   const countDays = () => {
     let pday = markdate.filter((date) => {
       // console.log(date.slice(3, 10), currentDate)
@@ -65,21 +65,25 @@ const CalendarComponent = () => {
     <div className="calendar">
       <div className="calendar-container">
         <div className="calendar-wrapper">
-          <Calendar
-            value={new Date()}
-            view={"month"}
-            onActiveStartDateChange={onActiveStartDateChangeHandler}
-            tileContent={tileContent}
-            tileClassName={({ date, view }) => {
-              if (markdate.find(x => x === moment(date).format("DD-MM-YYYY"))) {
-                return 'greencolor'
-              } else {
-                if (holidaysData.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
-                  return 'yellowDate'
-                }
-              }
-            }}
-          />
+          {
+            markdate && (
+              <Calendar
+                value={new Date()}
+                view={"month"}
+                onActiveStartDateChange={onActiveStartDateChangeHandler}
+                tileContent={tileContent}
+                tileClassName={({ date, view }) => {
+                  if (markdate.find(x => x === moment(date).format("DD-MM-YYYY"))) {
+                    return 'greencolor'
+                  } else {
+                    if (holidaysData.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
+                      return 'yellowDate'
+                    }
+                  }
+                }}
+              />
+            )
+          }
           <ReactTooltip effect="solid" id="my-tooltip" />
         </div>
       </div>

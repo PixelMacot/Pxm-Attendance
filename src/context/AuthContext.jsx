@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-import {Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -11,6 +11,7 @@ export const AuthContextProvider = ({ children }) => {
   const [userDataLoading, setUserDataLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
   const [userverified, setUserVerified] = useState(false)
+  const [emailSent,setEmailSent] = useState(false)
   const [userData, setUserData] = useState({
     "username": "user",
     "position": "Web Developer",
@@ -24,22 +25,23 @@ export const AuthContextProvider = ({ children }) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        getUserProfileData(user)
-        setUserDataLoading(false)
+        getUserProfileData(user) 
+        setUserDataLoading(false)     
         if (user.emailVerified) {
+          setUserDataLoading(false)
           setUserVerified(true)
           return <Navigate to="/" />
         }
         console.log(user);
-      
-      }else{
+
+      } else {
         console.log("user is not signed in")
         setUserDataLoading(false)
         return <Navigate to="/login" />
 
       }
     });
-    
+
     return () => {
       unsub();
     };
@@ -68,6 +70,7 @@ export const AuthContextProvider = ({ children }) => {
       sendEmailVerification(auth.currentUser)
         .then(() => {
           console.error('email verification sent');
+          setEmailSent(true)
         })
         .catch((error) => {
           console.error('Error sending email verification link:', error);
@@ -82,7 +85,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
+    <AuthContext.Provider value={{emailSent,userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
       {children}
     </AuthContext.Provider>
   );
