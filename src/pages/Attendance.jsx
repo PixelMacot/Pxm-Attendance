@@ -134,12 +134,12 @@ const Attendance = () => {
       <div className="flex flex-col gap-10 md:flex-row justify-center">
         {
           userData && (
-            <div className="border shadow-md rounded-md">
+            <div className="border shadow-md rounded-md w-[100%] md:w-[50%]">
               <Profile userData={userData} />
             </div>
           )
         }
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10 w-[100%] md:w-[50%]">
           <div className="load-btn">
             <button
               onClick={reloadCalendar}
