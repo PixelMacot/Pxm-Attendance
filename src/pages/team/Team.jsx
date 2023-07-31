@@ -103,7 +103,7 @@ const Team = () => {
                         (Object.entries(usersData)).map(user => {
                             // console.log("user",user)
                             return (
-                               <div className='w-[320px] md:w-[400px] border-b border-l border-r rounded-md'>
+                               <div className='w-[95%] md:w-[400px] border-b border-l border-r rounded-md'>
                                  <Profile userData = {user[1]} />
                                </div>
                             )
