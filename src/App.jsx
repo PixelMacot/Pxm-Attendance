@@ -27,7 +27,7 @@ import HomePageLoader from './components/loader/HomePageLoader';
 
 function App() {
 
-  const { currentUser, userverified, userDataLoading } = useContext(AuthContext)
+  const { currentUser, userverified, userDataLoading,userData } = useContext(AuthContext)
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
   }
@@ -40,6 +40,13 @@ function App() {
       } else {
         return <Navigate to="/notverified" />;
       }
+    }
+  };
+  const AdminProtectedRoute = ({ children }) => {
+    if(userData.prevelege=="admin"){
+      return children
+    }else{
+      return <Navigate to="/" />;
     }
   };
 
@@ -73,7 +80,9 @@ function App() {
             <div className="">
              
               <ProtectedRoute>
+                <AdminProtectedRoute>
                 <Outlet />
+                </AdminProtectedRoute>             
               </ProtectedRoute>
             </div>
           </div>

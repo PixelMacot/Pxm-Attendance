@@ -11,13 +11,14 @@ export const AuthContextProvider = ({ children }) => {
   const [userDataLoading, setUserDataLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
   const [userverified, setUserVerified] = useState(false)
-  const [emailSent,setEmailSent] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
   const [userData, setUserData] = useState({
     "username": "user",
     "position": "Web Developer",
     "skills": "Html Css ,Javascript,Webflow",
     "profileimg": "/boyavatar.png",
     "backgroundimg": "/profilebg.jpg",
+    "prevelege": "employee",
     "dummyData": true
   })
 
@@ -25,8 +26,8 @@ export const AuthContextProvider = ({ children }) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        getUserProfileData(user) 
-        setUserDataLoading(false)     
+        getUserProfileData(user)
+        setUserDataLoading(false)
         if (user.emailVerified) {
           setUserDataLoading(false)
           setUserVerified(true)
@@ -85,7 +86,7 @@ export const AuthContextProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{emailSent,userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
+    <AuthContext.Provider value={{ emailSent, userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
       {children}
     </AuthContext.Provider>
   );
