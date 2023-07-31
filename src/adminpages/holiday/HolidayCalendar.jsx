@@ -53,7 +53,7 @@ const HolidayCalendar = () => {
   };
 
   return (
-    <div className='py-10 flex flex-col justify-center items-center gap-10'>
+    <div className='border shadow-md w-fit mx-auto rounded-md  p-10 py-10 flex flex-col md:flex-row justify-center items-center md:items-start gap-10'>
       <label htmlFor='holidaycsvfile'>
         <img src='/uploadfile.png'
           className='w-[60%] mx-auto'
@@ -83,8 +83,8 @@ const HolidayCalendar = () => {
 
           {holidaysData.map((item, index) => {
             return (
-              <tr key={index}>
-                <td>{item.date}</td>
+              <tr key={index} >
+                <td >{item.date}</td>
                 <td>{item.name}</td>
               </tr>
             );

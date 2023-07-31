@@ -27,7 +27,7 @@ import HomePageLoader from './components/loader/HomePageLoader';
 
 function App() {
 
-  const { currentUser, userverified, userDataLoading,userData } = useContext(AuthContext)
+  const { currentUser, userverified, userDataLoading, userData } = useContext(AuthContext)
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
   }
@@ -43,9 +43,9 @@ function App() {
     }
   };
   const AdminProtectedRoute = ({ children }) => {
-    if(userData.prevelege=="admin"){
+    if (userData.prevelege == "admin") {
       return children
-    }else{
+    } else {
       return <Navigate to="/" />;
     }
   };
@@ -70,19 +70,18 @@ function App() {
   const AdminLayout = () => {
     return (
       <div className="">
-         <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
+        <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
         <Navbar />
-        <div className="flex flec-col justify-center">
+        <div className="flex w-[100vw]">
           <div className="">
             <div className="">
               <Sidebar />
             </div>
             <div className="">
-             
               <ProtectedRoute>
                 <AdminProtectedRoute>
-                <Outlet />
-                </AdminProtectedRoute>             
+                  <Outlet />
+                </AdminProtectedRoute>
               </ProtectedRoute>
             </div>
           </div>
@@ -124,7 +123,7 @@ function App() {
           path: "/apptest",
           element: <Test />,
         },
-      
+
         {
           path: "/attendancedashboard",
           element: <AttendanceDashboard />,

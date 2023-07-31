@@ -84,10 +84,8 @@ const AdminHome = () => {
 
   return (
     <div className="">
-      <div className="">
-        Admin Home
-      </div>
-      <div className="">
+    
+      <div className="w-[95vw] mx-auto shadow-md rounded-md">
         <table>
           <tr>
             <th>Name</th>
@@ -103,7 +101,9 @@ const AdminHome = () => {
                   <tr key={index}>
                     <td>{user[1].username}</td>
                     <td className='hidden md:flex'>{user[1].position}</td>
-                    <td><Link to={`/admin/employee/${user[1].uid}`}>View</Link></td>
+                    <td><Link to={`/admin/employee/${user[1].uid}`}
+                    className='text-cyan-800 font-bold'
+                    >View</Link></td>
                   </tr>
                 )
               })
