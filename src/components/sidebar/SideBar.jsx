@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
-    <div className="md:w-[100vw] px-10 my-5  border border-gray-200 bg-white border-r-2 text-black  flex  gap-10  items-center py-4">
+    <div className="md:w-[98vw] px-10 my-5  border border-gray-200 bg-white border-r-2 text-black  flex  gap-10  items-center py-4">
       <div className="mb-4">
         <Link to="/admin" className="text-black">
           <FaHome size={24} />
