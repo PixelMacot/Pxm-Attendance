@@ -12,7 +12,7 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
     const { currentUser, userData } = useContext(AuthContext)
-    const { getAttendanceData, datesLoader, markdate, attendance} = useContext(CalendarContext)
+    const { getAttendanceData, datesLoader, markdate, attendance } = useContext(CalendarContext)
     const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
 
 
@@ -35,16 +35,22 @@ const AttendanceDashboard = () => {
                         <div className="profile-wrapper py-5">
                             <Profile userData={userData} />
                         </div>
-                        <div className="markattendance-btn px-5 pb-5">
-                            <MarkAttendance />
-                        </div>
+                        {
+                            userData.dummyData ? (
+                                <div className=""></div>
+                            ) : (
+                                <div className="markattendance-btn px-5 pb-5">
+                                    <MarkAttendance />
+                                </div>
+                            )
+                        }
                     </div>
                     {
                         loader ? (
                             <div>Loading...</div>
-                        ): (
+                        ) : (
                             <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
-                               <div className="calendarapp w-fit p-2 border border-gray-200 ">
+                                <div className="calendarapp w-fit p-2 border border-gray-200 ">
                                     <ErrorBoundary fallback={<div>Something went wrong</div>}>
                                         <CalendarComponent />
                                     </ErrorBoundary>

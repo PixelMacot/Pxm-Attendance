@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
+import { Link } from 'react-router-dom';
 
 
 const Profile = ({ userData }) => {
@@ -15,7 +16,7 @@ const Profile = ({ userData }) => {
                     className={`bg-[url('${userData.backgroundimg}')] h-[100px] md:h-[200px] w-full bg-cover rounded-t-md`}>
                 </div>
                 <div className="p-5">
-                   <div className="flex flex-col  gap-10">
+                    <div className="flex flex-col  gap-10">
                         <div className="avatar border-[3px] border-white w-[120px] h-[130px] md:w-[170px] md:h-[180px] rounded-full  -mt-36 lg:-mt-44">
                             <Avatar
                                 alt={userData.username}
@@ -35,6 +36,13 @@ const Profile = ({ userData }) => {
                                 <AiFillSetting />
                                 <span>{userData.skills ? userData.skills : "Html Css"}</span>
                             </div>
+                            {
+                                userData.dummyData && (
+                                    <div className="text-cyan-700 font-bold">
+                                        <Link to="/profile"> Update your profile</Link>
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
