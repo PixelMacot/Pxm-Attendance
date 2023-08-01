@@ -86,6 +86,26 @@ const Attendance = () => {
     getAttendanceData(id)
   }
 
+  const calculateWorkingHours = (timePoint1 = "10-10-10", timePoint2 = "10-10-10") => {
+    if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
+      timePoint2 = timePoint1
+    }
+    
+    const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
+    const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
+
+    const totalSeconds1 = hours1 * 3600 + minutes1 * 60 + seconds1;
+    const totalSeconds2 = hours2 * 3600 + minutes2 * 60 + seconds2;
+
+    let difference = totalSeconds2 - totalSeconds1;
+
+    const hours = Math.floor(difference / 3600);
+    difference %= 3600;
+    const minutes = Math.floor(difference / 60);
+    const seconds = difference % 60;
+
+    return `${hours} hours, ${minutes} minutes`;
+  };
 
   //Attendance
   let rows = []
@@ -101,36 +121,14 @@ const Attendance = () => {
         rows.push({
           id: index,
           date: attn[key].markdate,
-          workinghours: calculateWorkingTime(attn[key].entry, attn[key].exit)
+          workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit)
         })
       }
       // console.log()
     });
   }
-  // console.log()
-  function calculateWorkingTime(arrivalDateStr = "17-01-47", departureDateStr = "17-01-47") {
-    if (arrivalDateStr != "17-01-47" && departureDateStr == "17-01-47") {
-      departureDateStr = arrivalDateStr
-    }
-    // console.log(arrivalDateStr, departureDateStr)
-    // Parse the date strings and create Date objects
-    const arrivalDateParts = arrivalDateStr.split('-');
-    const departureDateParts = departureDateStr.split('-');
-    // console.log(arrivalDateParts, departureDateParts)
-    const hours = departureDateParts[0] - arrivalDateParts[0]
-    const minute = departureDateParts[1] - arrivalDateParts[1]
-    const workingHours = `${hours} hours ${minute} minutes`
-    let hoursInMinutes = hours * 60
-    let totalMinutes = hoursInMinutes + minute
-    // const date = moment().add(totalMinutes, 'minutes').format('HH-mm-ss');
-    console.log(totalMinutes)
-    return workingHours;
-  }
 
-  const arrivalDateStr = "17-01-47";
-  const departureDateStr = "17-08-47";
-  const totalWorkingTime = calculateWorkingTime(arrivalDateStr, departureDateStr);
-  console.log(`Total working time: ${totalWorkingTime} `);
+
   return (
     <div className="min-h-[100vh]">
       <div className="flex flex-col gap-10 md:flex-row justify-center">
@@ -180,4 +178,4 @@ const Attendance = () => {
   )
 }
 
-export default  Attendance
+export default Attendance
