@@ -23,7 +23,7 @@ import Notes from './adminpages/Notes/Notes';
 import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
-
+import { ErrorBoundary } from "react-error-boundary";
 function App() {
 
   const { currentUser, userDataLoading, userData } = useContext(AuthContext)
@@ -58,9 +58,11 @@ function App() {
           <div className="">
           </div>
           <div className="">
-            <ProtectedRoute>
-              <Outlet />
-            </ProtectedRoute>
+            <ErrorBoundary fallback={<div>Something went wrong</div>}>
+              <ProtectedRoute>
+                <Outlet />
+              </ProtectedRoute>
+            </ErrorBoundary>
           </div>
         </div>
         <Footer />
@@ -78,11 +80,13 @@ function App() {
               <Sidebar />
             </div>
             <div className="">
-              <ProtectedRoute>
-                <AdminProtectedRoute>
-                  <Outlet />
-                </AdminProtectedRoute>
-              </ProtectedRoute>
+              <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                <ProtectedRoute>
+                  <AdminProtectedRoute>
+                    <Outlet />
+                  </AdminProtectedRoute>
+                </ProtectedRoute>
+              </ErrorBoundary>
             </div>
           </div>
         </div>

@@ -180,4 +180,4 @@ const Attendance = () => {
   )
 }
 
-export default Attendance
+export default  Attendance
