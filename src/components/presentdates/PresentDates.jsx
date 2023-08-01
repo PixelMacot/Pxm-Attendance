@@ -16,6 +16,17 @@ const columns = [
     headerName: 'Working Hours',
     width: 200
   },
+  ,
+  {
+    field: 'entry',
+    headerName: 'Entry',
+    width: 200
+  },
+  {
+    field: 'exit',
+    headerName: 'Exit',
+    width: 200
+  },
 ];
 function CustomToolbar() {
   return (
@@ -32,8 +43,8 @@ const PresentDates = ({ arr }) => {
   if (!attendance) {
     return <div>Not Attendance Data Found</div>
   }
- 
-  
+
+
   const calculateWorkingHours = (timePoint1 = "10-10-10", timePoint2 = "10-10-10") => {
     if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
       timePoint2 = timePoint1
@@ -73,7 +84,9 @@ const PresentDates = ({ arr }) => {
       rows.push({
         id: index,
         date: attn[key].markdate,
-        workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit)
+        workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
+        entry: attn[key].entry,
+        exit: attn[key].exit,
       })
     }
 
@@ -88,7 +101,7 @@ const PresentDates = ({ arr }) => {
   console.log(`Total  time: ${totalWorkingTime} `);
 
   return (
-    <div>
+    <div className='w-full'>
 
       <DataGrid
         rows={rows}

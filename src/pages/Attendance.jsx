@@ -21,6 +21,16 @@ const columns = [
     headerName: 'Working Hours',
     width: 200
   },
+  {
+    field: 'entry',
+    headerName: 'Entry',
+    width: 200
+  },
+  {
+    field: 'exit',
+    headerName: 'Exit',
+    width: 200
+  },
 ];
 
 
@@ -38,7 +48,7 @@ const Attendance = () => {
   console.log(id)
   //send user to login page when user not logged in
   const [attendance, setAttendance] = useState()
-  const [markdate, setMarkDate] = useState()
+  const [currentdate, setcurrentDate] = useState(7)
   const [userData, setUserData] = useState({})
   const [viewattendance, setViewAttendance] = useState(false)
   const navigate = useNavigate();
@@ -48,6 +58,12 @@ const Attendance = () => {
     getUserProfileData(id)
   }, [])
 
+  const prevmonth = () => {
+    setcurrentDate(currentdate - 1)
+  }
+  const nextmonth = () => {
+    setcurrentDate(currentdate + 1)
+  }
 
   const getUserProfileData = async (id) => {
     // console.log("getattendance data function called", user.uid)
@@ -90,7 +106,7 @@ const Attendance = () => {
     if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
       timePoint2 = timePoint1
     }
-    
+
     const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
     const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
 
@@ -108,8 +124,10 @@ const Attendance = () => {
   };
 
   //Attendance
+  let months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
   let rows = []
-  let currentMonth = "17-08-2023"
+  let currentMonth = `17-${months[currentdate]}-2023`
+  console.log("currentMont", currentMonth)
   let currentDate = currentMonth.slice(3, 10)
   if (attendance) {
     let attn = attendance
@@ -121,7 +139,9 @@ const Attendance = () => {
         rows.push({
           id: index,
           date: attn[key].markdate,
-          workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit)
+          workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
+          entry: attn[key].entry,
+          exit: attn[key].exit,
         })
       }
       // console.log()
@@ -131,23 +151,31 @@ const Attendance = () => {
 
   return (
     <div className="min-h-[100vh]">
-      <div className="flex flex-col gap-10 md:flex-row justify-center">
+      <div className="flex flex-col gap-10 justify-center items-center w-[90vw]">
         {
           userData && (
-            <div className="border shadow-md rounded-md w-[100%] md:w-[45%]">
+            <div className="border shadow-md rounded-md min-w-[100%] ">
               <Profile userData={userData} />
             </div>
           )
         }
-        <div className="flex flex-col gap-10 w-[100%] md:w-[45%]">
+        <div className="flex flex-col gap-10 ">
           <div className="load-btn">
             <button
               onClick={reloadCalendar}
               className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
             >Load Data</button>
           </div>
+          <div className="flex gap-5">
+            <button
+              onClick={prevmonth}
+              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Prev</button>
 
-          <div>
+            <button
+              onClick={nextmonth}
+              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Next</button>
+          </div>
+          <div className='max-w-[90vw]'>
             <DataGrid
               rows={rows}
               columns={columns}

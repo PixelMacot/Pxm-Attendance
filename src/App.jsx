@@ -74,12 +74,12 @@ function App() {
       <div className="">
         <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
         <Navbar />
-        <div className="flex md:w-[98vw] w-[95vw] min-h-[70vh] justify-center mx-auto">
-          <div className="flex flex-col justify-center ">
-            <div className="">
+        <div className="flex  min-h-[70vh] justify-center mx-auto">
+          <div className="flex max-w-[95vw] lg:max-w-[100vw] mx-auto flex-col justify-center ">
+            <div className="min-w-[100%]">
               <Sidebar />
             </div>
-            <div className="">
+            <div className="min-w-[100%]">
               <ErrorBoundary fallback={<div>Something went wrong</div>}>
                 <ProtectedRoute>
                   <AdminProtectedRoute>
