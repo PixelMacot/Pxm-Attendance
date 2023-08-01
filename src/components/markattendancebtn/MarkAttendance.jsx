@@ -170,7 +170,6 @@ const MarkAttendance = () => {
                 await setDoc(doc(db, "attendance", userData.uid), docExitData);
 
             }
-            getAttendanceData(userData.uid)
         } catch (err) {
             console.error("Error adding document: ", err);
             setErr("Some error occured try again")
