@@ -17,7 +17,7 @@ export const LocationContextProvider = ({ children }) => {
   // let targetLongitude =   77.2308;
  
   // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
-  const geofenceRadius = 20;
+  const geofenceRadius = 50;
 
   // Function to handle successful retrieval of user's location
   const successHandler = (position) => {
