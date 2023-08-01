@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, setDoc, getDoc, getDocs, updateDoc, collection } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
 import { auth } from '../firebase';
 import Profile from '../components/profile/Profile';
 import CalendarApp from '../components/calenda/CalendarApp';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import moment from 'moment';
 
@@ -50,6 +50,8 @@ const Attendance = () => {
   const [attendance, setAttendance] = useState()
   const [currentdate, setcurrentDate] = useState(7)
   const [userData, setUserData] = useState({})
+  const [err, setErr] = useState()
+  const [msg, setMsg] = useState()
   const [viewattendance, setViewAttendance] = useState(false)
   const navigate = useNavigate();
   //function to post profile data into cloud firestore
@@ -89,7 +91,6 @@ const Attendance = () => {
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
         setAttendance(docSnap.data())
-        markdatefunction()
       } else {
         console.log("No such document!");
       }
@@ -149,6 +150,75 @@ const Attendance = () => {
   }
 
 
+  //function to post attendance data into cloud firestore
+  const markAttendance = async (e, type) => {
+    e.preventDefault()
+    console.log(userData)
+    let newDate = new Date()
+    let arrivalDate = moment(newDate).format("DD-MM-YYYY")
+    // let arrivalDate = "14-06-2023"
+    console.log(arrivalDate)
+    try {
+      let docExitData = {
+        [arrivalDate]: {
+          name: userData.username,
+          markdate: arrivalDate,
+          arrivalDate: Timestamp.fromDate(new Date()),
+          entry: moment(newDate).format("HH-mm-ss"),
+        }
+      };
+      // console.log("datatobeinserted", docData)
+      const docRef = doc(db, "attendance", userData.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // console.log("Document data:", docSnap.data());
+        if (type==="exit") {
+          let entry = docSnap.data()[moment(newDate).format("DD-MM-YYYY")].entry
+          docExitData = {
+            [arrivalDate]: {
+              name: userData.username,
+              markdate: arrivalDate,
+              arrivalDate: Timestamp.fromDate(new Date()),
+              entry: entry,
+              exit: moment(newDate).format("HH-mm-ss"),
+            }
+          }
+        } else {
+          docExitData = {
+            [arrivalDate]: {
+              name: userData.username,
+              markdate: arrivalDate,
+              arrivalDate: Timestamp.fromDate(new Date()),
+              entry: moment(newDate).format("HH-mm-ss"),
+            }
+          }
+        }
+        console.log(docExitData)
+
+        updateDoc(doc(db, "attendance", userData.uid), docExitData).then(() => {
+          console.log('Data successfully updated in Firestore!');
+          if (type === "entry") {
+
+            setMsg("entry successfully updated")
+          } else {
+            setMsg("exit is successfully updated")
+
+          }
+        }).catch((error) => {
+          console.error('Error updating data in Firestore:', error);
+        });
+
+      } else {
+        await setDoc(doc(db, "attendance", userData.uid), docExitData);
+      }
+    } catch (err) {
+      console.error("Error adding document: ", err);
+      setErr("Some error occured try again")
+    }
+
+  }
+
   return (
     <div className="min-h-[100vh]">
       <div className="flex flex-col gap-10 justify-center items-center w-[90vw]">
@@ -160,11 +230,31 @@ const Attendance = () => {
           )
         }
         <div className="flex flex-col gap-10 ">
-          <div className="load-btn">
+          {
+            err && (
+              <p className="text-red-500">{err}</p>
+            )
+          }
+          {
+            msg && (
+              <p className="text-green-700 font-bold">{msg}</p>
+            )
+          }
+          <div className="flex gap-4">
+            <div className="load-btn">
+              <button
+                onClick={reloadCalendar}
+                className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+              >Load Data</button>
+            </div>
             <button
-              onClick={reloadCalendar}
+              onClick={(e) => markAttendance(e, "entry")}
               className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-            >Load Data</button>
+            >Update Entry</button>
+            <button
+              onClick={(e) => markAttendance(e, "exit")}
+              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+            >Update Exit</button>
           </div>
           <div className="flex gap-5">
             <button

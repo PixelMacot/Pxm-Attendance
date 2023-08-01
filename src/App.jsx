@@ -24,6 +24,7 @@ import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
 import { ErrorBoundary } from "react-error-boundary";
+import UpdateEmpData from './adminpages/empoyeeupdate/UpdateEmpData';
 function App() {
 
   const { currentUser, userDataLoading, userData } = useContext(AuthContext)
@@ -172,6 +173,10 @@ function App() {
         {
           path: "/admin/employee/:id",
           element: < Attendance />,
+        },
+        {
+          path: "/admin/update/employee/:id",
+          element: < UpdateEmpData />,
         },
         {
           path: "/admin/projects",

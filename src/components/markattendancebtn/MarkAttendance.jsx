@@ -148,38 +148,36 @@ const MarkAttendance = () => {
 
                 updateDoc(doc(db, "attendance", userData.uid), docExitData).then(() => {
                     console.log('Data successfully updated in Firestore!');
-                    if (type === "entry") {
+                    if (type == "entry") {
+                        setMsg("Welcome to office")
                         setDisableBtn({
                             entry: true,
                             exit: false
                         })
-                        setMsg("Welcome to office")
                     } else {
                         setMsg("your exit is successfully updated")
+                        console.log("disable exit")
                         setDisableBtn({
                             entry: true,
                             exit: true
-                        })                       
+                        })
+                        console.log("disable btn", disablebtn)
                     }
                 }).catch((error) => {
                     console.error('Error updating data in Firestore:', error);
                 });
-
-
-
             } else {
                 await setDoc(doc(db, "attendance", userData.uid), docExitData);
 
             }
             getAttendanceData(userData.uid)
-            btnshow()
         } catch (err) {
             console.error("Error adding document: ", err);
             setErr("Some error occured try again")
         }
 
     }
-    console.log("disable btn", disablebtn)
+
     return (
         <div className="markattendance">
             <div className="maincontainer">
