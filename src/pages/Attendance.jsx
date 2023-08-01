@@ -8,7 +8,7 @@ import Profile from '../components/profile/Profile';
 import CalendarApp from '../components/calenda/CalendarApp';
 import { useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-
+import moment from 'moment';
 
 const columns = [
   {
@@ -119,9 +119,12 @@ const Attendance = () => {
     const departureDateParts = departureDateStr.split('-');
     // console.log(arrivalDateParts, departureDateParts)
     const hours = departureDateParts[0] - arrivalDateParts[0]
-    const minute = departureDateParts[1] > arrivalDateParts[1] ? departureDateParts[1] - arrivalDateParts[1] : arrivalDateParts[1] - departureDateParts[1]
+    const minute = departureDateParts[1] - arrivalDateParts[1]
     const workingHours = `${hours} hours ${minute} minutes`
-
+    let hoursInMinutes = hours * 60
+    let totalMinutes = hoursInMinutes + minute
+    // const date = moment().add(totalMinutes, 'minutes').format('HH-mm-ss');
+    console.log(totalMinutes)
     return workingHours;
   }
 

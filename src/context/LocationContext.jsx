@@ -10,11 +10,11 @@ export const LocationContextProvider = ({ children }) => {
   const [lat, setLat] = useState()
   const [lon, setLon] = useState()
   // Replace these with the latitude and longitude of your target location
-  // const targetLatitude = 28.6292;
-  // const targetLongitude = 77.3840;
+  const targetLatitude = 28.6292;
+  const targetLongitude = 77.3840;
   
-  const targetLatitude = 28.6359;
-  const targetLongitude =   77.2308;
+  // let targetLatitude = 28.6359;
+  // let targetLongitude =   77.2308;
  
   // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
   const geofenceRadius = 20;
@@ -22,6 +22,8 @@ export const LocationContextProvider = ({ children }) => {
   // Function to handle successful retrieval of user's location
   const successHandler = (position) => {
     const { latitude, longitude } = position.coords;
+    // targetLatitude = latitude
+    // targetLongitude = longitude
     const distanceToTarget = getDistanceFromLatLonInMeters(
       latitude,
       longitude,

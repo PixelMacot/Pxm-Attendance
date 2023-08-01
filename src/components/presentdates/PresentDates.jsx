@@ -3,6 +3,7 @@ import { CalendarContext } from '../../context/CalendarContext'
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import './presentdates.scss'
+import moment from 'moment';
 
 const columns = [
   {
@@ -68,7 +69,7 @@ const PresentDates = ({ arr }) => {
     const departureDateParts = departureDateStr.split('-');
     // console.log(arrivalDateParts, departureDateParts)
     const hours = departureDateParts[0] - arrivalDateParts[0]
-    const minute = departureDateParts[1] > arrivalDateParts[1] ? departureDateParts[1] - arrivalDateParts[1] : arrivalDateParts[1] - departureDateParts[1]
+    const minute = departureDateParts[1] - arrivalDateParts[1]
     const workingHours = `${hours} hours ${minute} minutes`
 
     return workingHours;

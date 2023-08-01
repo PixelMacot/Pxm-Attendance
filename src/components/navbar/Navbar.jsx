@@ -109,14 +109,6 @@ const Navbar = () => {
                   "link": "/team",
                   "icon": AiOutlineFileProtect
                 },
-                {
-                  "title": "Test",
-                  "link": "/apptest",
-                  "icon": AiOutlineFileProtect
-                },
-
-
-
               ].map((item) => (
                 <li key={item.title} className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
 
@@ -133,13 +125,13 @@ const Navbar = () => {
               userData.prevelege == "admin" && (
                 <li className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
                   <Link to="/admin"
-                  className='flex gap-2 items-center'
-                    >
-                  <AiOutlineFileProtect />
-                  Admin
-                </Link>
+                    className='flex gap-2 items-center'
+                  >
+                    <AiOutlineFileProtect />
+                    Admin
+                  </Link>
                 </li>
-                      )
+              )
 
             }
             {
