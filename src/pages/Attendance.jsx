@@ -89,7 +89,7 @@ const Attendance = () => {
 
   //Attendance
   let rows = []
-  let currentMonth = "17-07-2023"
+  let currentMonth = "17-08-2023"
   let currentDate = currentMonth.slice(3, 10)
   if (attendance) {
     let attn = attendance
