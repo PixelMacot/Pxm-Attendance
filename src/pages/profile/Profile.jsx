@@ -207,7 +207,7 @@ const Profile = () => {
                             {/* //image upload functionality */}
                             <div className='cursor-pointer'>
                                 <label for="profileimage" className='hover:cursor-pointer'>
-                                    <div className="avatar border-[3px] border-white w-[120px] h-[130px] md:w-[170px] md:h-[180px] rounded-full  -mt-20 md:-mt-24">
+                                    <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-20 md:-mt-24">
                                         <Avatar
                                             alt={userData.displayName}
                                             src={formData.profileimg ? formData.profileimg : '/boyavatar.png'}
