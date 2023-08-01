@@ -7,7 +7,7 @@ export const CalendarContext = createContext();
 
 export const CalendarContextProvider = ({ children }) => {
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
-  const [attendance, setAttendance] = useState()
+  const [attendance, setAttendance] = useState(false)
   const [markdate, setMarkDate] = useState()
   const [datesLoader,setDatesLoader] = useState(true)
   const [currentMonthPresentDays, setCurrentMonthPresentDays] = useState()
@@ -20,6 +20,7 @@ export const CalendarContextProvider = ({ children }) => {
         console.log("Document data:", docSnap.data());
         setAttendance(docSnap.data())
         convertDataToJSON(docSnap.data())
+        setDatesLoader(false)
       } else {
         console.log("No such document!");
         setDatesLoader(false)

@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
     "username": "user",
     "position": "Web Developer",
     "skills": "Html Css ,Javascript,Webflow",
-    "profileimg": "/boyavatar.png",
+    "profileimg": "/avatar.png",
     "backgroundimg": "/profilebg.jpg",
     "prevelege": "employee",
     "dummyData": true

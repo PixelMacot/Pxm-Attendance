@@ -38,8 +38,6 @@ const AttendanceDashboard = () => {
         }
     }
 
-    
-
 
     return (
         <div className="AttendanceDashboard pb-5">
@@ -81,7 +79,10 @@ const AttendanceDashboard = () => {
                         )
                     }
                     <div className="attendancedashboard-map shadow-md rounded-md w-[90%] mx-auto">
-                        <MapStructure />
+
+                        <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                            <MapStructure />
+                        </ErrorBoundary>
                     </div>
 
                 </div>

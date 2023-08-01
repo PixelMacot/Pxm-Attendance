@@ -10,31 +10,60 @@ import './markattendance.scss'
 
 
 const MarkAttendance = () => {
+    const [err, setErr] = useState()
+    const [msg, setMsg] = useState()
     const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))
     const [showattendancebtn, setShowAttendancebtn] = useState(true)
     const [btnerr, setBtnErr] = useState()
     const [showexit, setShowExit] = useState(true)
+    const [disablebtn, setDisableBtn] = useState({
+        entry: false,
+        exit: false
+    })
     const { currentUser, userData } = useContext(AuthContext)
     const { getAttendanceData, markdate, attendance, markdatefunction } = useContext(CalendarContext)
     const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
     console.log(lat, lon)
 
-
     console.log("markrenderr")
     useEffect(() => {
         // setShowAttendancebtn(show)  
         return () => {
-            if (!isUserInsideGeofence) {
-                setBtnErr("You are not at office please visit office to mark attendance")
-                setShowAttendancebtn(false)
-                setShowExit(false)
-            } else {
-                if (markdate) {
-                    checkCurrentDayPresent()
-                }
-            }
+            btnshow()
         };
     }, [markdate])
+
+    const btnshow = () => {
+        if (!isUserInsideGeofence) {
+            setBtnErr("You are not at office please visit office to mark attendance")
+            setDisableBtn({
+                entry: false,
+                exit: false
+            })
+        } else {
+            let entry = attendance.hasOwnProperty(moment(new Date).format("DD-MM-YYYY"))
+            if (attendance) {
+                if (entry) {
+                    let exitdata = attendance[moment(new Date).format("DD-MM-YYYY")].hasOwnProperty("exit")
+                    if (exitdata) {
+                        setDisableBtn({
+                            entry: true,
+                            exit: true
+                        })
+                        setMsg("Your office day is completed")
+                    } else {
+                        setDisableBtn({
+                            entry: true,
+                            exit: false
+                        })
+                    }
+                }
+            }
+            // if (markdate) {
+            //     checkCurrentDayPresent()
+            // }
+        }
+    }
 
     const checkCurrentDayPresent = () => {
         console.log(attendance)
@@ -67,7 +96,7 @@ const MarkAttendance = () => {
 
         }
     }
- 
+
     //function to post attendance data into cloud firestore
     const markAttendance = async (e, type) => {
         e.preventDefault()
@@ -104,7 +133,7 @@ const MarkAttendance = () => {
                             exit: moment(newDate).format("HH-mm-ss"),
                         }
                     }
-                    setShowAttendancebtn(false)
+
                 } else {
                     docExitData = {
                         [arrivalDate]: {
@@ -115,49 +144,81 @@ const MarkAttendance = () => {
                         }
                     }
                 }
-                await updateDoc(doc(db, "attendance", userData.uid), docExitData);
-                // console.log("Document written with ID: ", userData.uid);
-                setShowExit(false)
-                getAttendanceData(userData.uid)
+                console.log(docExitData)
+
+                updateDoc(doc(db, "attendance", userData.uid), docExitData).then(() => {
+                    console.log('Data successfully updated in Firestore!');
+                    if (type === "entry") {
+                        setDisableBtn({
+                            entry: true,
+                            exit: false
+                        })
+                        setMsg("Welcome to office")
+                    } else {
+                        setMsg("your exit is successfully updated")
+                        setDisableBtn({
+                            entry: true,
+                            exit: true
+                        })                       
+                    }
+                }).catch((error) => {
+                    console.error('Error updating data in Firestore:', error);
+                });
+
+
+
             } else {
                 await setDoc(doc(db, "attendance", userData.uid), docExitData);
-                // console.log("Document written with ID: ", userData.uid);
-                getAttendanceData(userData.uid)
-            }
 
+            }
+            getAttendanceData(userData.uid)
+            btnshow()
         } catch (err) {
             console.error("Error adding document: ", err);
+            setErr("Some error occured try again")
         }
 
     }
-
+    console.log("disable btn", disablebtn)
     return (
         <div className="markattendance">
             <div className="maincontainer">
                 <div className="markattendance-wrapper">
 
-                    <div className="markattendance-buttons">
+                    <div className="markattendance-buttons flex flex-col">
                         {
                             btnerr && (
                                 <p>{btnerr}</p>
                             )
                         }
                         {
-                            showattendancebtn && (
-                                <button
-                                    onClick={(e) => markAttendance(e, "entry")}
-                                    className='markattendance-btn'
-                                >Entry</button>
+                            err && (
+                                <p className="text-red-500">{err}</p>
                             )
                         }
                         {
-                            showexit && (
-                                <button
-                                    onClick={(e) => markAttendance(e, "entry")}
-                                    className='markattendance-btn'
-                                >Exit</button>
+                            msg && (
+                                <p className="text-green-700 font-bold">{msg}</p>
                             )
                         }
+                        <div className="flex flex-row gap-4">
+                            {
+                                !disablebtn.entry && (
+                                    <button
+                                        onClick={(e) => markAttendance(e, "entry")}
+                                        className='markattendance-btn'
+                                    >Entry</button>
+                                )
+                            }
+                            {
+                                !disablebtn.exit && (
+                                    <button
+                                        onClick={(e) => markAttendance(e, "exit")}
+                                        className='markattendance-btn'
+                                    >Exit</button>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

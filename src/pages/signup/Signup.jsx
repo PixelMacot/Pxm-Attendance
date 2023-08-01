@@ -15,7 +15,7 @@ const Signup = () => {
     // progress
     const [percent, setPercent] = useState(0);
     // Handles input change event and updates state
-    const [photourl, setPhotoUrl] = useState("/boyavatar.png")
+    const [photourl, setPhotoUrl] = useState("/avatar.png")
     const [name, setName] = useState("")
     const [error, setError] = useState()
 

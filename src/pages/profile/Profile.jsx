@@ -10,6 +10,11 @@ import Loader from '../../components/loader/Loader';
 import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../context/AuthContext'
 
+const options = [
+    { value: "female", label: "Female" },
+    { value: "male", label: "Male" },
+];
+
 const Profile = () => {
     const navigate = useNavigate();
 
@@ -25,9 +30,11 @@ const Profile = () => {
             position: '',
             skills: '',
             backgroundimg: '/profilebg.jpg',
-            address: '', phoneno: ''
+            address: '',
+            phoneno: '',
+            gender: ''
         }
-       );
+    );
     const { currentUser, userData, getUserProfileData } = useContext(AuthContext)
 
     //send user to login page when user not logged in
@@ -53,13 +60,14 @@ const Profile = () => {
             address: formData.address,
             phoneno: formData.phoneno,
             backgroundimg: formData.backgroundimg,
+            gender: formData.gender,
             prevelege: "employee"
         }
         console.log(docdta)
         try {
             const docRef = doc(db, "users", currentUser.uid);
             const docSnap = await getDoc(docRef);
-           
+
             if (docSnap.exists()) {
                 await updateDoc(doc(db, "users", currentUser.uid),
                     {
@@ -71,6 +79,7 @@ const Profile = () => {
                         address: formData.address,
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
+                        gender: formData.gender,
                         prevelege: "employee"
                     }
                 );
@@ -86,6 +95,7 @@ const Profile = () => {
                         address: formData.address,
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
+                        gender: formData.gender,
                         prevelege: "employee"
                     }
                 );
@@ -297,6 +307,17 @@ const Profile = () => {
                                 maxLength="32"
                                 value={formData.phoneno}
                             />
+                            <select id="gender"
+                                name="gender"
+                                value={formData.gender}
+                                required
+                                className='border p-2 rounded-md'
+                                onChange={handleChangeInput}
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+
+                            </select>
                             <button
                                 // onClick={updateProfileDetails}
                                 className='bg-[#ff445a] px-5 py-2 w-fit mx-auto rounded-md text-white'>Update Profile</button>
