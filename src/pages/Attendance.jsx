@@ -104,7 +104,6 @@ const Attendance = () => {
           workinghours: calculateWorkingTime(attn[key].entry, attn[key].exit)
         })
       }
-
       // console.log()
     });
   }

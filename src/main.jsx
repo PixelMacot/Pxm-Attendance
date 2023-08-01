@@ -8,9 +8,11 @@ import { AuthContextProvider } from "./context/AuthContext";
 import { CalendarContextProvider } from "./context/CalendarContext";
 import { LocationContextProvider } from "./context/LocationContext";
 import { HolidaysContextProvider } from "./context/HolidaysContext";
-
+import { ErrorBoundary } from "react-error-boundary";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+
+<ErrorBoundary fallback={<div>Something went wrong</div>}>
 
   <AuthContextProvider>
     <CalendarContextProvider>
@@ -28,5 +30,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </CalendarContextProvider>
   </AuthContextProvider>
 
-
+  </ErrorBoundary>
+  
 )
