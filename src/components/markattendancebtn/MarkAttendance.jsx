@@ -37,8 +37,8 @@ const MarkAttendance = () => {
         if (!isUserInsideGeofence) {
             setBtnErr("You are not at office please visit office to mark attendance")
             setDisableBtn({
-                entry: false,
-                exit: false
+                entry: true,
+                exit: true
             })
         } else {
             let entry = attendance.hasOwnProperty(moment(new Date).format("DD-MM-YYYY"))
@@ -176,7 +176,6 @@ const MarkAttendance = () => {
         }
 
     }
-
     return (
         <div className="markattendance">
             <div className="maincontainer">

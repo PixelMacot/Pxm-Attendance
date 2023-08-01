@@ -52,9 +52,19 @@ const Attendance = () => {
   const [userData, setUserData] = useState({})
   const [err, setErr] = useState()
   const [msg, setMsg] = useState()
+  const [userattendance, setUserAttendance] = useState({
+    date: '',
+    entry: '',
+    exit: ''
+  })
   const [viewattendance, setViewAttendance] = useState(false)
   const navigate = useNavigate();
   //function to post profile data into cloud firestore
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUserAttendance({ ...userattendance, [name]: value });
+    console.log(userattendance)
+  };
 
   useEffect(() => {
     getUserProfileData(id)
@@ -151,20 +161,20 @@ const Attendance = () => {
 
 
   //function to post attendance data into cloud firestore
-  const markAttendance = async (e, type) => {
+  const markAttendance = async () => {
     e.preventDefault()
     console.log(userData)
     let newDate = new Date()
     let arrivalDate = moment(newDate).format("DD-MM-YYYY")
     // let arrivalDate = "14-06-2023"
-    console.log(arrivalDate)
+    console.log(userattendance.date)
     try {
       let docExitData = {
-        [arrivalDate]: {
+        [userattendance.date]: {
           name: userData.username,
-          markdate: arrivalDate,
+          markdate: userattendance.date,
           arrivalDate: Timestamp.fromDate(new Date()),
-          entry: moment(newDate).format("HH-mm-ss"),
+          entry: userattendance.entry,
         }
       };
       // console.log("datatobeinserted", docData)
@@ -173,24 +183,24 @@ const Attendance = () => {
 
       if (docSnap.exists()) {
         // console.log("Document data:", docSnap.data());
-        if (type==="exit") {
+        if (type === "exit") {
           let entry = docSnap.data()[moment(newDate).format("DD-MM-YYYY")].entry
           docExitData = {
-            [arrivalDate]: {
+            [userattendance.date]: {
               name: userData.username,
-              markdate: arrivalDate,
+              markdate: userattendance.date,
               arrivalDate: Timestamp.fromDate(new Date()),
-              entry: entry,
-              exit: moment(newDate).format("HH-mm-ss"),
+              entry: userattendance.entry,
+              exit: userattendance.exit,
             }
           }
         } else {
           docExitData = {
-            [arrivalDate]: {
+            [userattendance.date]: {
               name: userData.username,
-              markdate: arrivalDate,
+              markdate: userattendance.date,
               arrivalDate: Timestamp.fromDate(new Date()),
-              entry: moment(newDate).format("HH-mm-ss"),
+              entry: userattendance.entry,
             }
           }
         }
@@ -240,6 +250,39 @@ const Attendance = () => {
               <p className="text-green-700 font-bold">{msg}</p>
             )
           }
+
+          <div className="updateData">
+          
+              <div className="flex gap-2 flex-col">
+                <label>Date</label>
+                <input type="date"
+                  name='date'
+                  className='border p-2 w-fit'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <div className="flex gap-2 flex-col">
+                <label>Entry Time</label>
+                <input type="time"
+                  name='entry'
+                  className='border p-2 w-fit'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <div className="flex gap-2 flex-col">
+                <label>Exit Time</label>
+                <input type="time"
+                  name='exit'
+                  className='border p-2 w-fit'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <button
+              onClick={markAttendance}
+              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+            >Update Attendance Data</button>
+            
+          </div>
           <div className="flex gap-4">
             <div className="load-btn">
               <button
@@ -247,14 +290,7 @@ const Attendance = () => {
                 className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
               >Load Data</button>
             </div>
-            <button
-              onClick={(e) => markAttendance(e, "entry")}
-              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-            >Update Entry</button>
-            <button
-              onClick={(e) => markAttendance(e, "exit")}
-              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-            >Update Exit</button>
+           
           </div>
           <div className="flex gap-5">
             <button
