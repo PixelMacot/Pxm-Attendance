@@ -265,7 +265,7 @@ const Attendance = () => {
               <label>Date</label>
               <input type="date"
                 name='date'
-                className='border p-2 w-fit'
+                className='border p-2 w-[180px]'
                 onChange={handleChangeInput}
               />
             </div>
@@ -273,7 +273,7 @@ const Attendance = () => {
               <label>Entry Time</label>
               <input type="time"
                 name='entry'
-                className='border p-2 w-fit'
+                className='border p-2 w-[180px]'
                 onChange={handleChangeInput}
               />
             </div>
@@ -281,7 +281,7 @@ const Attendance = () => {
               <label>Exit Time</label>
               <input type="time"
                 name='exit'
-                className='border p-2 w-fit'
+                className='border p-2  w-[180px]'
                 onChange={handleChangeInput}
               />
             </div>
