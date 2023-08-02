@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { CalendarContext } from '../../context/CalendarContext'
 import CalendarComponent from '../../components/calendar/Calendar'
 import { HolidaysContext } from '../../context/HolidaysContext'
+import Quotes from '../../components/quotes/Quotes';
 
 const Home = () => {
   const [loader, setLoader] = useState(true)
@@ -30,25 +31,32 @@ const Home = () => {
   }, []);
 
   return (
-    <section className='min-h-[100vh]'>
-      <div className="shadow-md w-[90%] mx-auto py-5 my-2">
-        <Profile userData={userData} />
-      </div>
-      <div className="shadow-md w-[90%] mx-auto my-5">
-        {
-          loader ? (
-            <div className="w-fit mx-auto">
-              <button
-                onClick={reload}
-                className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
-              >Reload Calendar</button>
+    <section className='home-wrapper'>
+      <div className="home-container">
+        <div className="shadow-md w-[90%] mx-auto py-5 my-2">
+          <Profile userData={userData} />
+        </div>
+        <div className="shadow-md w-[90%] mx-auto my-5">
+          {
+            loader && (
+              <div className="w-fit mx-auto">
+                <button
+                  onClick={reload}
+                  className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
+                >Reload Calendar</button>
+              </div>)
+          }
+          < div className="calendar-quotes-container flex flex-wrap gap-10 justify-center items-center">
+            {!loader && (<CalendarComponent />)}
+            <div className="w-[400px]">
+              <Quotes />
             </div>
-          ) : (
-            <CalendarComponent />
-          )
-        }
+          </div>
+        </div>
+        <div>
+        </div>
       </div>
-    </section>
+    </section >
   )
 }
 

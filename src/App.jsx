@@ -53,12 +53,12 @@ function App() {
 
   const Layout = () => {
     return (
-      <div className="">
+      <div className="main">
         <Navbar />
-        <div className="">
-          <div className="">
+        <div className="page-wrapper">
+          <div className="maincontainer">
           </div>
-          <div className="">
+          <div className="layout">
             <ErrorBoundary fallback={<div>Something went wrong</div>}>
               <ProtectedRoute>
                 <Outlet />
@@ -72,15 +72,15 @@ function App() {
   };
   const AdminLayout = () => {
     return (
-      <div className="">
-        <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div>
+      <div className="main">
+        {/* <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div> */}
         <Navbar />
-        <div className="flex  min-h-[70vh] justify-center mx-auto">
-          <div className="flex max-w-[95vw] lg:max-w-[100vw] mx-auto flex-col justify-center ">
-            <div className="min-w-[100%]">
+        <div className="page-wrapper">
+          <div className="main-container">
+            <div className="">
               <Sidebar />
             </div>
-            <div className="min-w-[100%]">
+            <div className="admin-container">
               <ErrorBoundary fallback={<div>Something went wrong</div>}>
                 <ProtectedRoute>
                   <AdminProtectedRoute>
@@ -97,9 +97,9 @@ function App() {
   };
   const BasicLayout = () => {
     return (
-      <div className="">
+      <div className="main">
         <Navbar />
-        <div className="">
+        <div className="page-wrapper">
           <Outlet />
         </div>
         <Footer />

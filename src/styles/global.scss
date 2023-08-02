@@ -11,3 +11,17 @@ a {
   text-decoration: none;
   // color: inherit;
 }
+.main {
+  max-width: 98vw;
+}
+
+.page-wrapper {
+  min-height: 90vh;
+}
+.primary-button {
+  background-color: rgb(20, 64, 82);
+  width: fit-content;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}

@@ -43,7 +43,12 @@ const PresentDates = ({ arr }) => {
   if (!attendance) {
     return <div>Not Attendance Data Found</div>
   }
-
+  const convertToNumber = (value) => {
+    if (typeof value === 'string') {
+      return Number(value);
+    }
+    return value; // If it's not a string, return the original value
+  };
 
   const calculateWorkingHours = (timePoint1 = "10-10-10", timePoint2 = "10-10-10") => {
     if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
@@ -52,8 +57,8 @@ const PresentDates = ({ arr }) => {
     const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
     const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
 
-    const totalSeconds1 = hours1 * 3600 + minutes1 * 60 + seconds1;
-    const totalSeconds2 = hours2 * 3600 + minutes2 * 60 + seconds2;
+    const totalSeconds1 = convertToNumber(hours1) * 3600 + convertToNumber(minutes1) * 60 + convertToNumber(seconds1);
+    const totalSeconds2 = convertToNumber(hours2) * 3600 + convertToNumber(minutes2) * 60 + convertToNumber(seconds2);
 
     let difference = totalSeconds2 - totalSeconds1;
 
