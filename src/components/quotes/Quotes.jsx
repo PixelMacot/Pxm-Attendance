@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { quotes } from '../../jsonfiles/quotes'
 
 const Quotes = () => {
@@ -12,6 +12,10 @@ const Quotes = () => {
     const handleClick = () => {
         setNum(randomNumberInRange(1, 100));
     };
+    useEffect(() => {
+        handleClick()
+    }, [])
+
     return (
         <div className='quotes-wrapper'>
             <div className="quotes-container flex flex-col gap-10 p-5">
@@ -23,7 +27,6 @@ const Quotes = () => {
                             </svg>
                             <p>{quotes[num].quote}</p>
                         </blockquote>
-                        
                     </div>
                     <div className="text-right test-lg">
                         - {quotes[num].author}
