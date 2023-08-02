@@ -273,6 +273,7 @@ const Attendance = () => {
               <label>Entry Time</label>
               <input type="time"
                 name='entry'
+                step="3600"
                 className='border p-2 w-[180px]'
                 onChange={handleChangeInput}
               />
@@ -281,6 +282,7 @@ const Attendance = () => {
               <label>Exit Time</label>
               <input type="time"
                 name='exit'
+                step="3600"
                 className='border p-2  w-[180px]'
                 onChange={handleChangeInput}
               />
