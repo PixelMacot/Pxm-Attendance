@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import moment from 'moment';
 import './employee.scss'
-
+import TimePicker from 'react-time-picker';
 
 const columns = [
   {
@@ -61,29 +61,7 @@ const Attendance = () => {
     entry: '',
     exit: ''
   })
-
-  const [time, setTime] = useState('');
-
-  const enforce24HourFormat = (event) => {
-    let {name,value} = event.target;
-    const timeValue = value.split(':');
-    let hour = parseInt(timeValue[0], 10);
-    let minute = parseInt(timeValue[1], 10);
-
-    // Ensure the hour and minute are within the valid range
-    if (isNaN(hour) || hour < 0 || hour > 23) {
-      hour = 0;
-    }
-    if (isNaN(minute) || minute < 0 || minute > 59) {
-      minute = 0;
-    }
-
-    // Update the input value with the enforced 24-hour format
-    value = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-    setUserAttendance({ ...userattendance, [name]: value });
-    console.log(userattendance)
-  };
-
+  
   const [viewattendance, setViewAttendance] = useState(false)
   const navigate = useNavigate();
   //function to post profile data into cloud firestore
@@ -196,9 +174,32 @@ const Attendance = () => {
       // console.log()
     });
   }
+ 
+  
+  const convertTo24HourFormat = (time12) => {
+    // Check if the time is already in the 24-hour format (e.g., "18:10")
+    if (/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(time12)) {
+      return time12;
+    }
+
+    const [time, meridian] = time12.split(' ');
+    const [hours, minutes] = time.split(':');
+    let hours24 = parseInt(hours, 10);
+
+    if (meridian === 'PM' && hours24 !== 12) {
+      hours24 += 12;
+    } else if (meridian === 'AM' && hours24 === 12) {
+      hours24 = 0;
+    }
+
+    const time24 = `${hours24.toString().padStart(2, '0')}-${minutes}-00`;
+    return time24;
+  };
   const formatTime = (time) => {
     const [hours, minutes] = time.split(':');
-    return `${hours}-${minutes}-00`;
+    let timechange = `${hours}:${minutes}:00`
+    let correctformat = convertTo24HourFormat(timechange)
+    return correctformat
   };
 
   //function to post attendance data into cloud firestore
@@ -245,14 +246,14 @@ const Attendance = () => {
     const { checked } = event.target;
     // Update the data based on checkbox status
     if (checked) {
-      updateDoc(doc(db, "users", userData.uid), { prevelege: "admin" }).then(() => {
+      updateDoc(doc(db, "users", userData.uid),  {prevelege:"admin"}).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully added")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
-      updateDoc(doc(db, "users", userData.uid), { prevelege: "employee" }).then(() => {
+      updateDoc(doc(db, "users", userData.uid), {prevelege:"employee"}).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully removed")
       }).catch((error) => {
@@ -299,7 +300,7 @@ const Attendance = () => {
                 name='entry'
                 step="3600"
                 className='border p-2 w-[180px]'
-                onChange={enforce24HourFormat}
+                onChange={handleChangeInput}
               />
             </div>
             <div className="flex gap-2 flex-col">
@@ -308,100 +309,91 @@ const Attendance = () => {
                 name='exit'
                 step="3600"
                 className='border p-2  w-[180px]'
-                onChange={enforce24HourFormat}
+                onChange={handleChangeInput}
               />
             </div>
-            <input
-            className='border p-2  w-[180px]'
-              type="time"
-              id="timePicker"
-              value={time}
-              onChange={enforce24HourFormat}
-              style={{ width: '100px' }}
-            />
-        
-          <button
-            onClick={markAttendance}
-            className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-          >Update Attendance Data</button>
+            <button
+              onClick={markAttendance}
+              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+            >Update Attendance Data</button>
 
-        </div>
-        {
-          adminmsg && (
-            <p
-              className="text-green-700 font-bold"
-            >{adminmsg}</p>
-          )
-        }
-        {/* //switch  */}
-        {
-          userData.prevelege && (
-            <div className="switchbutton">
-              <div className="container">
-                admin
-                <div className="toggle-switch">
-                  <input type="checkbox" className="checkbox"
-                    name="admin" id="admin"
-                    value={"admin"}
-                    defaultChecked={isadmin ? true : false}
-                    onChange={handleCheckboxChange}
-                  />
-                  {console.log("from input", isadmin)}
-                  <label className="label" htmlFor={"admin"}>
-                    <span className="inner" />
-                    <span className="switch" />
-                  </label>
+          </div>
+          {
+            adminmsg && (
+              <p
+                className="text-green-700 font-bold"
+              >{adminmsg}</p>
+            )
+          }
+          {/* //switch  */}
+          {
+            userData.prevelege && (
+              <div className="switchbutton">
+                <div className="container">
+                  admin
+                  <div className="toggle-switch">
+                    <input type="checkbox" className="checkbox"
+                      name="admin" id="admin"
+                      value={"admin"}
+                      defaultChecked={isadmin ? true : false}
+                      onChange={handleCheckboxChange}
+                    />
+                    {console.log("from input", isadmin)}
+                    <label className="label" htmlFor={"admin"}>
+                      <span className="inner" />
+                      <span className="switch" />
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        }
+            )
+          }
 
-        <div className="flex gap-4">
-          <div className="load-btn">
+          <div className="flex gap-4">
+            <div className="load-btn">
+              <button
+                onClick={reloadCalendar}
+                className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+              >Load Data</button>
+            </div>
+
+          </div>
+          <div className="flex gap-5">
             <button
-              onClick={reloadCalendar}
-              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-            >Load Data</button>
+              onClick={prevmonth}
+              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Prev</button>
+
+            <button
+              onClick={nextmonth}
+              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Next</button>
+          </div>
+          <div className='max-w-[90vw]'>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: {
+                    pageSize: 5,
+                  },
+                },
+                sorting: {
+                  sortModel: [{ field: 'date', sort: 'desc' }],
+                },
+              }}
+              pageSizeOptions={[5]}
+              checkboxSelection
+              disableRowSelectionOnClick
+              slots={{
+                toolbar: CustomToolbar,
+              }}
+            />
           </div>
 
         </div>
-        <div className="flex gap-5">
-          <button
-            onClick={prevmonth}
-            className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Prev</button>
-
-          <button
-            onClick={nextmonth}
-            className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Next</button>
-        </div>
-        <div className='max-w-[90vw]'>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-              sorting: {
-                sortModel: [{ field: 'date', sort: 'desc' }],
-              },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
-            slots={{
-              toolbar: CustomToolbar,
-            }}
-          />
-        </div>
 
       </div>
-
     </div>
-    </div >
 
   )
 }
