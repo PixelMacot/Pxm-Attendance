@@ -10,6 +10,7 @@ import PresentDates from '../../components/presentdates/PresentDates'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import { LocationContext } from '../../context/LocationContext'
 import moment from 'moment';
+import GeofenceMap from "../../components/map/SecondMap";
 
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
@@ -29,6 +30,14 @@ const AttendanceDashboard = () => {
 
     }, []);
 
+    useEffect(() => {
+        if (isUserInsideGeofence) {
+            console.log("from attendance dashboard location", isUserInsideGeofence)
+        } else {
+            console.log("from attendance dashboard location", isUserInsideGeofence)
+        }
+    }, [isUserInsideGeofence])
+
     const reload = () => {
         fetchHolidays()
         getAttendanceData(currentUser.uid)
@@ -37,7 +46,11 @@ const AttendanceDashboard = () => {
             setLoader(false)
         }
     }
-
+    const fenceCoordinates = [
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047],
+    ];
 
     return (
         <div className="AttendanceDashboard pb-5">
@@ -80,10 +93,15 @@ const AttendanceDashboard = () => {
                     }
                     <div className="attendancedashboard-map shadow-md rounded-md w-[90%] mx-auto">
 
-                        <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                        {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
                             <MapStructure />
-                        </ErrorBoundary>
+                        {/* </ErrorBoundary> */}
                     </div>
+
+                    {/* <div>
+                        <h1>Geofence Map</h1>
+                        <GeofenceMap fenceCoordinates={fenceCoordinates} />
+                    </div> */}
 
                 </div>
             </div>

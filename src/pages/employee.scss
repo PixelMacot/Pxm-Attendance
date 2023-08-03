@@ -15,7 +15,7 @@
     text-align: left;
     top: 8px;
     }
-    .checkbox {
+    .checkbox,.userstatus-checkbox {
     display: none;
     }
     .label {
@@ -72,6 +72,13 @@
     margin-left: 0;
     }
     .checkbox:checked + .label .switch {
+    right: 0px;
+    }
+    
+    .userstatus-checkbox:checked + .label .inner {
+    margin-left: 0;
+    }
+    .userstatus-checkbox:checked + .label .switch {
     right: 0px;
     }
     

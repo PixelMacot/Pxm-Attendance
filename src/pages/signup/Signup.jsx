@@ -2,162 +2,176 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase';
-import { storage } from "../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useFormik } from 'formik';
-
+import './signup.scss'
+import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { db } from '../../firebase';
 const Signup = () => {
     const navigate = useNavigate();
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const [file, setFile] = useState("");
-    // progress
-    const [percent, setPercent] = useState(0);
-    // Handles input change event and updates state
-    const [photourl, setPhotoUrl] = useState("/avatar.png")
-    const [name, setName] = useState("")
     const [error, setError] = useState()
+    const [loader, setLoader] = useState(false)
+
+    const [formData, setFormData] = useState(
+        {
+            username: '',
+            profileimg: '/boyavatar.png',
+            position: 'your position',
+            skills: 'your skills',
+            backgroundimg: '/profilebg.jpg',
+            address: 'Noida',
+            phoneno: '',
+            gender: 'male'
+        }
+    );
+    //handle change input when an field changes
+    const handleChangeInput = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        console.log(formData)
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault()
 
         try {
             const { user } = await createUserWithEmailAndPassword(auth, email, password)
+            updateProfileDetails(user)
             console.log(`User ${user.uid} created`)
-            navigate("/")
+            navigate("/notallowed")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
             setError(errorMessage)
             console.log(errorCode, errorMessage)
-        }     
-    }
-    //image upload
-    function handleImageChange(event) {
-        setFile(event.target.files[0]);
-        handleImageUpload(event)
-    }
-    const handleImageUpload = (e) => {
-        e.preventDefault()
-        if (!file) {
-            alert("Please upload an image first!");
         }
+    }
 
-        const storageRef = ref(storage, `/files/${file.name}`);
-
-        // progress can be paused and resumed. It also exposes progress updates.
-        // Receives the storage reference and the file to upload.
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const percent = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                );
-
-                // update progress
-                setPercent(percent);
-            },
-            (err) => console.log(err),
-            () => {
-                // download url
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                    console.log(url);
-                    setPhotoUrl(url)
-                });
+    async function updateProfileDetails(user) {
+        console.log(formData)
+        console.log(user.uid)
+        setLoader(true)
+        let docData = {
+            uid: user.uid,
+            username: formData.username,
+            profileimg: formData.profileimg,
+            position: formData.position,
+            skills: formData.skills,
+            address: formData.address,
+            phoneno: formData.phoneno,
+            backgroundimg: formData.backgroundimg,
+            gender: formData.gender,
+            prevelege: "employee",
+            status:false,
+            updatedat: Timestamp.fromDate(new Date()),
+        }
+        console.log(docData)
+        try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                await updateDoc(doc(db, "users", user.uid),docData);
+            } else {
+                await setDoc(doc(db, "users",user.uid),docData);
             }
-        );
-    };
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
     return (
-        <main >
-            <section className='min-h-[80vh]'>
-                <div>
-                    <div className='w-[90%] md:w-[60%] lg:w-[40%] mx-auto shadow-lg rounded-sm px-5 py-20 my-5'>
-                        <form className='flex flex-col items-center ' onSubmit={onSubmit}>
-
-                            {/* //image upload functionality */}
-                            <div className=''>
-                                <label for="profileimage" className='hover:cursor-pointer'>
-                                    {photourl && (<img src={photourl} className='rounded-full w-[120px] h-[120px] border' />)}
-                                </label>
-                                {/* <input type="file"
-                                    onChange={handleImageChange}
-                                    accept="/image/*"
-                                    title="Choose a video please"
-                                    id='profileimage'
-                                    className='hidden'
-                                /> */}
-                                {/* //show percentage of image upload  */}
-                                {/* <p>{percent} "% done"</p> */}
-                            </div>
-                            {
-                                error && (
-                                    <div className="px-5 my-4 text-red-500">Error: {error}</div>
-                                )
-
-                            }
-                            {/* //user details functionality */}
-                            <div className='flex flex-col items-start p-5 gap-2 w-full'>
-                                {/* <label htmlFor="name">
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    label="name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                    autoComplete="off"
-                                    placeholder="your name"
-                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
-                                /> */}
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
-                                    type="email"
-                                    label="Email address"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    autoComplete="off"
-                                    placeholder="Email address"
-                                    pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
-                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
-                                />
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    label="Create password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    autoComplete="off"
-                                    placeholder="Password"
-                                    className='px-2 py-1 border rounded-md w-[100%] focus:outline-cyan-400'
-                                />
-                                <button
-                                    type="submit"
-                                    className='bg-cyan-700 p-2 rounded-md text-white font-bold w-[100%] my-2'
-                                >
-                                    Sign up
-                                </button>
-                                <p>
-                                    Already have an account?{' '}
-                                    <Link to="/login" className='text-cyan-700' >
-                                        Login
-                                    </Link>
-                                </p>
-                            </div>
-                        </form>
+        <section className='signup section-wrapper'>
+            <div className='signup-container'>
+                <div className='signup-wrapper'>
+                <div className="signup-avatar">
+                        <img src='/avatar.png' className='' />
                     </div>
+                    <form className='form-signup' onSubmit={onSubmit}>
+                        {
+                            error && (
+                                <div className="">Error: {error}</div>
+                            )
+
+                        }
+
+                        {/* //user details functionality */}
+                        <div className='input-div'>
+                            <label htmlFor="email-address">
+                            </label>
+                            <input
+                                type="email"
+                                label="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                autoComplete="off"
+                                placeholder="Email address"
+                                pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
+                                className=''
+                            />
+                            <label htmlFor="password">
+
+                            </label>
+                            <input
+                                type="password"
+                                label="Create password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                autoComplete="off"
+                                placeholder="Password"
+                                className=''
+                            />
+
+
+                            <input
+                                name="username"
+                                onChange={handleChangeInput}
+                                placeholder='username'
+                                className=''
+                                required
+                                minLength="2"
+                                maxLength="32"
+                                value={formData.username}
+                            />
+                            <input
+                                name="phoneno"
+                                onChange={handleChangeInput}
+                                placeholder='phoneno'
+                                className=''
+                                required
+                                minLength="2"
+                                maxLength="32"
+                                value={formData.phoneno}
+                            />
+                            <select id="gender"
+                                name="gender"
+                                value={formData.gender}
+                                required
+                                className=''
+                                onChange={handleChangeInput}
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+
+                            </select>
+                            <button
+                                type="submit"
+                                className='primary-button'
+                            >
+                                Sign up
+                            </button>
+                            <p>
+                                Already have an account?{' '}
+                                <Link to="/login" className='text-darkblue' >
+                                    Login
+                                </Link>
+                            </p>
+                        </div>
+                    </form>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
     )
 }
 

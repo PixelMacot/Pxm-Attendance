@@ -1,0 +1,50 @@
+@import "../../styles/variable.scss";
+@import "../../styles/responsive.scss";
+
+.login {
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid transparent;
+        width: 50vw;
+        margin: 20px auto;
+        gap: 20px;
+        padding: 20px 50px;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        @include md{
+          width: 95vw;
+        }
+
+        .login-avatar {
+            img {
+                width: 200px;
+            }
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+
+            .input-container {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                input {
+                    border: 1px solid rgba(128, 128, 128, 0.473);
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    width: 100%;
+                }
+                input:focus {
+                    border: 1px solid rgba(0, 0, 0, 0.801);
+                }
+            }
+        }
+    }
+}

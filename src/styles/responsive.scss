@@ -8,4 +8,16 @@ $xxl:1400px;
     @media screen and (max-width:($sm)) {
         @content
     }
+};
+
+@mixin md{
+    @media screen and (max-width:($md)) {
+        @content
+    }
+};
+
+@mixin lg{
+    @media screen and (max-width:($lg)) {
+        @content
+    }
 }

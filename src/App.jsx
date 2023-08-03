@@ -25,6 +25,8 @@ import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
 import { ErrorBoundary } from "react-error-boundary";
 import UpdateEmpData from './adminpages/empoyeeupdate/UpdateEmpData';
+import NotAllowed from './pages/notallowed/NotAllowed';
+
 function App() {
 
   const { currentUser, userDataLoading, userData } = useContext(AuthContext)
@@ -32,15 +34,28 @@ function App() {
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
   }
+
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Navigate to="/login" />;
+      return <Login />;
     } else {
-      if (currentUser.emailVerified) {
-        return children
-      } else {
-        return <Navigate to="/notverified" />;
+
+      if (!userData.dummyData) {
+        if (userData.status) {
+          if (currentUser.emailVerified) {
+            return children
+          } else {
+            // return <Navigate to="/notverified" />;
+            return <NotVerified />;
+          }
+        } else {
+          // return <Navigate to="/notallowed" />;
+          return <NotAllowed />;
+        }
+      }else{
+        return <div><HomePageLoader /></div>
       }
+
     }
   };
   const AdminProtectedRoute = ({ children }) => {
@@ -59,11 +74,11 @@ function App() {
           <div className="maincontainer">
           </div>
           <div className="layout">
-            <ErrorBoundary fallback={<div>Something went wrong</div>}>
+            {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
               <ProtectedRoute>
                 <Outlet />
               </ProtectedRoute>
-            </ErrorBoundary>
+            {/* </ErrorBoundary> */}
           </div>
         </div>
         <Footer />
@@ -125,10 +140,9 @@ function App() {
           element: <Team />,
         },
         {
-          path: "/apptest",
-          element: <Test />,
+          path: "/notallowed",
+          element: <NotAllowed />,
         },
-
         {
           path: "/attendancedashboard",
           element: <AttendanceDashboard />,

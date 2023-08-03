@@ -17,46 +17,50 @@ const MarkAttendance = () => {
     const [btnerr, setBtnErr] = useState()
     const [showexit, setShowExit] = useState(true)
     const [disablebtn, setDisableBtn] = useState({
-        entry: false,
-        exit: false
+        entry: true,
+        exit: true
     })
     const { currentUser, userData } = useContext(AuthContext)
-    const { getAttendanceData, markdate, attendance, markdatefunction } = useContext(CalendarContext)
-    const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
-    console.log(lat, lon)
+    const { handleGetLocationClick, getAttendanceData, markdate, attendance, markdatefunction, datesLoader } = useContext(CalendarContext)
+    const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation } = useContext(LocationContext)
+    console.log(latitude, longitude)
 
     console.log("markrenderr")
+
     useEffect(() => {
-        // setShowAttendancebtn(show)  
-        return () => {
-            btnshow()
-        };
-    }, [markdate])
+        btnshow()
+    }, [attendance])
 
     const btnshow = () => {
+        console.log("location", isUserInsideGeofence)
         if (!isUserInsideGeofence) {
             setBtnErr("You are not at office please visit office to mark attendance")
-            setDisableBtn({
-                entry: true,
-                exit: true
-            })
         } else {
             let entry = attendance.hasOwnProperty(moment(new Date).format("DD-MM-YYYY"))
             if (attendance) {
+                console.log("attendace data is loaded", entry)
                 if (entry) {
                     let exitdata = attendance[moment(new Date).format("DD-MM-YYYY")].hasOwnProperty("exit")
+
                     if (exitdata) {
+                        console.log("data exits")
                         setDisableBtn({
                             entry: true,
                             exit: true
                         })
-                        setMsg("Your office day is completed")
+                        setMsg("your office day is completed")
                     } else {
                         setDisableBtn({
                             entry: true,
                             exit: false
                         })
                     }
+                } else {
+                    console.log("data do not exit")
+                    setDisableBtn({
+                        entry: false,
+                        exit: true
+                    })
                 }
             }
             // if (markdate) {
@@ -148,7 +152,10 @@ const MarkAttendance = () => {
 
                 updateDoc(doc(db, "attendance", userData.uid), docExitData).then(() => {
                     console.log('Data successfully updated in Firestore!');
+                    getAttendanceData(userData.uid)
+                    btnshow()
                     if (type == "entry") {
+
                         setMsg("Welcome to office")
                         setDisableBtn({
                             entry: true,
@@ -183,8 +190,31 @@ const MarkAttendance = () => {
 
                     <div className="markattendance-buttons flex flex-col">
                         {
+                            !isUserInsideGeofence && (
+                                <div className="">
+                                    <div className="">
+                                        <button
+                                            onClick={reverifyLocation}
+                                            className='primary-button'
+                                        >Reverify Location</button>
+                                    </div>
+
+                                </div>
+                            )
+                        }
+
+                        {
                             btnerr && (
-                                <p>{btnerr}</p>
+
+                                <div className="">
+                                    <p>{btnerr}</p>
+                                    <div className="">
+                                        <button
+                                            onClick={btnshow}
+                                            className='primary-button'
+                                        >refresh</button>
+                                    </div>
+                                </div>
                             )
                         }
                         {

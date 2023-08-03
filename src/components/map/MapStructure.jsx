@@ -7,34 +7,38 @@ import { LocationContext } from '../../context/LocationContext'
 const MapStructure = () => {
     const [mapCenter, setMapCenter] = useState();
     const [placeName, setPlaceName] = useState('');
-    const { lat, lon } = useContext(LocationContext)
+    const { latitude, longitude, error } = useContext(LocationContext)
+
+    if (error) {
+        return <div>{error}</div>
+    }
 
     // const mapCenter = [latitude, longitude]; // Initial map center (latitude, longitude)
     console.log(mapCenter)
 
     useEffect(() => {
-        setMapCenter([lat, lon])
+        setMapCenter([latitude, longitude])
         const fetchAddress = async () => {
             try {
                 const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
                 );
                 const data = await response.json();
-                setPlaceName(data.display_name.slice(0,50));
+                setPlaceName(data.display_name.slice(0, 50));
             } catch (error) {
                 console.error('Error fetching address:', error);
                 setPlaceName('Your Location.');
             }
         };
-        fetchAddress(lat ,lon)
+        fetchAddress(latitude, longitude)
     }, [])
-  
-  
+
+
 
     if (!mapCenter) {
         return <div>Loading...</div>;
     }
-    
+
     return (
         <div className="map">
             <div className="maincontainer">
@@ -49,9 +53,9 @@ const MapStructure = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <Marker position={mapCenter}>
-                            
+
                             <Popup>
-                            <img src="/logo.png" alt="" className='w-[40%]'/>
+                                <img src="/logo.png" alt="" className='w-[40%]' />
                                 {placeName || 'Loading...'}
                             </Popup>
                         </Marker>

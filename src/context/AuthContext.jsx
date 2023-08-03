@@ -19,15 +19,20 @@ export const AuthContextProvider = ({ children }) => {
     "profileimg": "/avatar.png",
     "backgroundimg": "/profilebg.jpg",
     "prevelege": "employee",
-    "dummyData": true
+    "dummyData": true,
+    "status": false
   })
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        getUserProfileData(user)
-        setUserDataLoading(false)
+        getUserProfileData(user).then(() => {
+          setUserDataLoading(false)
+        }).catch((err) => {
+          console.log("cant get user data")
+        })
+
         if (user.emailVerified) {
           setUserDataLoading(false)
           setUserVerified(true)

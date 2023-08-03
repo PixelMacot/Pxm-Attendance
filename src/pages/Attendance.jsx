@@ -56,12 +56,13 @@ const Attendance = () => {
   const [err, setErr] = useState()
   const [msg, setMsg] = useState()
   const [adminmsg, setAdminMsg] = useState()
+  const [userStatus, setUserStatus] = useState(false)
   const [userattendance, setUserAttendance] = useState({
     date: '',
     entry: '',
     exit: ''
   })
-  
+
   const [viewattendance, setViewAttendance] = useState(false)
   const navigate = useNavigate();
   //function to post profile data into cloud firestore
@@ -91,6 +92,7 @@ const Attendance = () => {
         console.log("Document data:", JSON.stringify(docSnap.data()));
         setUserData(docSnap.data())
         console.log(docSnap.data().prevelege)
+        setUserStatus(docSnap.data().status)
         if (docSnap.data().prevelege === "admin") {
           setIsAdmin(true)
         } else {
@@ -174,8 +176,8 @@ const Attendance = () => {
       // console.log()
     });
   }
- 
-  
+
+
   const convertTo24HourFormat = (time12) => {
     // Check if the time is already in the 24-hour format (e.g., "18:10")
     if (/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(time12)) {
@@ -242,20 +244,39 @@ const Attendance = () => {
   }
 
   //checking admin
-  const handleCheckboxChange = (event) => {
+  const handleAdminCheckboxChange = (event) => {
     const { checked } = event.target;
     // Update the data based on checkbox status
     if (checked) {
-      updateDoc(doc(db, "users", userData.uid),  {prevelege:"admin"}).then(() => {
+      updateDoc(doc(db, "users", userData.uid), { prevelege: "admin" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully added")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
-      updateDoc(doc(db, "users", userData.uid), {prevelege:"employee"}).then(() => {
+      updateDoc(doc(db, "users", userData.uid), { prevelege: "employee" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully removed")
+      }).catch((error) => {
+        console.error('Error updating admin prevelege in Firestore:', error);
+      });
+    }
+  };
+  const handleUserStatusCheckboxChange = (event) => {
+    const { checked } = event.target;
+    // Update the data based on checkbox status
+    if (checked) {
+      updateDoc(doc(db, "users", userData.uid), { status: true }).then(() => {
+        console.log('User Status successfully updated in Firestore!');
+        setAdminMsg("User Status successfully added")
+      }).catch((error) => {
+        console.error('Error updating data in Firestore:', error);
+      });
+    } else {
+      updateDoc(doc(db, "users", userData.uid), { status: false }).then(() => {
+        console.log('User Status successfully updated in Firestore!');
+        setAdminMsg("User Status successfully removed")
       }).catch((error) => {
         console.error('Error updating admin prevelege in Firestore:', error);
       });
@@ -336,10 +357,32 @@ const Attendance = () => {
                       name="admin" id="admin"
                       value={"admin"}
                       defaultChecked={isadmin ? true : false}
-                      onChange={handleCheckboxChange}
+                      onChange={handleAdminCheckboxChange}
                     />
                     {console.log("from input", isadmin)}
                     <label className="label" htmlFor={"admin"}>
+                      <span className="inner" />
+                      <span className="switch" />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          {
+          userData.prevelege && (
+              <div className="switchbutton">
+                <div className="container">
+                  status
+                  <div className="toggle-switch">
+                    <input type="checkbox" className="userstatus-checkbox"
+                      name="userstatus" id="userstatus"
+                      value={true}
+                      defaultChecked={userStatus}
+                      onChange={handleUserStatusCheckboxChange}
+                    />
+                    {console.log("from status", userStatus)}
+                    <label className="label" htmlFor={"userstatus"}>
                       <span className="inner" />
                       <span className="switch" />
                     </label>

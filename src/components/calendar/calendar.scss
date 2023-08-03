@@ -12,8 +12,8 @@
         top: 0px;
         width: 60%;
         margin: auto;
-        height: 75px;
-        background-color: transparent;
+        height: 35px;
+        background-color: blue;
         /* border-radius: 50%; */
         cursor: pointer;
         /* font-size: 15px; */
@@ -40,10 +40,62 @@
     position: relative !important;
 }
 
-.react-calendar__navigation__next2-button,.react-calendar__navigation__prev2-button {
+.react-calendar__navigation__next2-button,
+.react-calendar__navigation__prev2-button {
     display: none;
 }
-.react-calendar__navigation__label{
+.react-calendar__navigation__label {
     pointer-events: none;
     cursor: default;
+}
+.react-calendar button:hover{
+background-color: transparent !important;
+}
+.present-day {
+    position: absolute;
+    top: 0px;
+    width: 50%;
+    color: green;
+    border: 2px solid green;
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    // border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.absent-day {
+    
+    position: absolute;
+    top: 0px;
+    width: 70%;
+    border: 2px solid red;
+    background-color: red;
+    color: white;
+    padding: 2px 8px;
+
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.holiday ,.sunday{
+    position: absolute;
+    top: 0px;
+    width: 70%;
+    border: 2px solid blue;
+    background-color: blue !important;
+    color: white;
+    padding: 2px 8px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sunday{
+    background-color: blue !important;
 }
