@@ -7,10 +7,8 @@ export const LocationContextProvider = ({ children }) => {
 
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
   const [error, setError] = useState(null);
-  const [lat, setLat] = useState()
-  const [lon, setLon] = useState()
-
   //second code
+  const [locationLoader,setLocationLoader] = useState(true)
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
@@ -38,7 +36,7 @@ export const LocationContextProvider = ({ children }) => {
         (position) => {
           setLatitude(position.coords.latitude);
           setLongitude(position.coords.longitude);
-
+          setLocationLoader(false)
           const userPosition = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -57,6 +55,7 @@ export const LocationContextProvider = ({ children }) => {
         (error) => {
           setLatitude(28.5292);
           setLongitude(77.3840);
+          setLocationLoader(false)
           console.error("Error getting user location:", error.message);
           setError(error.message)
         }
@@ -64,6 +63,7 @@ export const LocationContextProvider = ({ children }) => {
     } else {
       setLatitude(28.5292);
       setLongitude(77.3840);
+      setLocationLoader(false)
       console.error("Geolocation is not available in this browser.");
     }
   };
@@ -77,6 +77,7 @@ export const LocationContextProvider = ({ children }) => {
         latitude,
         longitude,
         reverifyLocation,
+        locationLoader
       
       }}>
       {children}

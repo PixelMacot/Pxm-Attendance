@@ -7,12 +7,18 @@ import { LocationContext } from '../../context/LocationContext'
 const MapStructure = () => {
     const [mapCenter, setMapCenter] = useState();
     const [placeName, setPlaceName] = useState('');
-    const { latitude, longitude, error } = useContext(LocationContext)
+    const { latitude, longitude, error, locationLoader } = useContext(LocationContext)
 
-    if (error) {
-        return <div>{error}</div>
+    if (!locationLoader) {
+        <div>Loading your location</div>
     }
-    if (latitude == null && longitude == null) {
+    if (error) {
+        return <div>
+            This is error -
+            {error}
+        </div>
+    }
+    if (latitude == null || longitude == null) {
         return <div>Can't get location of user</div>
     }
     // const mapCenter = [latitude, longitude]; // Initial map center (latitude, longitude)
