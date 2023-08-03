@@ -50,8 +50,11 @@
     pointer-events: none;
     cursor: default;
 }
-.react-calendar button:hover{
-background-color: transparent !important;
+.react-calendar button:hover {
+    background-color: transparent !important;
+}
+.react-calendar__month-view__days__day--weekend:not(.react-calendar__month-view__days__day--neighboringMonth) {
+    color: black !important;
 }
 .present-day {
     position: absolute;
@@ -73,7 +76,6 @@ background-color: transparent !important;
 }
 
 .absent-day {
-    
     position: absolute;
     top: 0px;
     width: 70%;
@@ -87,13 +89,14 @@ background-color: transparent !important;
     justify-content: center;
     align-items: center;
 }
-.holiday ,.sunday{
+.holiday,
+.sunday {
     position: absolute;
     top: 0;
-    left: 0; 
-    right: 0; 
-    margin-left: auto; 
-    margin-right: auto; 
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     width: 70%;
     height: 25px;
     border: 2px solid blue;
@@ -105,6 +108,6 @@ background-color: transparent !important;
     justify-content: center;
     align-items: center;
 }
-.sunday{
+.sunday {
     background-color: blue !important;
 }
