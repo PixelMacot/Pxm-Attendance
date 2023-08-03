@@ -189,8 +189,15 @@ const MarkAttendance = () => {
                 <div className="markattendance-wrapper">
 
                     <div className="markattendance-buttons flex flex-col">
+                    {
+                            error && (
+                                <p className='text-red-500'>Error:{error}</p>
+                            )
+                        } 
                         {
                             !isUserInsideGeofence && (
+                               <div className="">
+                                 <p>We can't determine you at office reverify again </p>
                                 <div className="">
                                     <div className="">
                                         <button
@@ -198,15 +205,11 @@ const MarkAttendance = () => {
                                             className='primary-button'
                                         >Reverify Location</button>
                                     </div>
-
                                 </div>
+                               </div>
                             )
                         }
-                        {
-                            error && (
-                                <p>Error:{error}</p>
-                            )
-                        }                      
+                                             
                         {
                             err && (
                                 <p className="text-red-500">{err}</p>

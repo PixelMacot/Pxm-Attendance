@@ -27,7 +27,6 @@ const AttendanceDashboard = () => {
             console.log("data is  loaded")
             setLoader(false)
         }
-
     }, []);
 
     useEffect(() => {
