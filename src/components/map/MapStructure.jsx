@@ -12,7 +12,9 @@ const MapStructure = () => {
     if (error) {
         return <div>{error}</div>
     }
-
+    if (latitude == null && longitude == null) {
+        return <div>Can't get location of user</div>
+    }
     // const mapCenter = [latitude, longitude]; // Initial map center (latitude, longitude)
     console.log(mapCenter)
 

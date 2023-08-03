@@ -17,7 +17,7 @@ export const LocationContextProvider = ({ children }) => {
   const geofenceCenter = { latitude: 28.6292, longitude: 77.3840 };
 
   // Calculate the distance in meters that defines your geofence (e.g., 100 meters)
-  const geofenceRadius = 50;
+  const geofenceRadius = 10;
 
   useEffect(() => {
     // Check if geolocation is available in the browser
@@ -55,15 +55,15 @@ export const LocationContextProvider = ({ children }) => {
           }
         },
         (error) => {
-          setLatitude(68.7710);
-          setLongitude(77.0123);
+          setLatitude(28.5292);
+          setLongitude(77.3840);
           console.error("Error getting user location:", error.message);
           setError(error.message)
         }
       );
     } else {
-      setLatitude(68.7710);
-      setLongitude(77.0123);
+      setLatitude(28.5292);
+      setLongitude(77.3840);
       console.error("Geolocation is not available in this browser.");
     }
   };
