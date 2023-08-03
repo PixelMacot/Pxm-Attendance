@@ -7,6 +7,7 @@ export const LocationContextProvider = ({ children }) => {
 
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
   const [error, setError] = useState('');
+  const [distance,setDistance]=useState(9999)
   //second code
   const [locationLoader,setLocationLoader] = useState(true)
   const [latitude, setLatitude] = useState(null);
@@ -44,11 +45,12 @@ export const LocationContextProvider = ({ children }) => {
             longitude: position.coords.longitude,
           };
           const distance = getDistance(userPosition, geofenceCenter);
+          setDistance(distance)
           if (distance <= geofenceRadius) {
-            console.log("User is inside the geofence.");
+            console.log("User is inside the geofence.",distance);
             setIsUserInsideGeofence(true)
           } else {
-            console.log("User is outside the geofence.");
+            console.log("User is outside the geofence.",distance);
             setIsUserInsideGeofence(false)
           }
         },
@@ -77,7 +79,8 @@ export const LocationContextProvider = ({ children }) => {
         latitude,
         longitude,
         reverifyLocation,
-        locationLoader
+        locationLoader,
+        distance
       
       }}>
       {children}

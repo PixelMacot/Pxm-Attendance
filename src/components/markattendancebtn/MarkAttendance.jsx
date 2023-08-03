@@ -22,7 +22,7 @@ const MarkAttendance = () => {
     })
     const { currentUser, userData } = useContext(AuthContext)
     const { getAttendanceData, markdate, attendance, markdatefunction, datesLoader } = useContext(CalendarContext)
-    const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation } = useContext(LocationContext)
+    const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation,distance } = useContext(LocationContext)
     console.log(latitude, longitude)
 
     console.log("markrenderr")
@@ -197,6 +197,7 @@ const MarkAttendance = () => {
                         {
                             !isUserInsideGeofence && (
                                <div className="">
+                                <p>You are at {distance} meters from office</p>
                                  <p>We can't determine you at office reverify again </p>
                                 <div className="">
                                     <div className="">
