@@ -6,7 +6,7 @@ export const LocationContext = createContext();
 export const LocationContextProvider = ({ children }) => {
 
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   //second code
   const [locationLoader,setLocationLoader] = useState(true)
   const [latitude, setLatitude] = useState(null);
@@ -25,12 +25,14 @@ export const LocationContextProvider = ({ children }) => {
 
   // Function to reverify the user's location when the button is clicked
   const reverifyLocation = () => {
+    setError('')
     setLatitude(null);
     setLongitude(null);
+    handleGetLocationClick()
   };
 
   const handleGetLocationClick = () => {
-    console.log("fn location called")
+    console.log("fn location called") 
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -41,9 +43,7 @@ export const LocationContextProvider = ({ children }) => {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
           };
-
           const distance = getDistance(userPosition, geofenceCenter);
-
           if (distance <= geofenceRadius) {
             console.log("User is inside the geofence.");
             setIsUserInsideGeofence(true)

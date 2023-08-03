@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import MarkAttendance from '../../components/markattendancebtn/MarkAttendance'
-import MapStructure from '../../components/map/MapStructure'
+// import MapStructure from '../../components/map/MapStructure'
 import CalendarComponent from '../../components/calendar/Calendar'
 import { ErrorBoundary } from "react-error-boundary";
 import { AuthContext } from '../../context/AuthContext'
@@ -94,7 +94,7 @@ const AttendanceDashboard = () => {
                     <div className="attendancedashboard-map shadow-md rounded-md w-[90%] mx-auto">
 
                         {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
-                            <MapStructure />
+                            {/* <MapStructure /> */}
                         {/* </ErrorBoundary> */}
                     </div>
 

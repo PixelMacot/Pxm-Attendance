@@ -21,7 +21,7 @@ const MarkAttendance = () => {
         exit: true
     })
     const { currentUser, userData } = useContext(AuthContext)
-    const { handleGetLocationClick, getAttendanceData, markdate, attendance, markdatefunction, datesLoader } = useContext(CalendarContext)
+    const { getAttendanceData, markdate, attendance, markdatefunction, datesLoader } = useContext(CalendarContext)
     const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation } = useContext(LocationContext)
     console.log(latitude, longitude)
 
@@ -29,7 +29,7 @@ const MarkAttendance = () => {
 
     useEffect(() => {
         btnshow()
-    }, [attendance])
+    }, [attendance,isUserInsideGeofence])
 
     const btnshow = () => {
         console.log("location", isUserInsideGeofence)
@@ -202,21 +202,11 @@ const MarkAttendance = () => {
                                 </div>
                             )
                         }
-
                         {
-                            btnerr && (
-
-                                <div className="">
-                                    <p>{btnerr}</p>
-                                    <div className="">
-                                        <button
-                                            onClick={btnshow}
-                                            className='primary-button'
-                                        >refresh</button>
-                                    </div>
-                                </div>
+                            error && (
+                                <p>Error:{error}</p>
                             )
-                        }
+                        }                      
                         {
                             err && (
                                 <p className="text-red-500">{err}</p>
