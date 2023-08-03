@@ -79,7 +79,7 @@ const AttendanceDashboard = () => {
                             </div>
                         ) : (
                             <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
-                                <div className="calendarapp w-[90vw] mx-auto p-2 border border-gray-200 ">
+                                <div className="calendarapp w-[90vw] md:w-[55vw] mx-auto p-2 border border-gray-200 ">
                                     <ErrorBoundary fallback={<div>Something went wrong</div>}>
                                         <CalendarComponent />
                                     </ErrorBoundary>

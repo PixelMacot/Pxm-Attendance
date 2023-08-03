@@ -46,8 +46,10 @@ const Home = () => {
                 >Reload Calendar</button>
               </div>)
           }
-          < div className="calendar-quotes-container flex flex-wrap gap-10 justify-center items-center">
-            {!loader && (<CalendarComponent />)}
+          < div className=" calendar-quotes-container flex flex-wrap gap-10 justify-center items-center">
+            <div className="home-calendar">
+              {!loader && (<CalendarComponent />)}
+            </div>
             <div className="w-[400px]">
               <Quotes />
             </div>

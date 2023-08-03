@@ -38,6 +38,8 @@
 
 .react-calendar__tile {
     position: relative !important;
+    display: flex;
+    justify-content: center;
 }
 
 .react-calendar__navigation__next2-button,
@@ -54,7 +56,9 @@ background-color: transparent !important;
 .present-day {
     position: absolute;
     top: 0px;
-    width: 50%;
+    width: 70%;
+    height: 25px;
+    margin: 0px auto;
     color: green;
     border: 2px solid green;
     background-color: green;
@@ -73,11 +77,11 @@ background-color: transparent !important;
     position: absolute;
     top: 0px;
     width: 70%;
+    height: 25px;
     border: 2px solid red;
     background-color: red;
     color: white;
     padding: 2px 8px;
-
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -85,8 +89,13 @@ background-color: transparent !important;
 }
 .holiday ,.sunday{
     position: absolute;
-    top: 0px;
+    top: 0;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
     width: 70%;
+    height: 25px;
     border: 2px solid blue;
     background-color: blue !important;
     color: white;
