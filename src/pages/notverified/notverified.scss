@@ -1,30 +1,24 @@
 @import "../../styles/variable.scss";
 @import "../../styles/responsive.scss";
 
-.notallowed-container {
-    .not-allowed-wrapper {
+.verify-mail-section {
+    .verify-mail-wrapper {
         display: flex;
         flex-direction: row;
-        align-items: center;
         justify-content: center;
-        gap: 20px;
+        align-items: center;
         font-size: 22px;
 
         @include md {
-            flex-direction: column;
             font-size: 15px;
+            flex-direction: column;
         }
 
-        .warning-img-wrapper {
-            width: 50%;
-        }
-
-        .not-allowed-content {
+        .verifymail-heading-btn {
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            gap: 2px;
+            align-items: center;
         }
     }
 }

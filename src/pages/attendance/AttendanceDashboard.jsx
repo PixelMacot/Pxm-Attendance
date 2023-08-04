@@ -52,7 +52,7 @@ const AttendanceDashboard = () => {
     ];
 
     return (
-        <div className="AttendanceDashboard pb-5">
+        <div className="AttendanceDashboard pb-5 mt-5">
             <div className="maincontainer min-h-[70vh]">
                 <div className="attendancedashboard-wrapper flex flex-col gap-5">
                     <div className="w-[90%] mx-auto rounded-md shadow-md ">

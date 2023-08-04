@@ -62,7 +62,7 @@ const Signup = () => {
             backgroundimg: formData.backgroundimg,
             gender: formData.gender,
             prevelege: "employee",
-            status:false,
+            status: false,
             updatedat: Timestamp.fromDate(new Date()),
         }
         console.log(docData)
@@ -70,9 +70,9 @@ const Signup = () => {
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                await updateDoc(doc(db, "users", user.uid),docData);
+                await updateDoc(doc(db, "users", user.uid), docData);
             } else {
-                await setDoc(doc(db, "users",user.uid),docData);
+                await setDoc(doc(db, "users", user.uid), docData);
             }
         } catch (e) {
             console.error("Error adding document: ", e);
@@ -83,7 +83,7 @@ const Signup = () => {
         <section className='signup section-wrapper'>
             <div className='signup-container'>
                 <div className='signup-wrapper'>
-                <div className="signup-avatar">
+                    <div className="signup-avatar">
                         <img src='/avatar.png' className='' />
                     </div>
                     <form className='form-signup' onSubmit={onSubmit}>
@@ -155,12 +155,14 @@ const Signup = () => {
                                 <option value="female">Female</option>
 
                             </select>
-                            <button
-                                type="submit"
-                                className='primary-button'
-                            >
-                                Sign up
-                            </button>
+                            <div className="signup-btn-wrapper">
+                                <button
+                                    type="submit"
+                                    className='primary-button'
+                                >
+                                    Sign up
+                                </button>
+                            </div>
                             <p>
                                 Already have an account?{' '}
                                 <Link to="/login" className='text-darkblue' >

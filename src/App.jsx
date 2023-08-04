@@ -18,14 +18,16 @@ import Test from './pages/unusedfiles/Test';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
-import Projects from './adminpages/projects/Projects';
-import Notes from './adminpages/Notes/Notes';
 import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
 import { ErrorBoundary } from "react-error-boundary";
 import UpdateEmpData from './adminpages/empoyeeupdate/UpdateEmpData';
 import NotAllowed from './pages/notallowed/NotAllowed';
+import OfficeLocation from './adminpages/location/OfficeLocation';
+import Message from './adminpages/message/Message';
+import Contact from './pages/contact/Contact';
+import Single from './adminpages/message/single';
 
 function App() {
 
@@ -52,7 +54,7 @@ function App() {
           // return <Navigate to="/notallowed" />;
           return <NotAllowed />;
         }
-      }else{
+      } else {
         return <div><HomePageLoader /></div>
       }
 
@@ -75,9 +77,9 @@ function App() {
           </div>
           <div className="layout">
             {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
-              <ProtectedRoute>
-                <Outlet />
-              </ProtectedRoute>
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
             {/* </ErrorBoundary> */}
           </div>
         </div>
@@ -146,6 +148,10 @@ function App() {
         {
           path: "/attendancedashboard",
           element: <AttendanceDashboard />,
+        },
+        {
+          path: "/contact",
+          element: <Contact/>,
         }
       ],
     },
@@ -193,13 +199,16 @@ function App() {
           element: < UpdateEmpData />,
         },
         {
-          path: "/admin/projects",
-          element: <Projects />,
-
+          path: "/admin/officelocation",
+          element: <OfficeLocation />,
         },
         {
-          path: "/admin/notes",
-          element: <Notes />,
+          path: "/admin/message",
+          element: <Message/>,
+        },
+        {
+          path: "/admin/message/:id",
+          element: <Single/>,
         },
       ],
     },

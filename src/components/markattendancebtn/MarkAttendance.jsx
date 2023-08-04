@@ -22,14 +22,14 @@ const MarkAttendance = () => {
     })
     const { currentUser, userData } = useContext(AuthContext)
     const { getAttendanceData, markdate, attendance, markdatefunction, datesLoader } = useContext(CalendarContext)
-    const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation,distance } = useContext(LocationContext)
+    const { isUserInsideGeofence, error, latitude, longitude, reverifyLocation, distance } = useContext(LocationContext)
     console.log(latitude, longitude)
 
     console.log("markrenderr")
 
     useEffect(() => {
         btnshow()
-    }, [attendance,isUserInsideGeofence])
+    }, [attendance, isUserInsideGeofence])
 
     const btnshow = () => {
         console.log("location", isUserInsideGeofence)
@@ -189,28 +189,34 @@ const MarkAttendance = () => {
                 <div className="markattendance-wrapper">
 
                     <div className="markattendance-buttons flex flex-col">
-                    {
+                        {
                             error && (
                                 <p className='text-red-500'>Error:{error}</p>
                             )
-                        } 
+                        }
                         {
                             !isUserInsideGeofence && (
-                               <div className="">
-                                <p>You are at {distance} meters from office</p>
-                                 <p>We can't determine you at office reverify again </p>
                                 <div className="">
+                                    {distance == 9999 ? (
+                                        <p>check if your location is on</p>
+                                    ) : (
+                                        <p>You are at {distance} meters from office</p>
+                                    )
+                                    }
+
+                                    <p>Head to office to mark attendance</p>
                                     <div className="">
-                                        <button
-                                            onClick={reverifyLocation}
-                                            className='primary-button'
-                                        >Reverify Location</button>
+                                        <div className="my-5">
+                                            <button
+                                                onClick={reverifyLocation}
+                                                className='primary-button'
+                                            >Reverify</button>
+                                        </div>
                                     </div>
                                 </div>
-                               </div>
                             )
                         }
-                                             
+
                         {
                             err && (
                                 <p className="text-red-500">{err}</p>

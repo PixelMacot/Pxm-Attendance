@@ -8,7 +8,6 @@ const Quotes = () => {
         return Math.floor(Math.random()
             * (max - min + 1)) + min;
     };
-
     const handleClick = () => {
         setNum(randomNumberInRange(1, 100));
     };
@@ -17,7 +16,7 @@ const Quotes = () => {
     }, [])
 
     return (
-        <div className='quotes-wrapper'>
+        <div className='quotes-wrapper '>
             <div className="quotes-container flex flex-col gap-10 p-5">
                 <div className="quotes-message flex flex-col gap-5">
                     <div className="quote">

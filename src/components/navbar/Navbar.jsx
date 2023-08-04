@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { BiMenuAltRight, BiCopyAlt, BiLogOut } from 'react-icons/bi';
 import { BsPersonFill } from 'react-icons/bs'
 import { HiX } from 'react-icons/hi';
-import { AiFillHome, AiOutlineUnorderedList, AiFillContacts } from 'react-icons/ai'
+import { AiFillHome, AiOutlineUnorderedList, AiFillContacts,AiOutlineMail } from 'react-icons/ai'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { motion } from 'framer-motion';
 import { AuthContext } from '../../context/AuthContext'
@@ -108,6 +108,11 @@ const Navbar = () => {
                   "title": "Team",
                   "link": "/team",
                   "icon": AiOutlineFileProtect
+                },
+                {
+                  "title": "Contact",
+                  "link": "/contact",
+                  "icon": AiOutlineMail
                 },
               ].map((item) => (
                 <li key={item.title} className='p-2 text-white hover:text-pink-500  font-semibold list-none'>

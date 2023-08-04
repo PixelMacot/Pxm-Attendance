@@ -28,8 +28,8 @@ const Login = () => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                setError(errorMessage)
-                console.log(errorCode, errorMessage)
+                setError(error)
+                console.log(error)
             });
     }
 
@@ -43,7 +43,7 @@ const Login = () => {
                     <form className='login-form login-form-wrapper' onSubmit={onLogin}>
                         {
                             error && (
-                                <div className="">Error: {error}</div>
+                                <div className="error">Error: {error.code}</div>
                             )
 
                         }
@@ -80,7 +80,7 @@ const Login = () => {
                             />
                         </div>
 
-                        <div className=''>
+                        <div className='login-btn-wrapper'>
                             <button
                                 onClick={onLogin}
                                 className='primary-button'

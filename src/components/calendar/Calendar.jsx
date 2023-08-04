@@ -93,8 +93,7 @@ const CalendarComponent = () => {
     return holiday ? holiday.name : '';
   };
 
-  // console.log(markdate, holidaysData)
-
+// console.log(markdate, holidaysData)
 
   return (
 

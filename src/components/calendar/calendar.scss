@@ -1,26 +1,7 @@
+@import "../../styles/variable.scss";
+@import "../../styles/responsive.scss";
+
 .calendar {
-    .greencolor {
-        color: green;
-        // font-size: 20px;
-        font-weight: 700;
-    }
-
-    /* HolidayCalendar.css */
-
-    .holiday-mark {
-        position: absolute;
-        top: 0px;
-        width: 60%;
-        margin: auto;
-        height: 35px;
-        background-color: blue;
-        /* border-radius: 50%; */
-        cursor: pointer;
-        /* font-size: 15px; */
-        /* overflow: scroll; */
-    }
-
-    /* Optional: Style the tooltip as per your preference */
     .tooltip {
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
@@ -29,86 +10,91 @@
         font-size: 12px;
         white-space: nowrap;
     }
-
-    .yellowDate {
-        color: blue !important;
-        font-weight: 700;
+    .react-calendar__tile {
+        position: relative !important;
+        display: flex;
+        justify-content: center;
     }
-}
 
-.react-calendar__tile {
-    position: relative !important;
-    display: flex;
-    justify-content: center;
-}
+    .react-calendar__navigation__next2-button,
+    .react-calendar__navigation__prev2-button {
+        display: none;
+    }
+    .react-calendar__navigation__label {
+        pointer-events: none;
+        cursor: default;
+    }
+    .react-calendar button:hover {
+        background-color: transparent !important;
+    }
+    .react-calendar__month-view__days__day--weekend:not(.react-calendar__month-view__days__day--neighboringMonth) {
+        color: black !important;
+    }
+    .react-calendar {
+        width: 100% !important;
+    }
+    .react-calendar__month-view__days__day {
+        height: 50px !important;
+    }
+    @include md {
+        .react-calendar__month-view__days__day {
+            height: 60px !important;
+        }
+    }
 
-.react-calendar__navigation__next2-button,
-.react-calendar__navigation__prev2-button {
-    display: none;
-}
-.react-calendar__navigation__label {
-    pointer-events: none;
-    cursor: default;
-}
-.react-calendar button:hover {
-    background-color: transparent !important;
-}
-.react-calendar__month-view__days__day--weekend:not(.react-calendar__month-view__days__day--neighboringMonth) {
-    color: black !important;
-}
+    .present-day {
+        position: absolute;
+        top: 0px;
+        width: 70%;
+        height: 25px;
+        margin: 0px auto;
+        color: green;
+        border: 2px solid green;
+        background-color: green;
+        color: white;
+        padding: 5px 10px;
+        // border-radius: 50%;
+        text-align: center;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.present-day {
-    position: absolute;
-    top: 0px;
-    width: 70%;
-    height: 25px;
-    margin: 0px auto;
-    color: green;
-    border: 2px solid green;
-    background-color: green;
-    color: white;
-    padding: 5px 10px;
-    // border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.absent-day {
-    position: absolute;
-    top: 0px;
-    width: 70%;
-    height: 25px;
-    border: 2px solid red;
-    background-color: red;
-    color: white;
-    padding: 2px 8px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.holiday,
-.sunday {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    height: 25px;
-    border: 2px solid blue;
-    background-color: blue !important;
-    color: white;
-    padding: 2px 8px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.sunday {
-    background-color: blue !important;
+    .absent-day {
+        position: absolute;
+        top: 0px;
+        width: 70%;
+        height: 25px;
+        border: 2px solid red;
+        background-color: red;
+        color: white;
+        padding: 2px 8px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .holiday,
+    .sunday {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        height: 25px;
+        border: 2px solid blue;
+        background-color: blue !important;
+        color: white;
+        padding: 2px 8px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .sunday {
+        background-color: blue !important;
+    }
 }
