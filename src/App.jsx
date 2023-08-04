@@ -27,7 +27,7 @@ import NotAllowed from './pages/notallowed/NotAllowed';
 import OfficeLocation from './adminpages/location/OfficeLocation';
 import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
-import Single from './adminpages/message/single';
+import Single from './adminpages/message/Single';
 
 function App() {
 
