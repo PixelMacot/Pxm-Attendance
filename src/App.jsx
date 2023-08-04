@@ -61,7 +61,7 @@ function App() {
     }
   };
   const AdminProtectedRoute = ({ children }) => {
-    if (userData.prevelege == "admin") {
+    if (userData.prevelege == "admin"|| userData.prevelege == "superadmin") {
       return children
     } else {
       return <Navigate to="/" />;

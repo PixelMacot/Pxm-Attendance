@@ -344,7 +344,7 @@ const Attendance = () => {
 
             <div className="switch flex flex-col gap-10">
               {
-                userData.prevelege && (
+                userData.prevelege && userData.prevelege ==="superadmin" &&(
                   <div className="switchbutton">
                     <div className="container">
                       admin
@@ -366,7 +366,7 @@ const Attendance = () => {
                 )
               }
               {
-                userData.prevelege && (
+                userData.prevelege && userData.prevelege ==="superadmin" && (
                   <div className="switchbutton">
                     <div className="container">
                       status

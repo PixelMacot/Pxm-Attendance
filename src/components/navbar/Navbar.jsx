@@ -31,7 +31,7 @@ const Navbar = () => {
       // Sign-out successful.
       console.log("you have signed out succesfully")
       return navigate('/login')
-      setCurrentUser()
+      setCurrentUser('')
     }).catch((error) => {
       // An error happened.
     });
@@ -127,7 +127,7 @@ const Navbar = () => {
                 </li>
               ))}
             {
-              userData.prevelege == "admin" && (
+              (userData.prevelege == "admin" ||  userData.prevelege == "superadmin") && (
                 <li className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
                   <Link to="/admin"
                     className='flex gap-2 items-center'

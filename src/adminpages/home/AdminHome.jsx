@@ -29,7 +29,7 @@ const columns = [
     headerName: "Status",
     width: 150,
     renderCell: (params) => {
-      return <p className=''>{params.row.status?'active':'not active'}</p>;
+      return <p className=''>{params.row.status ? 'active' : 'not active'}</p>;
     },
   },
   {
@@ -67,23 +67,31 @@ const AdminHome = () => {
     try {
       const collectionRef = collection(db, "users");
       const snapshot = await getDocs(collectionRef);
+      let fetchedarr = []
       const fetched_data = snapshot.docs.map((doc, index) => {
         console.log(doc.data())
-        return (
-          {
-            id: index,
-            name: doc.data().username,
-            img: doc.data().profileimg,
-            position: doc.data().position,
-            status: doc.data().status,
-            gender: doc.data().gender,
-            prevelege: doc.data().prevelege,
-            uid: doc.data().uid,
+        return doc.data().prevelege === "superadmin" ?
+          (
+            console.log("superadmin dont print")
+          )
+          : (
+            fetchedarr.push({
+              id: index,
+              name: doc.data().username,
+              img: doc.data().profileimg,
+              position: doc.data().position,
+              status: doc.data().status,
+              gender: doc.data().gender,
+              prevelege: doc.data().prevelege,
+              uid: doc.data().uid,
 
-          }
-        )
+            })
+
+
+          )
+
       });
-      setUsers(fetched_data);
+      setUsers(fetchedarr);
       //below function convert data into json
       console.log(fetched_data)
     } catch (error) {
