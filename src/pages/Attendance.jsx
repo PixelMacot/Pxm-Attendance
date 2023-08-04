@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import { useParams } from 'react-router';
-import { onAuthStateChanged } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
-import { auth } from '../firebase';
 import Profile from '../components/profile/Profile';
-import CalendarApp from '../components/calenda/CalendarApp';
-import { Link, useNavigate } from 'react-router-dom';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import moment from 'moment';
 import './employee.scss'
-import TimePicker from 'react-time-picker';
+import { AuthContext } from '../context/AuthContext'
 
 const columns = [
   {
@@ -45,14 +41,16 @@ function CustomToolbar() {
 }
 
 const Attendance = () => {
-  // console.log("Attendance",userData)
+  // console.log("Attendance",empData)
+  const {userData} = useContext(AuthContext)
+
   const { id } = useParams();
   console.log(id)
   //send user to login page when user not logged in
   const [isadmin, setIsAdmin] = useState(false)
   const [attendance, setAttendance] = useState()
   const [currentdate, setcurrentDate] = useState(7)
-  const [userData, setUserData] = useState({})
+  const [empData, setEmpData] = useState({})
   const [err, setErr] = useState()
   const [msg, setMsg] = useState()
   const [adminmsg, setAdminMsg] = useState()
@@ -63,9 +61,7 @@ const Attendance = () => {
     exit: ''
   })
 
-  const [viewattendance, setViewAttendance] = useState(false)
-  const navigate = useNavigate();
-  //function to post profile data into cloud firestore
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setUserAttendance({ ...userattendance, [name]: value });
@@ -74,7 +70,7 @@ const Attendance = () => {
 
   useEffect(() => {
     getUserProfileData(id)
-    console.log(userData.prevelege)
+    console.log(empData.prevelege)
   }, [])
 
   const prevmonth = () => {
@@ -90,7 +86,7 @@ const Attendance = () => {
 
       if (docSnap.exists()) {
         console.log("Document data:", JSON.stringify(docSnap.data()));
-        setUserData(docSnap.data())
+        setEmpData(docSnap.data())
         console.log(docSnap.data().prevelege)
         setUserStatus(docSnap.data().status)
         if (docSnap.data().prevelege === "admin") {
@@ -207,13 +203,13 @@ const Attendance = () => {
   //function to post attendance data into cloud firestore
   const markAttendance = async (e) => {
     e.preventDefault()
-    console.log(userData)
+    console.log(empData)
     console.log(userattendance.date)
     let objname = moment(userattendance.date).format("DD-MM-YYYY")
     try {
       let docData = {
         [objname]: {
-          name: userData.username,
+          name: empData.username,
           markdate: objname,
           arrivalDate: Timestamp.fromDate(new Date()),
           entry: formatTime(userattendance.entry),
@@ -221,19 +217,19 @@ const Attendance = () => {
         }
       }
       console.log("datatobeinserted", docData)
-      const docRef = doc(db, "attendance", userData.uid);
+      const docRef = doc(db, "attendance", empData.uid);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
 
-        updateDoc(doc(db, "attendance", userData.uid), docData).then(() => {
+        updateDoc(doc(db, "attendance", empData.uid), docData).then(() => {
           console.log('Data successfully updated in Firestore!');
           setMsg("Data successfully updated")
         }).catch((error) => {
           console.error('Error updating data in Firestore:', error);
         });
       } else {
-        await setDoc(doc(db, "attendance", userData.uid), docData);
+        await setDoc(doc(db, "attendance", empData.uid), docData);
         setMsg("Data successfully updated")
       }
     } catch (err) {
@@ -248,14 +244,14 @@ const Attendance = () => {
     const { checked } = event.target;
     // Update the data based on checkbox status
     if (checked) {
-      updateDoc(doc(db, "users", userData.uid), { prevelege: "admin" }).then(() => {
+      updateDoc(doc(db, "users", empData.uid), { prevelege: "admin" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully added")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
-      updateDoc(doc(db, "users", userData.uid), { prevelege: "employee" }).then(() => {
+      updateDoc(doc(db, "users", empData.uid), { prevelege: "employee" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
         setAdminMsg("admin prevelege successfully removed")
       }).catch((error) => {
@@ -267,14 +263,14 @@ const Attendance = () => {
     const { checked } = event.target;
     // Update the data based on checkbox status
     if (checked) {
-      updateDoc(doc(db, "users", userData.uid), { status: true }).then(() => {
+      updateDoc(doc(db, "users", empData.uid), { status: true }).then(() => {
         console.log('User Status successfully updated in Firestore!');
         setAdminMsg("User Status successfully added")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
-      updateDoc(doc(db, "users", userData.uid), { status: false }).then(() => {
+      updateDoc(doc(db, "users", empData.uid), { status: false }).then(() => {
         console.log('User Status successfully updated in Firestore!');
         setAdminMsg("User Status successfully removed")
       }).catch((error) => {
@@ -287,9 +283,9 @@ const Attendance = () => {
     <div className="flex flex-col gap-10 justify-center items-center ">
       <div className="w-[90vw]">
         {
-          userData && (
+          empData && (
             <div className="border shadow-md rounded-md min-w-[100%] ">
-              <Profile userData={userData} />
+              <Profile userData={empData} />
             </div>
           )
         }
@@ -344,7 +340,7 @@ const Attendance = () => {
 
             <div className="switch flex flex-col gap-10">
               {
-                userData.prevelege && userData.prevelege ==="superadmin" &&(
+                empData.prevelege && userData.prevelege ==="superadmin" &&(
                   <div className="switchbutton">
                     <div className="container">
                       admin
@@ -366,7 +362,7 @@ const Attendance = () => {
                 )
               }
               {
-                userData.prevelege && userData.prevelege ==="superadmin" && (
+                empData.prevelege && userData.prevelege ==="superadmin" && (
                   <div className="switchbutton">
                     <div className="container">
                       status
