@@ -305,38 +305,93 @@ const Attendance = () => {
             )
           }
 
-          <div className="updateData shadow-md p-5 rounded-md my-2">
+          <div className="updateData flex  items-center justify-between shadow-md p-5 rounded-md my-2">
 
-            <div className="flex gap-2 flex-col">
-              <label>Date</label>
-              <input type="date"
-                name='date'
-                className='border p-2 w-[180px]'
-                onChange={handleChangeInput}
-              />
+            <div className="date-update-wrapper">
+              <div className="flex gap-2 flex-col">
+                <label>Date</label>
+                <input type="date"
+                  name='date'
+                  className='border p-2 w-[180px]'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <div className="flex gap-2 flex-col">
+                <label>Entry Time</label>
+                <input type="time"
+                  name='entry'
+                  step="3600"
+                  className='border p-2 w-[180px]'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <div className="flex gap-2 flex-col">
+                <label>Exit Time</label>
+                <input type="time"
+                  name='exit'
+                  step="3600"
+                  className='border p-2  w-[180px]'
+                  onChange={handleChangeInput}
+                />
+              </div>
+              <button
+                onClick={markAttendance}
+                className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+              >Update</button>
             </div>
-            <div className="flex gap-2 flex-col">
-              <label>Entry Time</label>
-              <input type="time"
-                name='entry'
-                step="3600"
-                className='border p-2 w-[180px]'
-                onChange={handleChangeInput}
-              />
+
+
+
+            <div className="switch flex flex-col gap-10">
+              {
+                userData.prevelege && (
+                  <div className="switchbutton">
+                    <div className="container">
+                      admin
+                      <div className="toggle-switch">
+                        <input type="checkbox" className="checkbox"
+                          name="admin" id="admin"
+                          value={"admin"}
+                          defaultChecked={isadmin ? true : false}
+                          onChange={handleAdminCheckboxChange}
+                        />
+                        {console.log("from input", isadmin)}
+                        <label className="label" htmlFor={"admin"}>
+                          <span className="inner" />
+                          <span className="switch" />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+              {
+                userData.prevelege && (
+                  <div className="switchbutton">
+                    <div className="container">
+                      status
+                      <div className="toggle-switch">
+                        <input type="checkbox" className="userstatus-checkbox"
+                          name="userstatus" id="userstatus"
+                          value={true}
+                          defaultChecked={userStatus}
+                          onChange={handleUserStatusCheckboxChange}
+                        />
+                        {console.log("from status", userStatus)}
+                        <label className="label" htmlFor={"userstatus"}>
+                          <span className="inner" />
+                          <span className="switch" />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
             </div>
-            <div className="flex gap-2 flex-col">
-              <label>Exit Time</label>
-              <input type="time"
-                name='exit'
-                step="3600"
-                className='border p-2  w-[180px]'
-                onChange={handleChangeInput}
-              />
-            </div>
-            <button
-              onClick={markAttendance}
-              className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
-            >Update Attendance Data</button>
+
+
+
+
 
           </div>
           {
@@ -347,50 +402,7 @@ const Attendance = () => {
             )
           }
           {/* //switch  */}
-          {
-            userData.prevelege && (
-              <div className="switchbutton">
-                <div className="container">
-                  admin
-                  <div className="toggle-switch">
-                    <input type="checkbox" className="checkbox"
-                      name="admin" id="admin"
-                      value={"admin"}
-                      defaultChecked={isadmin ? true : false}
-                      onChange={handleAdminCheckboxChange}
-                    />
-                    {console.log("from input", isadmin)}
-                    <label className="label" htmlFor={"admin"}>
-                      <span className="inner" />
-                      <span className="switch" />
-                    </label>
-                  </div>
-                </div>
-              </div>
-            )
-          }
-          {
-          userData.prevelege && (
-              <div className="switchbutton">
-                <div className="container">
-                  status
-                  <div className="toggle-switch">
-                    <input type="checkbox" className="userstatus-checkbox"
-                      name="userstatus" id="userstatus"
-                      value={true}
-                      defaultChecked={userStatus}
-                      onChange={handleUserStatusCheckboxChange}
-                    />
-                    {console.log("from status", userStatus)}
-                    <label className="label" htmlFor={"userstatus"}>
-                      <span className="inner" />
-                      <span className="switch" />
-                    </label>
-                  </div>
-                </div>
-              </div>
-            )
-          }
+
 
           <div className="flex gap-4">
             <div className="load-btn">

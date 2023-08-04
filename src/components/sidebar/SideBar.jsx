@@ -1,7 +1,7 @@
 // Sidebar.js
 import React, { useState } from 'react';
 import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
-import { AiOutlineMessage,AiOutlineHome } from 'react-icons/ai'
+import { AiOutlineMessage, AiOutlineHome } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
 import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi'
 
@@ -9,7 +9,7 @@ const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false)
 
   return (
-    <div className="relative h-[100px]">
+    <div className="relative h-[60px]">
 
       {
         showMenu && (
@@ -17,22 +17,22 @@ const Sidebar = () => {
             <div className="flex gap-10  items-center">
               <div className="">
                 <Link to="/admin" className="">
-                  <AiOutlineHome  />
+                  <AiOutlineHome />
                 </Link>
               </div>
               <div className="">
                 <Link to="/admin/calendar" className="">
-                  <FaCalendarAlt  />
+                  <FaCalendarAlt />
                 </Link>
               </div>
-              <div className="">
+              {/* <div className="">
                 <Link to="/admin/officelocation" className="">
-                  <FaLocationArrow  />
+                  <FaLocationArrow />
                 </Link>
-              </div>
+              </div> */}
               <div className="">
                 <Link to="/admin/message" className="">
-                  <AiOutlineMessage  />
+                  <AiOutlineMessage />
                 </Link>
               </div>
             </div>
@@ -42,7 +42,6 @@ const Sidebar = () => {
               <BiSolidUpArrow />
             </div>
           </div>
-
         )
       }
       {
