@@ -5,7 +5,7 @@ import { CalendarContext } from '../../context/CalendarContext'
 import CalendarComponent from '../../components/calendar/Calendar'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import Quotes from '../../components/quotes/Quotes';
-import FilterHolidays from '../../components/filterholiday/filterholiday';
+// import FilterHolidays from '../../components/filterholiday/filterholiday';
 
 const Home = () => {
   const [loader, setLoader] = useState(true)
@@ -53,11 +53,7 @@ const Home = () => {
               {!loader && (<CalendarComponent />)}
             </div>
             <div className="w-[400px]">
-              {
-                holidaysData && (
-                  <FilterHolidays/>
-                )
-              }
+            
             </div>
           </div>
         </div>
