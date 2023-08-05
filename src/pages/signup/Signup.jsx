@@ -15,7 +15,7 @@ const Signup = () => {
     const [formData, setFormData] = useState(
         {
             username: '',
-            profileimg: '/boyavatar.png',
+            profileimg: 'notprovided',
             position: 'your position',
             skills: 'your skills',
             backgroundimg: '/profilebg.jpg',

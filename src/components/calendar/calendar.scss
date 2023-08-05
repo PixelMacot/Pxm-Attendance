@@ -6,6 +6,7 @@
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 5px;
+
         border-radius: 4px;
         font-size: 12px;
         white-space: nowrap;
@@ -32,6 +33,7 @@
     }
     .react-calendar {
         width: 100% !important;
+        border:2px solid transparent;
     }
     .react-calendar__month-view__days__day {
         height: 50px !important;

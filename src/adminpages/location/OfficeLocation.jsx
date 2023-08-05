@@ -1,9 +1,109 @@
-import React from 'react'
+import { isValidLatitude } from 'geolib';
+import React, { useState } from 'react'
+import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
+import { db } from '../../firebase';
 
 const OfficeLocation = () => {
-  
+  const [latitude, setLatitude] = useState(28.6292);
+  const [longitude, setLongitude] = useState(77.3840);
+  const [radius, setRadius] = useState(10)
+  const [error, setError] = useState('');
+  const [locationLoader, setLocationLoader] = useState(true)
+  const [msg, setMsg] = useState('')
+
+  const handleGetLocationClick = (e) => {
+    e.preventDefault()
+    console.log("fn location called")
+    setError('')
+    setMsg('')
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude.toFixed(4));
+          setLongitude(position.coords.longitude.toFixed(4));
+          setLocationLoader(false)
+          setMsg("successfully fetched location")
+        },
+        (error) => {
+          setLocationLoader(false)
+          console.error("Error getting user location:", error.message);
+          setError(error.message)
+        }
+      );
+    } else {
+      setLocationLoader(false)
+      console.error("Geolocation is not available in this browser.");
+    }
+  };
+
+const uploadToFirestore = async (e) => {
+    e.preventDefault()
+   await setDoc(doc(db, "officelocation", "h8jzagt3VGDlwpzUdgbI"), {
+        latitude:latitude,
+        longitude:longitude,
+        radius:radius,
+      
+    }).then(()=>{
+      setMsg("successfully updated office location")
+    })
+    // console.log("Document written with ID: ", docRef.id);
+};
+
   return (
-    <div>Location</div>
+    <div className="office-location-container">
+      <div className="office-location-wrapper">
+        <div className="shadow-md m-5 p-10 w-[95vw] lg:w-[40vw] mx-auto">
+          <h1 className="text-xl py-5 text-center font-bold text-cyan-900 ">Change Office Location</h1>
+          <form
+            className='flex flex-col gap-5'
+            onSubmit={uploadToFirestore}
+          >
+            <input
+              name='latitude'
+              value={latitude}
+              onChange={(e)=>setLatitude(e.target.value)}
+              placeholder='enter latitude'
+              className='border py-2 px-5 rounded-md'
+              type='number'
+              maxLength="7"
+              minLength="6"
+            />
+            <input
+              name='longitude'
+              value={longitude}
+              onChange={(e)=>setLongitude(e.target.value)}
+              placeholder='enter longitude'
+              className='border py-2 px-5 rounded-md'
+              type='number'
+              maxLength="7"
+              minLength="6"
+            />
+            <input
+              name='radius'
+              value={radius}
+              onChange={(e)=>setRadius(e.target.value)}
+              placeholder='enter Radius'
+              className='border py-2 px-5 rounded-md'
+              type='number'
+              maxLength="7"
+              minLength="2"
+            />
+            {
+              error && (
+                <p className="text-red-500 font-bold">{error}</p>
+              )
+            }
+            <p className="text-green-700 font-bold">
+              {msg}
+            </p>
+            <button className='primary-button'
+              onClick={handleGetLocationClick}
+            >Locate</button>
+            <button className='primary-button'>Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
   )
 }
 

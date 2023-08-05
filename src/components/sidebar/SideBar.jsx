@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
 import { AiOutlineMessage, AiOutlineHome } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
-import { BiSolidUpArrow, BiSolidDownArrow } from 'react-icons/bi'
+import { BiSolidUpArrow, BiSolidDownArrow, BiSolidMapPin } from 'react-icons/bi'
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -25,11 +25,11 @@ const Sidebar = () => {
                   <FaCalendarAlt />
                 </Link>
               </div>
-              {/* <div className="">
+              <div className="">
                 <Link to="/admin/officelocation" className="">
-                  <FaLocationArrow />
+                  <BiSolidMapPin />
                 </Link>
-              </div> */}
+              </div>
               <div className="">
                 <Link to="/admin/message" className="">
                   <AiOutlineMessage />

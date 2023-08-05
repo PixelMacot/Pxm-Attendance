@@ -20,7 +20,7 @@ const Profile = ({ userData }) => {
                         <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-36 lg:-mt-44">
                             <Avatar
                                 alt={userData.username}
-                                src={userData.profileimg ? userData.profileimg : "/boyavatar.png"}
+                                src={userData.profileimg != 'notprovided' ? userData.profileimg:userData.gender=='male'?'/boyavatar.png':'/girlavatar.png'}
                                 sx={{ width: '100%', height: '100%' }}
                             />
                         </div>

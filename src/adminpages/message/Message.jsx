@@ -89,7 +89,7 @@ const Message = () => {
   }
 
   return (
-    <div className='message-container'>
+    <div className='message-container mt-4'>
       <div className="message-wrapper w-fit mx-auto">
         <DataGrid
           rows={messages}

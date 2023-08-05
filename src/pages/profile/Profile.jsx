@@ -25,14 +25,14 @@ const Profile = () => {
     const [percent, setPercent] = useState(0);
     const [formData, setFormData] = useState(
         {
-            username: '',
-            profileimg: '/boyavatar.png',
+            username: '',       
             position: '',
             skills: '',
             backgroundimg: '/profilebg.jpg',
             address: '',
             phoneno: '',
-            gender: ''
+            gender: '',
+            profileimg:'notprovided',
         }
     );
     const { currentUser, userData, getUserProfileData } = useContext(AuthContext)
@@ -220,7 +220,7 @@ const Profile = () => {
                                     <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-20 md:-mt-24">
                                         <Avatar
                                             alt={userData.displayName}
-                                            src={formData.profileimg ? formData.profileimg : '/boyavatar.png'}
+                                            src={formData.profileimg != 'notprovided' ? formData.profileimg:formData.gender=='male'?'/boyavatar.png':'/girlavatar.png'}
                                             sx={{ width: '100%', height: '100%' }}
                                         />
                                     </div>
