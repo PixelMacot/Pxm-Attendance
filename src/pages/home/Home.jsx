@@ -5,12 +5,13 @@ import { CalendarContext } from '../../context/CalendarContext'
 import CalendarComponent from '../../components/calendar/Calendar'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import Quotes from '../../components/quotes/Quotes';
+import FilterHolidays from '../../components/filterholiday/filterholiday';
 
 const Home = () => {
   const [loader, setLoader] = useState(true)
   const { currentUser, userData } = useContext(AuthContext)
   const { datesLoader, getAttendanceData, attendance } = useContext(CalendarContext)
-  const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
+  const { holidaysDataLoading, fetchHolidays, holidaysData, filteredHolidays } = useContext(HolidaysContext)
 
 
   const reload = () => {
@@ -29,12 +30,13 @@ const Home = () => {
       setLoader(false)
     }
   }, []);
-
+  console.log('filter holidays', filteredHolidays)
   return (
     <section className='home-wrapper'>
       <div className="home-container">
         <div className="shadow-md w-[90%] mx-auto py-5 my-2">
           <Profile userData={userData} />
+          <Quotes />
         </div>
         <div className="shadow-md w-[90%] mx-auto my-5">
           {
@@ -51,7 +53,11 @@ const Home = () => {
               {!loader && (<CalendarComponent />)}
             </div>
             <div className="w-[400px]">
-              <Quotes />
+              {
+                holidaysData && (
+                  <FilterHolidays/>
+                )
+              }
             </div>
           </div>
         </div>

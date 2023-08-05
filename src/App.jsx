@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import './styles/global.scss'
 import Home from './pages/home/Home';
 import Signup from './pages/signup/Signup';
@@ -28,10 +28,16 @@ import OfficeLocation from './adminpages/location/OfficeLocation';
 import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
 import Single from './adminpages/message/Single';
+import Notification from './components/notification/Notification';
+import {getFirebaseToken} from './firebase'
 
 function App() {
-
+  // getFirebaseToken()
+  const [isTokenFound, setTokenFound] = useState(false);
+  
   const { currentUser, userDataLoading, userData } = useContext(AuthContext)
+  getFirebaseToken(setTokenFound);
+  isTokenFound ? console.log("Token found") : console.log("Token not found");
 
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
@@ -61,7 +67,7 @@ function App() {
     }
   };
   const AdminProtectedRoute = ({ children }) => {
-    if (userData.prevelege == "admin"|| userData.prevelege == "superadmin") {
+    if (userData.prevelege == "admin" || userData.prevelege == "superadmin") {
       return children
     } else {
       return <Navigate to="/" />;
@@ -72,6 +78,7 @@ function App() {
     return (
       <div className="main">
         <Navbar />
+        <Notification />
         <div className="page-wrapper">
           <div className="maincontainer">
           </div>
@@ -151,7 +158,7 @@ function App() {
         },
         {
           path: "/contact",
-          element: <Contact/>,
+          element: <Contact />,
         }
       ],
     },
@@ -204,11 +211,11 @@ function App() {
         },
         {
           path: "/admin/message",
-          element: <Message/>,
+          element: <Message />,
         },
         {
           path: "/admin/message/:id",
-          element: <Single/>,
+          element: <Single />,
         },
       ],
     },

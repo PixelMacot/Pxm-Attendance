@@ -2,19 +2,30 @@ import { createContext, useEffect, useState } from "react";
 import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import Papa from 'papaparse';
-
+import moment from 'moment'
 export const HolidaysContext = createContext();
 
 export const HolidaysContextProvider = ({ children }) => {
   const [fetchedData, setFetchedData] = useState([]);
   const [holidaysDataLoading, setHolidaysDataLoading] = useState(true);
+  const [filteredHolidays, setFilteredHolidays] = useState([]);
   const [holidaysData, setHolidaysData] = useState(
     [
       { "date": "05-07-2023", "name": "Independence Day" },
       { "date": "15-07-2023", "name": "Second Saturday" }
     ]
   )
+  useEffect(() => {
+    fetchHolidays().then(() => {
+      filterHolidays()
+    })
+  }, [])
 
+  const filterHolidays = () => {
+    const currentDate = moment(new Date()).format("DD-MM-YYYY")
+    const filteredHolidays = holidaysData.filter((holiday) => holiday.date === currentDate);
+    setFilteredHolidays(filteredHolidays);
+  }
   const handleImportData = () => {
     if (csvFile) {
       Papa.parse(csvFile, {
@@ -102,7 +113,19 @@ export const HolidaysContextProvider = ({ children }) => {
     setHolidaysData(jsonData)
   };
   return (
-    <HolidaysContext.Provider value={{ holidaysDataLoading, setHolidaysDataLoading, holidaysData, setHolidaysData,handleImportData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON }}>
+    <HolidaysContext.Provider value={{
+      holidaysDataLoading,
+      setHolidaysDataLoading,
+      holidaysData,
+      setHolidaysData,
+      handleImportData,
+      handleCsvData,
+      fetchHolidays,
+      flattenData,
+      convertDataToCSV,
+      convertDataToJSON,
+      filteredHolidays
+    }}>
       {children}
     </HolidaysContext.Provider>
   );
