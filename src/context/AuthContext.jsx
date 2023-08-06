@@ -89,9 +89,39 @@ export const AuthContextProvider = ({ children }) => {
   };
 
 
+  async function updateFcmToken(userData,Fcmtoken) {
+
+    let docData = {
+      uid: userData.uid,
+      username: userData.username,
+      token: Fcmtoken
+    }
+    console.log(docData)
+    try {
+      const docRef = doc(db, "notification", userData.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        await updateDoc(doc(db, "notification", userData.uid), docData);
+      } else {
+        await setDoc(doc(db, "notification", userData.uid), docData);
+      }
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
 
   return (
-    <AuthContext.Provider value={{ emailSent, userDataLoading, currentUser, userData, getUserProfileData, handleSendEmailVerification, userverified }}>
+    <AuthContext.Provider value={{
+      emailSent,
+      userDataLoading,
+      currentUser,
+      userData,
+      getUserProfileData,
+      handleSendEmailVerification,
+      userverified,
+      updateFcmToken
+    }}>
       {children}
     </AuthContext.Provider>
   );

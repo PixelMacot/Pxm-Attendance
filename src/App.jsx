@@ -29,15 +29,20 @@ import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
 import Single from './adminpages/message/Single';
 import Notification from './components/notification/Notification';
-import {getFirebaseToken} from './firebase'
+import { requestForToken,onMessageListener } from './firebase'
 
 function App() {
   // getFirebaseToken()
   const [isTokenFound, setTokenFound] = useState(false);
   
-  const { currentUser, userDataLoading, userData } = useContext(AuthContext)
-  getFirebaseToken(setTokenFound);
-  isTokenFound ? console.log("Token found") : console.log("Token not found");
+  const { currentUser, userDataLoading, userData,updateFcmToken } = useContext(AuthContext)
+
+  onMessageListener().then(payload => {
+    // setShow(true);
+    alert(payload.notification.body )
+    console.log(payload.notification.title);
+  }).catch(err => console.log('failed: ', err));
+  // isTokenFound ? console.log("Token found") : console.log("Token not found");
 
   if (userDataLoading) {
     return <div><HomePageLoader /></div>
@@ -51,6 +56,10 @@ function App() {
       if (!userData.dummyData) {
         if (userData.status) {
           if (currentUser.emailVerified) {
+           requestForToken().then((data)=>{
+            console.log(data)
+            updateFcmToken(userData,data)
+           })
             return children
           } else {
             // return <Navigate to="/notverified" />;
