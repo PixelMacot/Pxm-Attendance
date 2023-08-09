@@ -63,7 +63,7 @@ const Profile = () => {
             phoneno: formData.phoneno,
             backgroundimg: formData.backgroundimg,
             gender: formData.gender,
-            dob: formData.dob,
+            dob: moment(formData.dob).format("YYYY-MM-DD"),
             prevelege: "employee"
         }
         console.log(docdta)
@@ -83,7 +83,7 @@ const Profile = () => {
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
                         gender: formData.gender,
-                        dob: formData.dob,
+                        dob: moment(formData.dob).format("YYYY-MM-DD"),
                         prevelege: "employee"
                     }
                 );
@@ -100,7 +100,7 @@ const Profile = () => {
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
                         gender: formData.gender,
-                        dob: formData.dob,
+                        dob: moment(formData.dob).format("YYYY-MM-DD"),
                         prevelege: "employee"
                     }
                 );

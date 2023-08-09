@@ -6,6 +6,7 @@ import './calendar.scss'
 import moment from 'moment';
 import { CalendarContext } from '../../context/CalendarContext'
 import { HolidaysContext } from '../../context/HolidaysContext'
+import HolidayEmail from '../holidaysemail/HolidayEmail';
 
 
 
@@ -48,7 +49,7 @@ const CalendarComponent = () => {
     const isSunday = date.getDay() === 0; // 0 is Sunday
     // Define the content for different date types
     const isAbsent = !isPresent && !isHoliday && !isSunday && date < currentDate;
-   // Check if the date is a Sunday
+    // Check if the date is a Sunday
 
     // Define the content for different date types
     if (isPresent) {
@@ -64,12 +65,12 @@ const CalendarComponent = () => {
     } else if (isAbsent) {
       return <div className="absent-day" data-tip={getOccasion(formattedDate)}
       >{date.getDate()}</div>
-    } else if(isSunday){
+    } else if (isSunday) {
       return <div className='sunday'>
         {date.getDate()}
       </div>
     }
-    
+
     else {
       return null; // For future dates with no special marking
     }
@@ -93,13 +94,14 @@ const CalendarComponent = () => {
     return holiday ? holiday.name : '';
   };
 
-// console.log(markdate, holidaysData)
+  // console.log(markdate, holidaysData)
 
   return (
 
     <div className="calendar">
       <div className="calendar-container">
         <div className="calendar-wrapper">
+        <HolidayEmail/>
           {
             markdate && (
               <Calendar
@@ -107,16 +109,8 @@ const CalendarComponent = () => {
                 view={"month"}
                 onActiveStartDateChange={onActiveStartDateChangeHandler}
                 tileContent={tileContent}
-              // tileClassName={({ date, view }) => {
-              //   if (markdate.find(x => x === moment(date).format("DD-MM-YYYY"))) {
-              //     return 'greencolor'
-              //   } else {
-              //     if (holidaysData.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
-              //       return 'yellowDate'
-              //     }
-              //   }
-              // }}
               />
+              
             )
           }
           <ReactTooltip effect="solid" id="my-tooltip" />

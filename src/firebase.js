@@ -35,11 +35,31 @@ export const messaging = getMessaging(app);
 // getToken(messaging, { vapidKey: "BMfyLyEdq0zmorHvgcfhrsT4iZCPjxLD0g2yUoS3smY2kXdxmeA2vR1rHqb86SxvDya7W8MGRRKJ3EdMpk6jED85" });
 const message = "Successfully registered FCM"
 
+ function subscribeToTopic(token, topic) {
+          fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${topic}`, {
+            method: 'POST',
+            headers: new Headers({
+              Authorization: `key=${FCM_SERVER_KEY}`
+            })
+          })
+            .then((response) => {
+              if (response.status < 200 || response.status >= 400) {
+                console.log(response.status, response);
+              }
+              console.log(`"${topic}" is subscribed`);
+            })
+            .catch((error) => {
+              console.error(error.result);
+            });
+          return true;
+        }
+
 export const requestForToken = () => {
   return getToken(messaging, { vapidKey: 'BHkt4e3hDotxxN0riYplQp85Wf17AocPthBjfGZw6deUob_ZwnadUIC4D-IweqVgtgxsFgqC6u5sE9YqYQ-jWOs' })
     .then((currentToken) => {
       if (currentToken) {
         console.log('current token for client: ', currentToken);
+        subscribeToTopic(currentToken, 'allUsers')
         return currentToken
         // Perform any other neccessary action with the token
       } else {

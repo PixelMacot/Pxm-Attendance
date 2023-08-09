@@ -10,6 +10,7 @@ var firebaseConfig = {
     storageBucket: "attendance-14669.appspot.com",
     messagingSenderId: "332574020347",
     appId: "1:332574020347:web:164aa235c7790b28cb565e",
+
 };
 
 firebase.initializeApp(firebaseConfig);

@@ -1,19 +1,22 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
+import axios from 'axios';
+import emailjs from '@emailjs/browser';
+
 
 const Contact = () => {
     const { currentUser, userData } = useContext(AuthContext)
-
+    console.log(currentUser)
     const [formData, setFormData] = useState(
         {
-           
-            category:'query',
-            message:''
+            subject: '',
+            message: ''
         }
     );
+
     //handle change input when an field changes
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
@@ -22,17 +25,46 @@ const Contact = () => {
     };
 
     const uploadToFirestore = async (e) => {
+
         e.preventDefault()
+        sendEmail(e)
         const docRef = await addDoc(collection(db, "messages"), {
-            id:currentUser.uid,
-            name:userData.username,
-            category: formData.category,
+            id: currentUser.uid,
+            name: userData.username,
+            subject: formData.subject,
             message: formData.message,
-            date:moment(new Date()).format("DD-MM-YYYY")
+            date: moment(new Date()).format("DD-MM-YYYY")
         });
         console.log("Document written with ID: ", docRef.id);
     };
 
+    //sending email to all  users
+    
+    const sendEmail = (e) => {
+        e.preventDefault();
+        console.log(e.target.email)
+        emailjs.sendForm('service_2jm8iue', 'template_jcs0gvd', e.target, '7E1QUrPpZ_ri8eIqo')
+            .then((result) => {
+                console.log(result);
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
+
+    //send email to admin
+
+    const sendAdminEmail = (e) => {
+        e.preventDefault();
+        console.log(e.target.email)
+        emailjs.sendForm('service_2jm8iue', 'template_ag201b9', e.target, '7E1QUrPpZ_ri8eIqo')
+            .then((result) => {
+                console.log(result);
+            }, (error) => {
+                console.log(error.text);
+            });
+    };
+
+    //sending email to admin
     return (
         <div className="py-20 flex flex-col gap-10 justify-center items-center">
             <h1 className='text-xl'>Send Message</h1>
@@ -41,18 +73,22 @@ const Contact = () => {
                 className='flex flex-col gap-10 justify-center items-center'
             >
 
-                <select id="category"
-                    name="category"
-                    value={formData.category}
-                    required
-                    className='w-full border px-5 py-2 shadow-md rounded-md'
+                <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder='Enter subject'
+                    className='w-full p-2 border shadow-md rounded-md'
                     onChange={handleChangeInput}
-                >
-                    <option value="query">I have a Query</option>
-                    <option value="leave">I want leave</option>
-                    <option value="blocked">I am blocked</option>
-                    <option value="error">App is malfunctioning</option>
-                </select>
+                />
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={currentUser.email}
+                    placeholder='your email'
+                    className='w-full p-2 border shadow-md rounded-md hidden '
+                />
                 <textarea
                     name="message"
                     onChange={handleChangeInput}
