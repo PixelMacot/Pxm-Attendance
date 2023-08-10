@@ -5,6 +5,7 @@ import { CalendarContext } from '../../context/CalendarContext'
 import CalendarComponent from '../../components/calendar/Calendar'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import Quotes from '../../components/quotes/Quotes';
+import ShowAnnouncement from '../../components/showannouncement/ShowAnnouncement';
 // import FilterHolidays from '../../components/filterholiday/filterholiday';
 
 const Home = () => {
@@ -37,6 +38,7 @@ const Home = () => {
         <div className="shadow-md w-[90%] mx-auto py-5 my-2">
           <Profile userData={userData} />
           <Quotes />
+          <ShowAnnouncement/>
         </div>
         <div className="shadow-md w-[90%] mx-auto my-5">
           {

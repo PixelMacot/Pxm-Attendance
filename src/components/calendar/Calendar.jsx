@@ -7,6 +7,7 @@ import moment from 'moment';
 import { CalendarContext } from '../../context/CalendarContext'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import HolidayEmail from '../holidaysemail/HolidayEmail';
+import UpcomingHolidays from '../upcomingholidays/UpcomingHolidays';
 
 
 
@@ -34,8 +35,6 @@ const CalendarComponent = () => {
     // console.log("vv:", activeStartDate, value, view);
     setCurrentMonth(moment(activeStartDate).format("DD-MM-YYYY"))
   };
-
-
   const tileContent = ({ date }) => {
     const formattedDate = moment(date).format("DD-MM-YYYY")
 
@@ -101,7 +100,7 @@ const CalendarComponent = () => {
     <div className="calendar">
       <div className="calendar-container">
         <div className="calendar-wrapper">
-        <HolidayEmail/>
+          <UpcomingHolidays />
           {
             markdate && (
               <Calendar
@@ -110,7 +109,7 @@ const CalendarComponent = () => {
                 onActiveStartDateChange={onActiveStartDateChangeHandler}
                 tileContent={tileContent}
               />
-              
+
             )
           }
           <ReactTooltip effect="solid" id="my-tooltip" />
