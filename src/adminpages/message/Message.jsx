@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import { Link } from 'react-router-dom';
-
+import { MessagesContext } from '../../context/MessageContext'
 
 const columns = [
   {
@@ -41,53 +41,43 @@ function CustomToolbar() {
 }
 
 const Message = () => {
-  const [filter, setFilter] = useState()
-  const [messages, setMessages] = useState({})
+  const {messages,fetchMessages} = useContext(MessagesContext)
+
   let rows = []
 
-  useEffect(() => {
-    fetchMessages()
-    // if (messages) {
-    //   insertInRows()
-    // }
-  }, [])
+  // useEffect(() => {
+  //   fetchMessages()
+  //   // if (messages) {
+  //   //   insertInRows()
+  //   // }
+  // }, [])
 
 
-  const fetchMessages = async () => {
-    try {
-      const collectionRef = collection(db, "messages");
-      const snapshot = await getDocs(collectionRef);
-      const fetched_data = snapshot.docs.map((doc, index) => {
-        console.log(index)
-        return (
-          {
-            id:index,
-            name:doc.data().name,
-            category:doc.data().category,
-            date:doc.data().date,
-            message:doc.data().message,
-          }
-        )
-      });
-      setMessages(fetched_data);
-      //below function convert data into json
-      console.log(fetched_data)
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const fetchMessages = async () => {
+  //   try {
+  //     const collectionRef = collection(db, "messages");
+  //     const snapshot = await getDocs(collectionRef);
+  //     const fetched_data = snapshot.docs.map((doc, index) => {
+  //       console.log(index)
+  //       return (
+  //         {
+  //           id:index,
+  //           name:doc.data().name,
+  //           date:doc.data().date,
+  //           message:doc.data().message,
+  //           uid:doc.data().uid
+  //         }
+  //       )
+  //     });
+  //     setMessages(fetched_data);
+  //     //below function convert data into json
+  //     console.log(fetched_data)
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
-  const insertInRows = () => {
-    Object.keys(messages).forEach(function (key, index) {
-      console.log(messages[key])
-      rows.push({
-        id: index,
-        name: messages[key].name,
-        message: messages[key].message
-      })
-    });
-  }
-
+console.log(messages)
   return (
     <div className='message-container mt-4'>
       <div className="message-wrapper w-fit mx-auto">

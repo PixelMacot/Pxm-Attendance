@@ -114,6 +114,11 @@ const Navbar = () => {
                   "link": "/contact",
                   "icon": AiOutlineMail
                 },
+                {
+                  "title": "Inbox",
+                  "link": "/inbox",
+                  "icon": AiOutlineMail
+                },
               ].map((item) => (
                 <li key={item.title} className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
 

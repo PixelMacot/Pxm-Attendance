@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react'
-import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, getDocs, updateDoc, collection, addDoc,Timestamp  } from "firebase/firestore";
 import { db } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
@@ -27,13 +27,14 @@ const Contact = () => {
     const uploadToFirestore = async (e) => {
 
         e.preventDefault()
-        sendEmail(e)
+        sendAdminEmail(e)
         const docRef = await addDoc(collection(db, "messages"), {
             id: currentUser.uid,
             name: userData.username,
             subject: formData.subject,
             message: formData.message,
-            date: moment(new Date()).format("DD-MM-YYYY")
+            date: moment(new Date()).format("DD-MM-YYYY"),
+            createdat: Timestamp.fromDate(new Date()),
         });
         console.log("Document written with ID: ", docRef.id);
     };
@@ -56,7 +57,7 @@ const Contact = () => {
     const sendAdminEmail = (e) => {
         e.preventDefault();
         console.log(e.target.email)
-        emailjs.sendForm('service_2jm8iue', 'template_ag201b9', e.target, '7E1QUrPpZ_ri8eIqo')
+        emailjs.sendForm('service_2jm8iue', 'template_jcs0gvd', e.target, '7E1QUrPpZ_ri8eIqo')
             .then((result) => {
                 console.log(result);
             }, (error) => {
@@ -80,14 +81,6 @@ const Contact = () => {
                     placeholder='Enter subject'
                     className='w-full p-2 border shadow-md rounded-md'
                     onChange={handleChangeInput}
-                />
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={currentUser.email}
-                    placeholder='your email'
-                    className='w-full p-2 border shadow-md rounded-md hidden '
                 />
                 <textarea
                     name="message"

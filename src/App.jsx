@@ -14,7 +14,6 @@ import Team from './pages/team/Team';
 
 import { AuthContext } from "./context/AuthContext";
 import NotVerified from './pages/notverified/NotVerified';
-import Test from './pages/unusedfiles/Test';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
 import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
@@ -27,9 +26,10 @@ import NotAllowed from './pages/notallowed/NotAllowed';
 import OfficeLocation from './adminpages/location/OfficeLocation';
 import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
-import Single from './adminpages/message/Single';
 import Notification from './components/notification/Notification';
 import { requestForToken,onMessageListener } from './firebase'
+import SingleMessage from './components/singlemessage/SingleMessage';
+import Inbox from './components/inbox/Inbox';
 
 function App() {
   // getFirebaseToken()
@@ -168,6 +168,10 @@ function App() {
         {
           path: "/contact",
           element: <Contact />,
+        },
+        {
+          path: "/inbox",
+          element: <Inbox/>,
         }
       ],
     },
@@ -224,7 +228,7 @@ function App() {
         },
         {
           path: "/admin/message/:id",
-          element: <Single />,
+          element: <SingleMessage />,
         },
       ],
     },
