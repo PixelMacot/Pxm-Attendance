@@ -30,6 +30,7 @@ import Notification from './components/notification/Notification';
 import { requestForToken,onMessageListener } from './firebase'
 import SingleMessage from './components/singlemessage/SingleMessage';
 import Inbox from './components/inbox/Inbox';
+import CreateAnnouncement from './adminpages/createannouncement/CreateAnnouncement';
 
 function App() {
   // getFirebaseToken()
@@ -225,6 +226,10 @@ function App() {
         {
           path: "/admin/message",
           element: <Message />,
+        },
+        {
+          path: "/admin/createannouncement",
+          element: <CreateAnnouncement/>,
         },
         {
           path: "/admin/message/:id",

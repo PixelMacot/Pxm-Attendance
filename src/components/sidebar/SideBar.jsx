@@ -4,6 +4,8 @@ import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
 import { AiOutlineMessage, AiOutlineHome } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
 import { BiSolidUpArrow, BiSolidDownArrow, BiSolidMapPin } from 'react-icons/bi'
+import {HiOutlineSpeakerphone} from 'react-icons/hi'
+
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -13,8 +15,8 @@ const Sidebar = () => {
 
       {
         showMenu && (
-          <div className=" fixed w-full z-10 px-10 my-5 border border-gray-200 bg-cyan-700 text-white text-2xl border-r-2 flex items-center justify-between  py-3">
-            <div className="flex gap-10  items-center">
+          <div className=" fixed w-full z-10 px-5 my-5 border border-gray-200 bg-cyan-700 text-white text-2xl border-r-2 flex items-center justify-between  py-3">
+            <div className="flex gap-8 md:gap-10  items-center">
               <div className="">
                 <Link to="/admin" className="">
                   <AiOutlineHome />
@@ -28,6 +30,11 @@ const Sidebar = () => {
               <div className="">
                 <Link to="/admin/officelocation" className="">
                   <BiSolidMapPin />
+                </Link>
+              </div>
+              <div className="">
+                <Link to="/admin/createannouncement" className="">
+                  <HiOutlineSpeakerphone/>
                 </Link>
               </div>
               <div className="">
