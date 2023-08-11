@@ -4,7 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import { FaSuitcase } from 'react-icons/fa';
 import { AiFillSetting } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
-
+import Quotes from '../../components/quotes/Quotes';
 
 const Profile = ({ userData }) => {
 
@@ -20,29 +20,35 @@ const Profile = ({ userData }) => {
                         <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-36 lg:-mt-44">
                             <Avatar
                                 alt={userData.username}
-                                src={userData.profileimg != 'notprovided' ? userData.profileimg:userData.gender=='male'?'/boyavatar.png':'/girlavatar.png'}
+                                src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
                                 sx={{ width: '100%', height: '100%' }}
                             />
                         </div>
-                        <div className="flex flex-col gap-5">
-                            <div className="text-center text-xl md:text-2xl font-bold w-fit">
-                                <span>{userData.username ? userData.username : "Username"}</span>
+                        <div className="flex flex-wrap justify-between gap-[20px]">
+                            <div className="flex flex-col gap-5">
+                                <div className="text-center text-xl md:text-2xl font-bold w-fit">
+                                    <span>{userData.username ? userData.username : "Username"}</span>
+                                </div>
+                                <div className="flex flex-row items-center gap-2 text-center text-sm md:text-lg text-gray-600 w-fit">
+                                    <FaSuitcase />
+                                    <span>{userData.position ? userData.position : "Web Developer"}</span>
+                                </div>
+                                <div className="flex flex-row items-center gap-2  text-sm md:text-lg text-gray-600 break-words w-fit">
+                                    <AiFillSetting />
+                                    <span>{userData.skills ? userData.skills : "Html Css"}</span>
+                                </div>
+
+                                {
+                                    userData.dummyData && (
+                                        <div className="text-cyan-700 font-bold">
+                                            <Link to="/profile"> Update your profile</Link>
+                                        </div>
+                                    )
+                                }
                             </div>
-                            <div className="flex flex-row items-center gap-2 text-center text-sm md:text-lg text-gray-600 w-fit">
-                                <FaSuitcase />
-                                <span>{userData.position ? userData.position : "Web Developer"}</span>
+                            <div className="quotes-container-in-profile w-[100%] md:w-[450px]  lg:-mt-10">
+                                <Quotes />
                             </div>
-                            <div className="flex flex-row items-center gap-2  text-sm md:text-lg text-gray-600 break-words w-fit">
-                                <AiFillSetting />
-                                <span>{userData.skills ? userData.skills : "Html Css"}</span>
-                            </div>
-                            {
-                                userData.dummyData && (
-                                    <div className="text-cyan-700 font-bold">
-                                        <Link to="/profile"> Update your profile</Link>
-                                    </div>
-                                )
-                            }
                         </div>
                     </div>
                 </div>

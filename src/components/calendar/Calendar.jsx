@@ -100,7 +100,7 @@ const CalendarComponent = () => {
     <div className="calendar">
       <div className="calendar-container">
         <div className="calendar-wrapper">
-          <UpcomingHolidays />
+          {/* <UpcomingHolidays /> */}
           {
             markdate && (
               <Calendar

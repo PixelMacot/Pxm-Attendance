@@ -88,7 +88,7 @@ function App() {
     return (
       <div className="main">
         <Navbar />
-        <Notification />
+        {/* <Notification /> */}
         <div className="page-wrapper">
           <div className="maincontainer">
           </div>

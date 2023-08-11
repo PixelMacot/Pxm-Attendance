@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 
 const CreateAnnouncement = () => {
-    const [announcement, setAnnouncement] = useState()
+    const [announcement, setAnnouncement] = useState({
+        msg:'notprovided',
+        link:'notprovided',
+        date:'notprovided'
+    })
     const [allannouncement, setAllAnnouncement] = useState()
 
     const [msg, setMsg] = useState({
@@ -11,15 +15,26 @@ const CreateAnnouncement = () => {
         error: ''
     })
 
+    const handleChangeInput = (e) => {
+        const { name, value } = e.target;
+        setAnnouncement({ ...announcement, [name]: value });
+        console.log(announcement)
+    };
+
+
     useEffect(() => {
         fetchAnnouncement()
     }, [])
 
-
     const uploadToFirestore = async (e) => {
         e.preventDefault()
-        await addDoc(collection(db, "announcement"), {
-            msg: announcement
+        let slug = createSlug(announcement.msg)
+        console.log(slug)
+        await setDoc(doc(db, "announcement", slug), {
+            msg: announcement.msg ? announcement.msg :'notprovided',
+            date:announcement.date ? announcement.date :'notprovided',
+            link:announcement.link ? announcement.link :'notprovided',
+            slug: slug
         }).then(() => {
             setMsg(
                 {
@@ -27,6 +42,7 @@ const CreateAnnouncement = () => {
                     successtxt: 'successfully created announcement'
                 }
             )
+            fetchAnnouncement()
         }).catch((err) => {
             setMsg(
                 {
@@ -35,9 +51,17 @@ const CreateAnnouncement = () => {
                 }
             )
         })
-
     };
 
+    function createSlug(text) {
+        return text
+            .toString()                         // Convert to string
+            .toLowerCase()                      // Convert to lowercase
+            .trim()                             // Trim spaces from the beginning and end
+            .replace(/\s+/g, '-')               // Replace spaces with dashes
+            .replace(/[^\w\-]+/g, '')           // Remove non-word characters
+            .replace(/\-\-+/g, '-');            // Replace multiple dashes with a single dash
+    }
 
     const fetchAnnouncement = async () => {
         try {
@@ -52,6 +76,26 @@ const CreateAnnouncement = () => {
         }
     };
 
+    const DeleteAnnouncement = async (e) => {
+        e.preventDefault()
+        let id = e.target.id
+        await deleteDoc(doc(db, "announcement", id)).then(() => {
+            setMsg(
+                {
+                    ...msg,
+                    successtxt: 'successfully deleted announcement'
+                }
+            )
+            fetchAnnouncement()
+        }).catch((err) => {
+            setMsg(
+                {
+                    ...msg,
+                    error: err
+                }
+            )
+        })
+    }
 
     return (
         <div>
@@ -63,32 +107,59 @@ const CreateAnnouncement = () => {
                     <label>Enter Announcement</label>
                     {
                         msg.error && (
-                            <p className="text-green-500 font-bold ">{msg.error}</p>
+                            <p className="text-red-500 font-bold ">{msg.error}</p>
                         )
                     }
                     {
                         msg.successtxt && (
-                            <p className="text-red font-bold " >{msg.successtxt}</p>
+                            <p className="text-green-700 font-bold " >{msg.successtxt}</p>
                         )
                     }
                     <input
+                        type="date"
+                        name='date'
+                        required
+                        onChange={handleChangeInput}
+                        className='border rounded-md p-2 w-fit '
+                    />
+                    <input
                         type="text"
-                        onChange={(e) => setAnnouncement(e.target.value)}
+                        name='msg'
+                        required
+                        maxLength='20'
+                        onChange={handleChangeInput}
+                        className='border rounded-md p-2 w-fit '
+                    />
+                    <input
+                        type="text"
+                        name='link'
+                        onChange={handleChangeInput}
                         className='border rounded-md p-2 w-fit '
                     />
                     <button className='primary-button'>create</button>
                 </form>
                 <h2 className='text-lg font-bold text-center'>Curent Announcements</h2>
-                <div className="">
-                    <ul>
-                        {
-                            allannouncement && allannouncement.map((item) => {
-                                return (
-                                    <li>{item.msg}</li>
-                                )
-                            })
-                        }
-                    </ul>
+                <div className="flex flex-col gap-5">
+
+                    {
+                        allannouncement && allannouncement.map((item) => {
+                            return (
+                                <div className="border border-red-500" key={item.id}>
+                                    <div className="mgg">
+                                        {item.msg}
+                                    </div>
+                                    <div className="deletebtn cursor-pointer"
+                                        id={item.slug}
+                                        onClick={DeleteAnnouncement}
+                                    >
+                                        Delete
+                                    </div>
+                                </div>
+
+                            )
+                        })
+                    }
+
                 </div>
             </div>
         </div>

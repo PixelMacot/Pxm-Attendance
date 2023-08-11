@@ -26,19 +26,23 @@ const Home = () => {
 
   useEffect(() => {
     reload()
+
     if (!holidaysDataLoading && !datesLoader) {
       console.log("data is  loaded")
       setLoader(false)
     }
   }, []);
+
+
+
   console.log('filter holidays', filteredHolidays)
   return (
     <section className='home-wrapper'>
       <div className="home-container">
         <div className="shadow-md w-[90%] mx-auto py-5 my-2">
           <Profile userData={userData} />
-          <Quotes />
-          <ShowAnnouncement/>
+          {/* <Quotes /> */}
+          {/* <ShowAnnouncement /> */}
         </div>
         <div className="shadow-md w-[90%] mx-auto my-5">
           {
@@ -50,12 +54,12 @@ const Home = () => {
                 >Reload Calendar</button>
               </div>)
           }
-          < div className=" calendar-quotes-container flex flex-wrap gap-28 justify-center items-center">
+          < div className=" calendar-announcement-container flex flex-wrap gap-28 justify-center items-center">
             <div className="home-calendar lg:w-[50%]">
               {!loader && (<CalendarComponent />)}
             </div>
             <div className="w-[400px]">
-            
+              <ShowAnnouncement />
             </div>
           </div>
         </div>
