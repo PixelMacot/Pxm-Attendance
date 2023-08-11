@@ -54,7 +54,7 @@ const Home = () => {
                 >Reload Calendar</button>
               </div>)
           }
-          < div className=" calendar-announcement-container flex lg:flex-row-reverse flex-wrap  gap-5 justify-between items-center">
+          < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
             <div className="w-[100%] lg:w-[40%]">
               <ShowAnnouncement />
             </div>

@@ -102,7 +102,7 @@ const ShowAnnouncement = () => {
                     </h1>
                 </div>
 
-                <div className='max-h-[400px] overflow-auto flex flex-col  justify-center p-5 '>
+                <div className='max-h-[400px] overflow-auto flex flex-col   p-5 '>
                     
                     {
                         finalAnnouncement && finalAnnouncement.map((item) => {
