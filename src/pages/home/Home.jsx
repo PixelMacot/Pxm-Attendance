@@ -45,19 +45,20 @@ const Home = () => {
           {/* <ShowAnnouncement /> */}
         </div>
         <div className="shadow-md w-[90%] mx-auto my-5">
-          {
-            loader && (
-              <div className="w-fit mx-auto">
-                <button
-                  onClick={reload}
-                  className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
-                >Reload Calendar</button>
-              </div>)
-          }
+
           < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
             <div className="w-[100%] lg:w-[40%]">
               <ShowAnnouncement />
             </div>
+            {
+              loader && (
+                <div className="w-fit mx-auto">
+                  <button
+                    onClick={reload}
+                    className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
+                  >Reload Calendar</button>
+                </div>)
+            }
             <div className="home-calendar lg:w-[50%]">
               {!loader && (<CalendarComponent />)}
             </div>
