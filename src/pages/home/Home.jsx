@@ -40,7 +40,7 @@ const Home = () => {
     <section className='home-wrapper'>
       <div className="home-container">
         <div className="shadow-md w-[90%] mx-auto py-5 my-2">
-          <Profile userData={userData} />
+          <Profile userData={userData} quote={true} />
           {/* <Quotes /> */}
           {/* <ShowAnnouncement /> */}
         </div>
@@ -54,12 +54,12 @@ const Home = () => {
                 >Reload Calendar</button>
               </div>)
           }
-          < div className=" calendar-announcement-container flex flex-wrap gap-28 justify-center items-center">
+          < div className=" calendar-announcement-container flex lg:flex-row-reverse flex-wrap  gap-5 justify-between items-center">
+            <div className="w-[100%] lg:w-[40%]">
+              <ShowAnnouncement />
+            </div>
             <div className="home-calendar lg:w-[50%]">
               {!loader && (<CalendarComponent />)}
-            </div>
-            <div className="w-[400px]">
-              <ShowAnnouncement />
             </div>
           </div>
         </div>

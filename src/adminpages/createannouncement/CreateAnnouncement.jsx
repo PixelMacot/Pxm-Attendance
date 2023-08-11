@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
+import moment from 'moment';
 
 const CreateAnnouncement = () => {
     const [announcement, setAnnouncement] = useState({
@@ -32,7 +33,7 @@ const CreateAnnouncement = () => {
         console.log(slug)
         await setDoc(doc(db, "announcement", slug), {
             msg: announcement.msg ? announcement.msg :'notprovided',
-            date:announcement.date ? announcement.date :'notprovided',
+            date:announcement.date ?moment( announcement.date).format("DD-MM-YYYY") :'notprovided',
             link:announcement.link ? announcement.link :'notprovided',
             slug: slug
         }).then(() => {
@@ -99,12 +100,12 @@ const CreateAnnouncement = () => {
 
     return (
         <div>
-            <div className="py-10 px-2 w-fit mx-auto">
-                <h1 className='text-xl font-bold text-center'>CreateAnnouncement</h1>
-                <form className='flex flex-col gap-2 py-5'
+            <div className="py-10 px-2 w-fit mx-auto border shadow-md">
+                <h1 className='text-xl font-bold text-center '>CreateAnnouncement</h1>
+                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-5'
                     onSubmit={uploadToFirestore}
                 >
-                    <label>Enter Announcement</label>
+                    
                     {
                         msg.error && (
                             <p className="text-red-500 font-bold ">{msg.error}</p>
@@ -115,6 +116,7 @@ const CreateAnnouncement = () => {
                             <p className="text-green-700 font-bold " >{msg.successtxt}</p>
                         )
                     }
+                    <label>Date</label>
                     <input
                         type="date"
                         name='date'
@@ -122,14 +124,16 @@ const CreateAnnouncement = () => {
                         onChange={handleChangeInput}
                         className='border rounded-md p-2 w-fit '
                     />
-                    <input
+                    <label>Announcement</label>
+                    <textarea
                         type="text"
                         name='msg'
                         required
-                        maxLength='20'
+                        maxLength='100'
                         onChange={handleChangeInput}
                         className='border rounded-md p-2 w-fit '
                     />
+                     <label>Link</label>
                     <input
                         type="text"
                         name='link'

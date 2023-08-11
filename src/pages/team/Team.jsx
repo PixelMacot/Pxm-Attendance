@@ -104,7 +104,7 @@ const Team = () => {
                             // console.log("user",user)
                             return (
                                <div className='w-[95%] md:w-[400px] border-b border-l border-r rounded-md'>
-                                 <Profile userData = {user[1]} />
+                                 <Profile userData = {user[1]} quote={false}/>
                                </div>
                             )
                         })

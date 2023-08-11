@@ -6,7 +6,7 @@ import { AiFillSetting } from 'react-icons/ai'
 import { Link } from 'react-router-dom';
 import Quotes from '../../components/quotes/Quotes';
 
-const Profile = ({ userData }) => {
+const Profile = ({ userData, quote }) => {
 
     return (
         <>
@@ -46,9 +46,13 @@ const Profile = ({ userData }) => {
                                     )
                                 }
                             </div>
-                            <div className="quotes-container-in-profile w-[100%] md:w-[450px]  lg:-mt-10">
-                                <Quotes />
-                            </div>
+                            {
+                                quote && (
+                                    <div className="quotes-container-in-profile w-[100%] md:w-[450px]  lg:-mt-10">
+                                        <Quotes />
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
