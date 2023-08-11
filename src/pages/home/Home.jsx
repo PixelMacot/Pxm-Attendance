@@ -48,7 +48,7 @@ const Home = () => {
 
           < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
             <div className="w-[100%] lg:w-[40%]">
-              <ShowAnnouncement />
+              <ShowAnnouncement/>
             </div>
             {
               loader && (

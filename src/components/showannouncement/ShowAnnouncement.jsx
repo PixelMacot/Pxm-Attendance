@@ -14,9 +14,16 @@ const ShowAnnouncement = () => {
         successtxt: '',
         error: ''
     })
+    const [datesallowed, setDatesAllowed] = useState({
+        nextdays: '',
+        prevdays: '',
+    })
 
     useEffect(() => {
-        fetchAnnouncement()
+        datesAllowed().then(() => {
+            fetchAnnouncement()
+        })
+
     }, [])
 
     useEffect(() => {
@@ -33,6 +40,21 @@ const ShowAnnouncement = () => {
             setAllAnnouncement(fetched_data);
             //below function convert data into json
             console.log(fetched_data)
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    const datesAllowed = async () => {
+        try {
+            const collectionRef = collection(db, "datesallowed");
+            const snapshot = await getDocs(collectionRef);
+            const fetched_data = snapshot.docs.map((doc) => doc.data());
+            console.log("datesallowed", fetched_data)
+            setDatesAllowed({
+                nextdays: fetched_data[0]['nextdays'],
+                prevdays: fetched_data[0]['previousdays'],
+            })
+           console.log("dateallwoed",fetched_data[0]['previousdays'])
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -66,7 +88,7 @@ const ShowAnnouncement = () => {
             let anndate = moment(ann.date, 'DD-MM-YYYY')
             let totaldiff = anndate.diff(today, 'days');
             console.log(totaldiff)
-            if (totaldiff >= 0) {
+            if (totaldiff >= datesallowed.prevdays && totaldiff <= datesallowed.nextdays) {
                 finalAnnouncement.push({
                     date: ann.date,
                     msg: ann.msg,
@@ -103,24 +125,24 @@ const ShowAnnouncement = () => {
                 </div>
 
                 <div className='max-h-[400px] overflow-auto flex flex-col   p-5 '>
-                    
+
                     {
-                        finalAnnouncement && finalAnnouncement.map((item) => {
+                        finalAnnouncement && finalAnnouncement.toReversed().map((item) => {
                             console.log(item.date)
                             return (
-                         
-                                    <div className="py-2">
-                                        <div className="bg-white p-2 rounded-md " key={item.id}>
-                                            <div className='flex gap-2 items-center text-sm text-cyan-900'>
-                                                <FaCalendarAlt />
-                                                {item.date}
-                                            </div>
-                                            <div className="msg">
-                                                {item.msg}
-                                            </div>
+
+                                <div className="py-2">
+                                    <div className="bg-white p-2 rounded-md " key={item.id}>
+                                        <div className='flex gap-2 items-center text-sm text-cyan-900'>
+                                            <FaCalendarAlt />
+                                            {item.date}
+                                        </div>
+                                        <div className="msg">
+                                            {item.msg}
                                         </div>
                                     </div>
-                              
+                                </div>
+
                             )
                         })
                     }

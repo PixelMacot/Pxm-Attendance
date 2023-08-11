@@ -5,9 +5,13 @@ import moment from 'moment';
 
 const CreateAnnouncement = () => {
     const [announcement, setAnnouncement] = useState({
-        msg:'notprovided',
-        link:'notprovided',
-        date:'notprovided'
+        msg: 'notprovided',
+        link: 'notprovided',
+        date: 'notprovided'
+    })
+    const [datesallowed, setDatesAllowed] = useState({
+        nextdays: '',
+        previousdays: '',
     })
     const [allannouncement, setAllAnnouncement] = useState()
 
@@ -21,6 +25,11 @@ const CreateAnnouncement = () => {
         setAnnouncement({ ...announcement, [name]: value });
         console.log(announcement)
     };
+    const handleDatesAllowedInput = (e) => {
+        const { name, value } = e.target;
+        setDatesAllowed({ ...datesallowed, [name]: value });
+        console.log(datesallowed)
+    };
 
 
     useEffect(() => {
@@ -32,15 +41,37 @@ const CreateAnnouncement = () => {
         let slug = createSlug(announcement.msg)
         console.log(slug)
         await setDoc(doc(db, "announcement", slug), {
-            msg: announcement.msg ? announcement.msg :'notprovided',
-            date:announcement.date ?moment( announcement.date).format("DD-MM-YYYY") :'notprovided',
-            link:announcement.link ? announcement.link :'notprovided',
+            msg: announcement.msg ? announcement.msg : 'notprovided',
+            date: announcement.date ? moment(announcement.date).format("DD-MM-YYYY") : 'notprovided',
+            link: announcement.link ? announcement.link : 'notprovided',
             slug: slug
         }).then(() => {
             setMsg(
                 {
                     ...msg,
                     successtxt: 'successfully created announcement'
+                }
+            )
+            fetchAnnouncement()
+        }).catch((err) => {
+            setMsg(
+                {
+                    ...msg,
+                    error: err
+                }
+            )
+        })
+    };
+    const updateDatesAllowed = async (e) => {
+        e.preventDefault()
+        await setDoc(doc(db, "datesallowed", "datesallowed"), {
+            nextdays: datesallowed.nextdays,
+            previousdays: datesallowed.previousdays
+        }).then(() => {
+            setMsg(
+                {
+                    ...msg,
+                    successtxt: 'successfully updated'
                 }
             )
             fetchAnnouncement()
@@ -105,7 +136,7 @@ const CreateAnnouncement = () => {
                 <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-5'
                     onSubmit={uploadToFirestore}
                 >
-                    
+
                     {
                         msg.error && (
                             <p className="text-red-500 font-bold ">{msg.error}</p>
@@ -125,7 +156,7 @@ const CreateAnnouncement = () => {
                         className='border rounded-md p-2 w-fit '
                     />
                     <label>Announcement</label>
-                    <textarea
+                    <input
                         type="text"
                         name='msg'
                         required
@@ -133,7 +164,7 @@ const CreateAnnouncement = () => {
                         onChange={handleChangeInput}
                         className='border rounded-md p-2 w-fit '
                     />
-                     <label>Link</label>
+                    <label>Link</label>
                     <input
                         type="text"
                         name='link'
@@ -141,6 +172,28 @@ const CreateAnnouncement = () => {
                         className='border rounded-md p-2 w-fit '
                     />
                     <button className='primary-button'>create</button>
+                </form>
+                <div className="text-xl font-bold text-center my-5 px-5">Show Number of notifications</div>
+                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-5'
+                    onSubmit={updateDatesAllowed}
+                >
+                    <label>Nextdays</label>
+                    <textarea
+                        type="number"
+                        name='nextdays'
+                        required
+                        onChange={handleDatesAllowedInput}
+                        className='border rounded-md p-2 w-fit '
+                    />
+                    <label>Previousdays</label>
+                    <input
+                        type="number"
+                        name='previousdays'
+                        required
+                        onChange={handleDatesAllowedInput}
+                        className='border rounded-md p-2 w-fit '
+                    />
+                    <button className='primary-button'>update</button>
                 </form>
                 <h2 className='text-lg font-bold text-center'>Curent Announcements</h2>
                 <div className="flex flex-col gap-5">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase';
 import { getAuth, signOut } from "firebase/auth";
@@ -41,7 +41,7 @@ const Navbar = () => {
     <>
       <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white border-b-4 shadow-sm w-full'>
         <div>
-          <Link to='/'>
+          <NavLink to='/'>
             <div className=''>
               <img
                 src='/logo.png'
@@ -50,7 +50,7 @@ const Navbar = () => {
                 alt="PixelMascot"
               />
             </div>
-          </Link>
+          </NavLink>
         </div>
         {
           logged && (
@@ -81,7 +81,7 @@ const Navbar = () => {
               >
                 <BsPersonFill />
                 {logged ? userData.username : (
-                  <Link to="/login">Login</Link>
+                  <NavLink to="/login">Login</NavLink>
                 )}
               </div>
             </li>
@@ -91,55 +91,55 @@ const Navbar = () => {
               [
                 {
                   "title": "Home",
-                  "link": "/",
+                  "NavLink": "/",
                   "icon": AiFillHome
                 },
                 {
                   "title": "Attendance",
-                  "link": "/attendancedashboard",
+                  "NavLink": "/attendancedashboard",
                   "icon": AiOutlineUnorderedList
                 },
                 {
                   "title": "Profile",
-                  "link": "/profile",
+                  "NavLink": "/profile",
                   "icon": AiFillContacts
                 },
                 {
                   "title": "Team",
-                  "link": "/team",
+                  "NavLink": "/team",
                   "icon": AiOutlineFileProtect
                 },
                 {
                   "title": "Contact",
-                  "link": "/contact",
+                  "NavLink": "/contact",
                   "icon": AiOutlineMail
                 },
                 {
                   "title": "Inbox",
-                  "link": "/inbox",
+                  "NavLink": "/inbox",
                   "icon": AiOutlineMail
                 },
               ].map((item) => (
                 <li key={item.title} className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
 
-                  <Link to={`${item.link}`} onClick={() => setToggle(false)}
+                  <NavLink exact activeClassName="active" to={`${item.NavLink}`} onClick={() => setToggle(false)}
                     className='flex gap-2 items-center'
                     style={{ listStyle: 'none' }}
                   >
                     {<item.icon />}
                     {item.title}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             {
               (userData.prevelege == "admin" ||  userData.prevelege == "superadmin") && (
                 <li className='p-2 text-white hover:text-pink-500  font-semibold list-none'>
-                  <Link to="/admin"
+                  <NavLink to="/admin"
                     className='flex gap-2 items-center'
                   >
                     <AiOutlineFileProtect />
                     Admin
-                  </Link>
+                  </NavLink>
                 </li>
               )
 
