@@ -70,11 +70,11 @@ const ForgotPassword = () => {
                     </button>
                 </form>
                 <p className="account-text">
-                        Remeber your password{' '}
-                        <Link to="/login">
-                            <span className='login-link-text text-[#007aff]'>Login</span>
-                        </Link>
-                    </p>
+                    Remeber your password{' '}
+                    <Link to="/login">
+                        <span className='login-link-text text-[#007aff]'>Login</span>
+                    </Link>
+                </p>
             </div>
         </div>
     )

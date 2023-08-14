@@ -26,6 +26,8 @@
 
             @include md {
                 width: 100%;
+                justify-content:start;
+                padding-top: 10px;
             }
             .logo-heading {
                 display: flex;

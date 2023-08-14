@@ -15,7 +15,7 @@ import { RiEyeLine } from 'react-icons/ri';
 const Navbar = () => {
   const navigate = useNavigate();
   const [logged, SetLogged] = useState(false)
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const { currentUser, setCurrentUser, userData, getUserProfileData } = useContext(AuthContext)
 
   useEffect(() => {
