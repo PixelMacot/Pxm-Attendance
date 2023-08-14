@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import './login.scss'
 
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
                 const user = userCredential.user;
                 navigate("/")
                 console.log(user);
-                
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -35,10 +35,11 @@ const Login = () => {
 
     return (
         <>
-            <section className='login section-wrapper'>
+            <section className='login login-section section-wrapper'>
                 <div className='login-container'>
-                    <div className="login-avatar">
-                        <img src='/avatar.png' className='' />
+                    <div className="logo-heading">
+                        <img src='/logo.png' className='' />
+                        <h1>Hi,Welcome Back!</h1>
                     </div>
                     <form className='login-form login-form-wrapper' onSubmit={onLogin}>
                         {
@@ -57,6 +58,7 @@ const Login = () => {
                                 type="email"
                                 pattern="[^@\s]{2,}@[^@\s]{2,}\.[^@\s]{2,}"
                                 required
+                                minLength="5"
                                 autoComplete="off"
                                 placeholder="Email address"
                                 onChange={(e) => setEmail(e.target.value)}
@@ -73,29 +75,39 @@ const Login = () => {
                                 name="password"
                                 type="password"
                                 required
+                                minLength="5"
                                 autoComplete="off"
                                 placeholder="Password"
                                 onChange={(e) => setPassword(e.target.value)}
                                 className=''
                             />
                         </div>
-
+                        <div className="forgot-password">
+                           <NavLink to="/forgotpassword">
+                           <p className='signup-link-text cursor-pointer'>Forgot Password?</p>
+                           </NavLink>
+                        </div>
                         <div className='login-btn-wrapper'>
                             <button
-                                onClick={onLogin}
-                                className='primary-button'
+                               
+                                className='login-btn'
                             >
                                 Login
                             </button>
+                           
                         </div>
                     </form>
+                    <button className='gbtn flex gap-2 -mt-4 py-2 mb-4 pborder items-center  w-full justify-center text-black  border border-solid-[#EBEBEB] bg-white hover:bg-[#F1F4FF] px-4 text-sm font-medium'> <img src='/glogo.png' alt="-" className='mx' /> Sign in with google</button>
 
-                    <p className="">
-                        No account yet? {' '}
+                    <p className="account-text">
+                        Don't have an account yet?{' '}
                         <Link to="/signup">
-                            <span className='text-darkblue'>Sign up</span>
+                            <span className='signup-link-text'>Sign up</span>
                         </Link>
                     </p>
+                </div>
+                <div className="auth-background-img">
+
                 </div>
             </section>
 

@@ -20,14 +20,6 @@ a {
   min-height: 90vh;
   width: 100vw;
 }
-.primary-button {
-  background-color: rgb(20, 64, 82);
-  width: 150px;
-  color: white;
-  padding: 8px;
-  border-radius: 40px;
-  
-}
 
 .quote-text {
   color: rgba(0, 0, 0, 0.801);
@@ -42,6 +34,12 @@ a {
 
 .error{
   color: red;
+  padding: 10px 10px 10px 0px;
+}
+.success{
+  color: rgb(4, 48, 19);
+  font-size: 1rem;
+  font-weight: bold;
   padding: 10px 10px 10px 0px;
 }
 .active {

@@ -39,18 +39,18 @@ const Home = () => {
   return (
     <section className='home-wrapper'>
       <div className="home-container">
-        <div className="shadow-md w-[90%] mx-auto py-5 my-2">
+        <div className="shadow-md w-[95%] mx-auto py-5 my-2">
           <Profile userData={userData} quote={true} />
           {/* <Quotes /> */}
           {/* <ShowAnnouncement /> */}
         </div>
-        <div className="shadow-md w-[90%] mx-auto my-5">
+        <div className="shadow-md w-[95%] mx-auto my-5">
 
           < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
             <div className="w-[100%] lg:w-[40%]">
               <ShowAnnouncement/>
             </div>
-            {
+            {/* {
               loader && (
                 <div className="w-fit mx-auto">
                   <button
@@ -61,7 +61,7 @@ const Home = () => {
             }
             <div className="home-calendar lg:w-[50%]">
               {!loader && (<CalendarComponent />)}
-            </div>
+            </div> */}
           </div>
         </div>
         <div>

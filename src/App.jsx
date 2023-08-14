@@ -27,20 +27,21 @@ import OfficeLocation from './adminpages/location/OfficeLocation';
 import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
 import Notification from './components/notification/Notification';
-import { requestForToken,onMessageListener } from './firebase'
+import { requestForToken, onMessageListener } from './firebase'
 import SingleMessage from './components/singlemessage/SingleMessage';
 import Inbox from './components/inbox/Inbox';
 import CreateAnnouncement from './adminpages/createannouncement/CreateAnnouncement';
+import ForgotPassword from './pages/forgotpassword/ForgotPassword';
 
 function App() {
   // getFirebaseToken()
   const [isTokenFound, setTokenFound] = useState(false);
-  
-  const { currentUser, userDataLoading, userData,updateFcmToken } = useContext(AuthContext)
+
+  const { currentUser, userDataLoading, userData, updateFcmToken } = useContext(AuthContext)
 
   onMessageListener().then(payload => {
     // setShow(true);
-    alert(payload.notification.body )
+    alert(payload.notification.body)
     console.log(payload.notification.title);
   }).catch(err => console.log('failed: ', err));
   // isTokenFound ? console.log("Token found") : console.log("Token not found");
@@ -51,16 +52,16 @@ function App() {
 
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Login />;
+      return <Navigate to="/login" />;
     } else {
 
       if (!userData.dummyData) {
         if (userData.status) {
           if (currentUser.emailVerified) {
-           requestForToken().then((data)=>{
-            console.log(data)
-            updateFcmToken(userData,data)
-           })
+            requestForToken().then((data) => {
+              console.log(data)
+              updateFcmToken(userData, data)
+            })
             return children
           } else {
             // return <Navigate to="/notverified" />;
@@ -132,11 +133,11 @@ function App() {
   const BasicLayout = () => {
     return (
       <div className="main">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="page-wrapper">
           <Outlet />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   };
@@ -172,7 +173,7 @@ function App() {
         },
         {
           path: "/inbox",
-          element: <Inbox/>,
+          element: <Inbox />,
         }
       ],
     },
@@ -187,6 +188,10 @@ function App() {
         {
           path: "/signup",
           element: <Signup />,
+        },
+        {
+          path: "/forgotpassword",
+          element: <ForgotPassword />,
         },
         {
           path: "/notverified",
@@ -229,7 +234,7 @@ function App() {
         },
         {
           path: "/admin/createannouncement",
-          element: <CreateAnnouncement/>,
+          element: <CreateAnnouncement />,
         },
         {
           path: "/admin/message/:id",

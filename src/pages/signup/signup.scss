@@ -3,30 +3,18 @@
 
 .signup {
     min-height: 100vh;
-    background-color: rgb(230, 212, 212);
-    padding-top: 40px;
-    background-image: url("/public/backgroundbubble.jpg");
-    background-position: center;
-    background-size: cover;
+    display: flex;
 
     .signup-container {
+        width: 30%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 50vw;
-        margin: 20px auto;
         gap: 20px;
         padding: 20px 10px;
-        background: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
         @include md {
-            width: 90vw;
+            width: 100%;
         }
         .signup-wrapper {
             width: 100%;
@@ -39,10 +27,20 @@
             @include md {
                 width: 100%;
             }
-            .signup-avatar {
-                width: 130px;
-                // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-                border-radius: 50%;
+            .logo-heading {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding: 10px 0px;
+                text-align: center;
+    
+                img {
+                    width: 220px;
+                }
+                h1 {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                }
             }
 
             .form-signup {
@@ -91,23 +89,38 @@
                     box-shadow: rgb(0 0 0 / 26%) 2px 5px 15px;
                     font-size: 18px;
                 }
-                .signup-btn-wrapper{
-                    width: fit-content;
-                    margin:10px auto;
-                }
-                .primary-button {
-                    background-color: rgb(20, 64, 82);
-                    width: 150px;
-                    color: white;
+                .signup-btn {
+                    width: 100%;
+                    margin: auto;
+                    background-color: #007aff;
+                    margin: 15px auto;
                     padding: 8px;
-                    border-radius: 40px;
-                }
+                    color: white;
 
-                p {
-                    font-size: 18px;
-                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    :hover {
+                        background-color: #006de4;
+                    }
+                }              
+                .login-link-text {
+                    color: #007aff;
+                    font-weight: 500;
+                    font-size: 0.9rem;
                 }
             }
         }
+    }
+    .auth-background-img {
+        width: 70%;
+        background-image: url("/auth-background-img.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @include md {
+            display: none;
+        }
+    }
+    .account-text {
+        font-size: 0.9rem;
     }
 }

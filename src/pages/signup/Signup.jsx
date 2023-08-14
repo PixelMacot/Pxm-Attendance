@@ -83,8 +83,9 @@ const Signup = () => {
         <section className='signup section-wrapper'>
             <div className='signup-container'>
                 <div className='signup-wrapper'>
-                    <div className="signup-avatar">
-                        <img src='/avatar.png' className='' />
+                    <div className="logo-heading">
+                        <img src='/logo.png' className='' />
+                        <h1>Let's get Started</h1>
                     </div>
                     <form className='form-signup' onSubmit={onSubmit}>
                         {
@@ -155,23 +156,28 @@ const Signup = () => {
                                 <option value="female">Female</option>
 
                             </select>
-                            <div className="signup-btn-wrapper">
+                            
                                 <button
                                     type="submit"
-                                    className='primary-button'
+                                    className='signup-btn'
                                 >
                                     Sign up
                                 </button>
-                            </div>
-                            <p>
+                            
+                            <p className='account-text'>
                                 Already have an account?{' '}
-                                <Link to="/login" className='text-darkblue' >
+                                <Link to="/login" className='login-link-text' >
                                     Login
                                 </Link>
                             </p>
                         </div>
                     </form>
+
                 </div>
+
+            </div>
+            <div className="auth-background-img">
+
             </div>
         </section>
     )

@@ -10,6 +10,7 @@ import { AiFillHome, AiOutlineUnorderedList, AiFillContacts,AiOutlineMail } from
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { motion } from 'framer-motion';
 import { AuthContext } from '../../context/AuthContext'
+import { RiEyeLine } from 'react-icons/ri';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -39,15 +40,15 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white border-b-4 shadow-sm w-full'>
+      <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-[#FF4158]  shadow-sm w-full'>
         <div>
           <NavLink to='/'>
             <div className=''>
               <img
-                src='/logo.png'
-                width='150'
-                height='100'
-                alt="PixelMascot"
+                src='/logo.svg'
+                width='40'
+                height='40'
+                alt="PXM"
               />
             </div>
           </NavLink>

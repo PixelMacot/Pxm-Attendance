@@ -3,35 +3,33 @@
 
 .login {
     min-height: 100vh;
-    background-color: rgb(230, 212, 212);
-    padding-top: 40px;
-    background-image: url("/public/backgroundbubble.jpg");
-    background-position: center;
-    background-size: cover;
+    display: flex;
 
     .login-container {
+        width: 30%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 50vw;
-        margin: 20px auto;
         gap: 20px;
-        padding: 20px 50px;
-        background: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-
+        padding:0px 50px;
         @include md {
-            width: 90vw;
+            width: 100%;
         }
 
-        .login-avatar {
+        .logo-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px 0px;
+            text-align: center;
+
             img {
-                width: 150px;
+                width: 220px;
+            }
+            h1 {
+                font-size: 1.2rem;
+                font-weight: bold;
             }
         }
 
@@ -47,25 +45,56 @@
                 flex-direction: column;
                 gap: 2px;
                 label {
-                    color: rgb(43, 39, 39);
+                    color: #131313d0;
+                    font-size:1rem;
                 }
 
                 input {
                     border: 1px solid rgba(128, 128, 128, 0.473);
-                    padding: 5px 10px;
+                    padding: 8px 10px;
                     border-radius: 5px;
                     width: 100%;
                     color: rgb(43, 39, 39);
                 }
                 input:focus {
-                    border: 1px solid rgba(0, 0, 0, 0.801);
+                    border: 1px solid #007aff;
+                    outline: #006de4;
                 }
             }
-            .login-btn-wrapper {
-                width: fit-content;
+            .forgot-password{
+                text-align: right;
+                max-width: 4px 0px;
+            }
+            .login-btn {
+                width: 100%;
                 margin: auto;
+                background-color: #007aff;
                 margin: 15px auto;
+                padding: 8px;
+                color: white;
+
+                :hover {
+                    background-color: #006de4;
+                }
             }
         }
+        .signup-link-text {
+            color: #007aff;
+            font-weight: 500;
+        }
+    }
+    .auth-background-img {
+        width: 70%;
+        background-image: url("/auth-background-img.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        @include md {
+            display: none;
+        }
+    }
+    .account-text{
+        font-size: 0.9rem;
     }
 }
