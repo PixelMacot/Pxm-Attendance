@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getDocs,collection } from "firebase/firestore";
 import { db } from '../firebase';
+import moment from 'moment'
 
 export const MessagesContext = createContext();
 
@@ -17,14 +18,15 @@ export const MessagesContextProvider = ({ children }) => {
             const collectionRef = collection(db, "messages");
             const snapshot = await getDocs(collectionRef);
             const fetched_data = snapshot.docs.map((doc, index) => {
-                console.log(index)
+                // console.log(moment(doc.data().createdat.seconds).format('HH-ss'))
                 return (
                     {
                         id: index,
                         name: doc.data().name,
                         date: doc.data().date,
                         message: doc.data().message,
-                        uid: doc.data().uid
+                        uid: doc.data().uid,
+                        slug:doc.data().slug
                     }
                 )
             });

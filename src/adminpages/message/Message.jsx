@@ -80,6 +80,10 @@ const Message = () => {
 console.log(messages)
   return (
     <div className='message-container mt-4'>
+      <button
+      onClick={fetchMessages}
+      className='px-5 py-2 bg-cyan-700 text-white rounded-md m-2'
+      >Refresh Messages</button>
       <div className="message-wrapper w-fit mx-auto">
         <DataGrid
           rows={messages}

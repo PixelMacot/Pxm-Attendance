@@ -113,7 +113,7 @@ function App() {
       <div className="main">
         {/* <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div> */}
         <Navbar />
-        <div className="page-wrapper">
+        <div className="min-h-[80vh]">
           <div className="main-container">
             <div className="">
               <Sidebar />

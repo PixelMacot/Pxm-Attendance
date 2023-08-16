@@ -13,7 +13,7 @@ const Contact = () => {
     const [messagesent, setMessageSent] = useState(false)
     const [issubmitted, setIsSubmitted] = useState(false)
 
-    console.log(currentUser)
+    // console.log(currentUser)
     const [formData, setFormData] = useState(
         {
             subject: '',
@@ -31,17 +31,20 @@ const Contact = () => {
     const uploadToFirestore = async (e) => {
         e.preventDefault()
         try {
-            sendAdminEmail(e)
+            // sendAdminEmail(e)
         } catch (error) {
             console.log(error)
         }
-        const docRef = await addDoc(collection(db, "messages"), {
+        let slug = createSlug(formData.message)
+        console.log(slug)
+        await setDoc(doc(db, "messages", slug), {
             id: currentUser.uid,
             name: userData.username,
             subject: formData.subject,
             message: formData.message,
-            date: moment(new Date()).format("DD-MM-YYYY"),
+            date: moment(new Date()).format("DD-MM-YYYY-HH-mm-ss"),
             createdat: Timestamp.fromDate(new Date()),
+            slug: slug
         }).then(() => {
             setMessageSent(true)
             setIsSubmitted(true)
@@ -50,10 +53,33 @@ const Contact = () => {
                 message: ''
             })
         }).catch((err) => {
-            console.log("from contact page", err)
+            console.log(err)
         })
 
+        // const docRef = await addDoc(collection(db, "messages"), {
+        //     id: currentUser.uid,
+        //     name: userData.username,
+        //     subject: formData.subject,
+        //     message: formData.message,
+        //     date: moment(new Date()).format("DD-MM-YYYY"),
+        //     createdat: Timestamp.fromDate(new Date()),
+        // }).then(() => {
+
+        // }).catch((err) => {
+        //     console.log("from contact page", err)
+        // })
+
     };
+
+    function createSlug(text) {
+        return text
+            .toString()                         // Convert to string
+            .toLowerCase()                      // Convert to lowercase
+            .trim()                             // Trim spaces from the beginning and end
+            .replace(/\s+/g, '-')               // Replace spaces with dashes
+            .replace(/[^\w\-]+/g, '')           // Remove non-word characters
+            .replace(/\-\-+/g, '-');            // Replace multiple dashes with a single dash
+    }
 
     //sending email to all  users
 
@@ -89,7 +115,7 @@ const Contact = () => {
             {
                 mailsent && (
                     <div className="text-left flex gap-2 items-center">
-                        <img src='/mailicon.png'  className='w-[32px]'/>           
+                        <img src='/mailicon.png' className='w-[32px]' />
                         <p className='text-green-900 font-semibold'>Mail sent successfully</p>
                     </div>
                 )
@@ -97,7 +123,7 @@ const Contact = () => {
             {
                 messagesent && (
                     <div className="flex gap-2 items-center">
-                        <img src='/messageicon.png' className='w-[32px]'/>      
+                        <img src='/messageicon.png' className='w-[32px]' />
                         <p className='text-green-900 font-semibold'> Message sent successfully</p>
                     </div>
                 )
@@ -131,9 +157,9 @@ const Contact = () => {
                             Send
                         </button>
                     </form>
-                ):(
+                ) : (
                     <div className="">
-                        <img src='/okicon.png' className='w-[200px]'/>
+                        <img src='/okicon.png' className='w-[200px]' />
                     </div>
                 )
             }
