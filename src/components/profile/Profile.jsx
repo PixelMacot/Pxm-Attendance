@@ -21,7 +21,7 @@ const Profile = ({ userData, quote }) => {
                             <Avatar
                                 alt={userData.username}
                                 src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
-                                sx={{ width: '100%', height: '100%' }}
+                                sx={{ width: '100%', height: '100%',position:'static' }}
                             />
                         </div>
                         <div className="flex flex-wrap justify-between gap-[20px]">

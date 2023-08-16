@@ -40,11 +40,11 @@ function App() {
 
   const { currentUser, userDataLoading, userData, updateFcmToken } = useContext(AuthContext)
 
-  onMessageListener().then(payload => {
-    // setShow(true);
-    alert(payload.notification.body)
-    console.log(payload.notification.title);
-  }).catch(err => console.log('failed: ', err));
+  // onMessageListener().then(payload => {
+  //   // setShow(true);
+  //   alert(payload.notification.body)
+  //   console.log(payload.notification.title);
+  // }).catch(err => console.log('failed: ', err));
   // isTokenFound ? console.log("Token found") : console.log("Token not found");
 
   if (userDataLoading) {
@@ -61,7 +61,7 @@ function App() {
           if (currentUser.emailVerified) {
             requestForToken().then((data) => {
               console.log(data)
-              updateFcmToken(userData, data)
+              // updateFcmToken(userData, data)
             })
             return children
           } else {
@@ -89,8 +89,8 @@ function App() {
   const Layout = () => {
     return (
       <div className="main">
-        <div className="flex">
-          <div className="">
+        <div className="flex relative ">
+          <div className="border-r-2 border-gray-300 relative">
             <SideNav />
           </div>
           {/* <Notification /> */}
