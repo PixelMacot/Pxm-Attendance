@@ -13,7 +13,7 @@ const MarkAttendance = () => {
     const [err, setErr] = useState()
     const [msg, setMsg] = useState()
     const [currentDate, setCurrentDate] = useState(moment(new Date()).format("DD-MM-YYYY"))
-    const [showattendancebtn, setShowAttendancebtn] = useState(true)
+    const [showattendancebtn, setShowAttendancebtn] = useState(false)
     const [btnerr, setBtnErr] = useState()
     const [showexit, setShowExit] = useState(true)
     const [disablebtn, setDisableBtn] = useState({
@@ -190,26 +190,53 @@ const MarkAttendance = () => {
 
                     <div className="markattendance-buttons flex flex-col">
                         {
+                            !showattendancebtn && distance == 9999 && !error && (
+                                <div className="flex items-center gap-2">
+                                    <img src="/locationredimg.png" alt="" className='w-[20px]' />
+                                    <p className='text-red-700 font-bold'>Not able to determine your location</p>
+                                </div>
+                            )
+                        }
+                        {
                             error && (
-                                <p className='text-red-500'>Error:{error}</p>
+                                <div className="flex flex-col gap-2">
+                                    <div className=" flex gap-2 flex-wrap">
+                                        <img src="/locationredimg.png" alt="" className='w-[20px]' />
+                                        <p className='text-red-700 font-bold'>Error:{error}</p>
+
+                                    </div>
+                                    <div className="flex gap-2 my-1">
+                                        <img src="/clickicon.png" alt="" className='w-[30px]' />
+                                        <p>check if your location is on</p>
+                                    </div>
+                                </div>
                             )
                         }
                         {
                             !isUserInsideGeofence && (
-                                <div className="">
-                                    {distance == 9999 ? (
-                                        <p>check if your location is on</p>
+                                <div className="text-cyan-900 font-semibold">
+                                    {distance == 9999 || error ? (
+                                        ''
                                     ) : (
-                                        <p>You are at {distance} meters from office</p>
+                                        <div className="flex flex-col gap-2">
+                                            <div className="flex gap-2 items-center my-2">
+                                                <img src="/twocoordinates.png" alt="" className='w-[40px]' />
+                                                <p>You are at <span className='font-bold'>{distance}</span> meters from office</p>
+                                            </div>
+                                            <div className="flex gap-2 my-2">
+                                                <img src="/walkicon.png" alt="" className='w-[40px]' />
+                                                <p>Head to office to mark attendance</p>
+                                            </div>
+                                        </div>
                                     )
                                     }
 
-                                    <p>Head to office to mark attendance</p>
+
                                     <div className="">
                                         <div className="my-5">
                                             <button
                                                 onClick={reverifyLocation}
-                                                className='primary-button'
+                                                className='bg-cyan-700 px-5 py-2 text-white  rounded-md shadow-md'
                                             >Reverify</button>
                                         </div>
                                     </div>

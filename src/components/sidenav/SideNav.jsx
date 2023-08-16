@@ -1,18 +1,14 @@
-
 import './sidenav.scss'
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase';
-import { getAuth, signOut } from "firebase/auth";
-import { BiMenuAltRight, BiCopyAlt, BiLogOut } from 'react-icons/bi';
-import { BsPersonFill } from 'react-icons/bs'
+import { signOut } from "firebase/auth";
+import { BiMenuAltRight, BiLogOut } from 'react-icons/bi';
 import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts, AiOutlineMail, AiOutlineClose } from 'react-icons/ai'
 import { AiOutlineFileProtect } from 'react-icons/ai'
-import { motion } from 'framer-motion';
 import { AuthContext } from '../../context/AuthContext'
-import { RiEyeLine } from 'react-icons/ri';
+
 
 const SideNav = () => {
     const navigate = useNavigate();
@@ -34,20 +30,21 @@ const SideNav = () => {
             // Sign-out successful.
             console.log("you have signed out succesfully")
             return navigate('/login')
-            setCurrentUser('')
+
         }).catch((error) => {
-            // An error happened.
+            console.log("err signing out", error)
         });
     }
+
     function scrollTop() {
         window.scrollTo(0, 0)
     }
-    return (
 
+    return (
         <div className="">
             {
                 !toggle && (
-                    <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white  shadow-sm w-full'>
+                    <div className='p-2 lg:hidden fixed z-40  flex justify-between text-center items-center bg-white  shadow-sm w-full'>
                         <Link to='/'>
                             <div className=''>
                                 <img
@@ -87,11 +84,10 @@ const SideNav = () => {
                 <div
                     className='flex flex-col gap-2 w-fit text-xl '>
                     <div className="sidenav-wrapper p-4">
-                        <div className="logo">
+                        <div className="logo mb-4">
                             <img src='/logo.png'
                                 className='w-[200px]'
                             />
-
                         </div>
                         <div className="all-links-wrapper  flex flex-col  text-xl">
                             {

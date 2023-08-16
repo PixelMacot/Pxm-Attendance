@@ -5,6 +5,8 @@ import UpComingHolidays from '../upcomingholidays/UpcomingHolidays'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import moment from 'moment'
 import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
+import './showannouncement.scss'
+
 
 const ShowAnnouncement = () => {
     const [announcement, setAnnouncement] = useState()
@@ -112,7 +114,7 @@ const ShowAnnouncement = () => {
     }
     finalAnnouncement.sort((a, b) => moment(a.date, 'DD-MM-YYYY').diff(moment(b.date, 'DD-MM-YYYY')));
 
-
+  const currentday = moment(new Date()).format('DD-MM-YYYY')
 
     return (
         <div className=''>
@@ -132,8 +134,8 @@ const ShowAnnouncement = () => {
                             return (
 
                                 <div className="py-2">
-                                    <div className="bg-white p-2 rounded-md " key={item.id}>
-                                        <div className='flex gap-2 items-center text-sm text-cyan-900'>
+                                    <div className={`bg-white p-2 rounded-md ${currentday == item.date ?'currentday':'nottoday'}`} key={item.id}>
+                                        <div className={`flex gap-2 items-center text-sm text-cyan-900 ${currentday == item.date ?'currentday':'nottoday'} `}>
                                             <FaCalendarAlt />
                                             {item.date}
                                         </div>
