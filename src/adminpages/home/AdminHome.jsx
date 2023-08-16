@@ -14,7 +14,7 @@ const columns = [
     headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
-      return <img src={params.row.img || "/noavatar.png"} alt="" />;
+      return <img src={params.row.img != 'notprovided' ? params.row.img : params.row.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}/>;
     },
   },
   {

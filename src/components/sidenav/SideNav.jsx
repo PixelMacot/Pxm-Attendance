@@ -82,14 +82,14 @@ const SideNav = () => {
                     )
                 }
                 <div
-                    className='flex flex-col gap-2 w-fit text-xl '>
+                    className='flex flex-col gap-2 w-fit '>
                     <div className="sidenav-wrapper p-4">
                         <div className="logo mb-4">
                             <img src='/logo.png'
                                 className='w-[200px]'
                             />
                         </div>
-                        <div className="all-links-wrapper  flex flex-col  text-xl">
+                        <div className="all-links-wrapper  flex flex-col  text-lg">
                             {
                                 [
                                     {
