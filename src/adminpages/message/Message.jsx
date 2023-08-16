@@ -88,17 +88,18 @@ console.log(messages)
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 15,
               },
             },
-            // sorting: {
-            //   sortModel: [{ field: 'date', sort: 'desc' }],
-            // },
+            sorting: {
+              sortModel: [{ field: 'date', sort: 'desc' }],
+            },
             columns: {
               columnVisibilityModel: {
                 // Hide columns status and traderName, the other columns will remain visible
                 category: false,
-                date: false,
+                date: true,
+                id:false
               },
             },
           }}
