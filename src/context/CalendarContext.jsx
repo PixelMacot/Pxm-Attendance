@@ -22,6 +22,7 @@ export const CalendarContextProvider = ({ children }) => {
         convertDataToJSON(docSnap.data())
         setDatesLoader(false)
       } else {
+        setAttendance('newuser')
         console.log("No such document!");
         setDatesLoader(false)
       }

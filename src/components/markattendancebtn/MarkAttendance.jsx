@@ -36,12 +36,12 @@ const MarkAttendance = () => {
         if (!isUserInsideGeofence) {
             setBtnErr("You are not at office please visit office to mark attendance")
         } else {
+
             let entry = attendance.hasOwnProperty(moment(new Date).format("DD-MM-YYYY"))
             if (attendance) {
                 console.log("attendace data is loaded", entry)
                 if (entry) {
                     let exitdata = attendance[moment(new Date).format("DD-MM-YYYY")].hasOwnProperty("exit")
-
                     if (exitdata) {
                         console.log("data exits")
                         setDisableBtn({
@@ -57,6 +57,13 @@ const MarkAttendance = () => {
                     }
                 } else {
                     console.log("data do not exit")
+                    if (attendance == 'newuser') {
+                        setDisableBtn({
+                            entry: false,
+                            exit: true
+                        })
+                        return
+                    }
                     setDisableBtn({
                         entry: false,
                         exit: true
@@ -174,7 +181,28 @@ const MarkAttendance = () => {
                     console.error('Error updating data in Firestore:', error);
                 });
             } else {
-                await setDoc(doc(db, "attendance", userData.uid), docExitData);
+                await setDoc(doc(db, "attendance", userData.uid), docExitData).then(() => {
+                    console.log('Data successfully updated in Firestore!');
+                    getAttendanceData(userData.uid)
+                    if (type == "entry") {
+
+                        setMsg("Welcome to office")
+                        setDisableBtn({
+                            entry: true,
+                            exit: false
+                        })
+                    } else {
+                        setMsg("your exit is successfully updated")
+                        console.log("disable exit")
+                        setDisableBtn({
+                            entry: true,
+                            exit: true
+                        })
+                        console.log("disable btn", disablebtn)
+                    }
+                }).catch((error) => {
+                    console.error('Error setting data in Firestore:', error);
+                });
 
             }
         } catch (err) {
