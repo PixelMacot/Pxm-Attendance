@@ -89,8 +89,8 @@ function App() {
   const Layout = () => {
     return (
       <div className="main">
-        <div className="flex relative ">
-          <div className="border-r-2 border-gray-300 relative">
+        <div className="flex ">
+          <div className="border-r-2 border-gray-300">
             <SideNav />
           </div>
           {/* <Notification /> */}

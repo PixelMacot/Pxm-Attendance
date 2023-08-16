@@ -1,7 +1,7 @@
 
 import './sidenav.scss'
 import React, { useState, useEffect, useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../../firebase';
 import { getAuth, signOut } from "firebase/auth";
@@ -39,19 +39,37 @@ const SideNav = () => {
             // An error happened.
         });
     }
-
+    function scrollTop() {
+        window.scrollTo(0, 0)
+    }
     return (
 
-        <div className="sticky bottom-0">
+        <div className="">
             {
                 !toggle && (
-                    <div className='mobilemenu lg:hidden flex justify-between fixed p-4 bg-white shadow-md w-full z-60'>
-                        <img src='/logo.png'
-                            className='w-[200px]'
-                        />
-                        <p
-                            onClick={() => setToggle(!toggle)}
-                        >open</p>
+                    <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white  shadow-sm w-full'>
+                        <Link to='/'>
+                            <div className=''>
+                                <img
+                                    src='/logo.png'
+                                    width='140'
+                                    height='140'
+                                    alt="PXM"
+                                />
+                            </div>
+                        </Link>
+                        {
+                            logged && (
+                                <div className="mobile_navbar-menu  p-2 hover:cursor-pointer  order-2 "
+                                    onClick={scrollTop}
+                                >
+                                    <BiMenuAltRight onClick={() => setToggle(true)}
+                                        className='text-2xl'
+                                    />
+
+                                </div>
+                            )
+                        }
                     </div>
                 )
             }
@@ -116,10 +134,10 @@ const SideNav = () => {
                                             className={({ isActive }) => (isActive ? "flex gap-2 items-center active" : 'flex gap-2 items-center ')}
                                             style={{ listStyle: 'none' }}
                                         >
-                                          
-                                                {<item.icon />}
-                                                {item.title}
-                                       
+
+                                            {<item.icon />}
+                                            {item.title}
+
                                         </NavLink>
                                     </li>
                                 ))}
