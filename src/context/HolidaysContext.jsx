@@ -103,11 +103,11 @@ export const HolidaysContextProvider = ({ children }) => {
   const convertDataToJSON = () => {
     const jsonData = fetchedData.map((item) => {
       // Check if date and name properties exist in the object
-      console.log(item.data.Date.replace(/["']/g, ""))
-      const date = item.date || (item.data && item.data.Date.replace(/["']/g, "")) || null;
-      const name = item.name || (item.data && item.data.name) || null;
-
-      return { date, name };
+      console.log(item.slug)
+      const date = item.date || (item && item.Date.replace(/["']/g, "")) || null;
+      const name = item.name || (item && item.Name) || null;
+       const slug = item.slug || (item && item.slug) || null;
+      return { date, name,slug };
     });
     console.log(jsonData)
     setHolidaysData(jsonData)

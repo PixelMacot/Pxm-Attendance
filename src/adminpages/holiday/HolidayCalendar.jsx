@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Papa from 'papaparse';
 import { HolidaysContext } from '../../context/HolidaysContext'
-import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
+// import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
+// import { db } from '../../firebase';
+import { doc, setDoc, getDocs, updateDoc, collection, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import Loader from '../../components/loader/Loader';
 import './holiday.scss'
@@ -10,6 +12,8 @@ const HolidayCalendar = () => {
   const [loader, setLoader] = useState(false)
   const [csvFile, setCsvFile] = useState(null);
   const [fetchedData, setFetchedData] = useState([]);
+  const [msg, setMsg] = useState()
+
   const {
     holidaysData,
     fetchHolidays,
@@ -43,20 +47,41 @@ const HolidayCalendar = () => {
   };
 
   const uploadToFirestore = (json_data) => {
+
     json_data.forEach(async (data) => {
-      const docRef = await addDoc(collection(db, "holidays"), {
-        data
-      });
-      console.log("Document written with ID: ", docRef.id);
+      // let slug = createSlug(data.date)
+      console.log(data.date)
+      let slug = data.Date
+      if (slug) {
+        const docRef = await setDoc(doc(db, "holidays", slug), {
+          Date: data.Date ? data.Date : 'notprovided',
+          Name: data.name ? data.name : 'notprovided',
+          slug: data.Date ? data.Date : 'notprovided'
+        });
+      }
+      // console.log("Document written with ID: ", docRef.id);
       setLoader(false)
     });
   };
+
+  const DeleteHoliday = async (e) => {
+    e.preventDefault()
+    let id = e.target.id
+    console.log(id)
+    await deleteDoc(doc(db, "holidays", id)).then(() => {
+      
+      setMsg('Holiday deleted Successfully')
+      fetchHolidays()
+    }).catch((err) => {
+      setMsg('A error occured while deleting Holiday')
+    })
+  }
 
   return (
     <div className='border shadow-md w-fit mx-auto rounded-md  p-10 py-10 flex flex-col md:flex-row justify-center items-center md:items-start gap-10'>
       <label htmlFor='holidaycsvfile'>
         <img src='/uploadfile.png'
-          className='w-[60%] mx-auto'
+          className='w-[95%] mx-auto'
         />
       </label>
       <input type="file"
@@ -79,6 +104,7 @@ const HolidayCalendar = () => {
           <tr>
             <th>Date</th>
             <th>Holiday</th>
+            <th>Delete</th>
           </tr>
 
           {holidaysData.map((item, index) => {
@@ -86,6 +112,12 @@ const HolidayCalendar = () => {
               <tr key={index} >
                 <td >{item.date}</td>
                 <td>{item.name}</td>
+                <td id={item.slug}
+                  onClick={DeleteHoliday}
+                  className='bg-[url(/delete.png)]'
+                >
+                  {/* <img src="/delete.png" /> */}
+                </td>
               </tr>
             );
           })}

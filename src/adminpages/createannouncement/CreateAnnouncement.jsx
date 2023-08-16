@@ -178,7 +178,7 @@ const CreateAnnouncement = () => {
                     onSubmit={updateDatesAllowed}
                 >
                     <label>Nextdays</label>
-                    <textarea
+                    <input
                         type="number"
                         name='nextdays'
                         required
