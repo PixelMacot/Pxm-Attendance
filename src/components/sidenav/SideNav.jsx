@@ -123,7 +123,7 @@ const SideNav = () => {
                                         "icon": AiOutlineMail
                                     },
                                 ].map((item) => (
-                                    <li key={item.title} className='p-2 font-semibold list-none my-4'>
+                                    <li key={item.title} className='p-2 font-semibold list-none my-3'>
 
                                         <NavLink to={`${item.NavLink}`} onClick={() => setToggle(false)}
 
@@ -139,7 +139,7 @@ const SideNav = () => {
                                 ))}
                             {
                                 (userData.prevelege == "admin" || userData.prevelege == "superadmin") && (
-                                    <li className='p-2 font-semibold list-none my-4'>
+                                    <li className='p-2 font-semibold list-none my-3'>
                                         <NavLink to="/admin"
                                             className='flex gap-2 items-center'
                                         >

@@ -46,8 +46,8 @@ const Navbar = () => {
             <div className=''>
               <img
                 src='/logo.png'
-                width='200'
-                height='200'
+                width='140'
+                height='140'
                 alt="PXM"
               />
             </div>
