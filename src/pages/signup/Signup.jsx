@@ -98,6 +98,7 @@ const Signup = () => {
                         {/* //user details functionality */}
                         <div className='input-div'>
                             <label htmlFor="email-address">
+                                email
                             </label>
                             <input
                                 type="email"
@@ -111,7 +112,7 @@ const Signup = () => {
                                 className=''
                             />
                             <label htmlFor="password">
-
+                                password
                             </label>
                             <input
                                 type="password"
@@ -123,28 +124,40 @@ const Signup = () => {
                                 placeholder="Password"
                                 className=''
                             />
-
+                            <label htmlFor="username">
+                                Username
+                            </label>
 
                             <input
                                 name="username"
                                 onChange={handleChangeInput}
                                 placeholder='username'
+                                type='text'
                                 className=''
                                 required
                                 minLength="2"
                                 maxLength="32"
                                 value={formData.username}
+                                autoComplete="off"
                             />
+                            <label htmlFor="phoneno">
+                                Phone No
+                            </label>
                             <input
                                 name="phoneno"
                                 onChange={handleChangeInput}
                                 placeholder='phoneno'
                                 className=''
+                                type='number'
                                 required
                                 minLength="2"
                                 maxLength="32"
                                 value={formData.phoneno}
+                                autoComplete="off"
                             />
+                            <label htmlFor="gender">
+                                Gender
+                            </label>
                             <select id="gender"
                                 name="gender"
                                 value={formData.gender}
@@ -156,14 +169,14 @@ const Signup = () => {
                                 <option value="female">Female</option>
 
                             </select>
-                            
-                                <button
-                                    type="submit"
-                                    className='signup-btn'
-                                >
-                                    Sign up
-                                </button>
-                            
+
+                            <button
+                                type="submit"
+                                className='signup-btn'
+                            >
+                                Sign up
+                            </button>
+
                             <p className='account-text'>
                                 Already have an account?{' '}
                                 <Link to="/login" className='login-link-text' >
