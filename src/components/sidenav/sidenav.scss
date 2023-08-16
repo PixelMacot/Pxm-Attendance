@@ -17,7 +17,7 @@
 
 .sideNav.open {
     display: flex;
-    position: fixed;
+    position: sticky;
     z-index: 50;
     width: 100vw;
     top: 0;

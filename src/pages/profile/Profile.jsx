@@ -226,7 +226,7 @@ const Profile = () => {
                                         <Avatar
                                             alt={userData.displayName}
                                             src={formData.profileimg != 'notprovided' ? formData.profileimg : formData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
-                                            sx={{ width: '100%', height: '100%' }}
+                                            sx={{ width: '100%', height: '100%',position:'static' }}
                                         />
                                     </div>
                                     {/* {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />} */}
