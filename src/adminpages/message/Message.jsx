@@ -13,6 +13,7 @@ const columns = [
   {
     field: 'name',
     headerName: 'Name',
+    width: 150,
   },
   {
     field: 'category',
@@ -21,12 +22,13 @@ const columns = [
   {
     field: 'date',
     headerName: 'Date',
+    width: 120,
 
   },
   {
     field: 'message',
     headerName: 'Message',
-    width: 200,
+    width: 50,
     renderCell: (params) => {
       return <Link to={`/admin/message/${params.row.id}`}>View</Link>;
     },
@@ -79,12 +81,12 @@ const Message = () => {
 
 console.log(messages)
   return (
-    <div className='message-container mt-4'>
+    <div className='message-container mt-4 '>
       <button
       onClick={fetchMessages}
       className='px-5 py-2 bg-cyan-700 text-white rounded-md m-2'
       >Refresh Messages</button>
-      <div className="message-wrapper w-fit mx-auto">
+      <div className="message-wrapper w-[90%] mx-auto ">
         <DataGrid
           rows={messages}
           columns={columns}
@@ -92,7 +94,7 @@ console.log(messages)
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 15,
+                pageSize: 20,
               },
             },
             sorting: {
@@ -107,7 +109,7 @@ console.log(messages)
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[5,10,20]}
           // checkboxSelection
           disableRowSelectionOnClick
           slots={{

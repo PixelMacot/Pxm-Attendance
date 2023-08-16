@@ -133,7 +133,7 @@ const CreateAnnouncement = () => {
         <div>
             <div className="py-10 px-2 w-fit mx-auto border shadow-md">
                 <h1 className='text-xl font-bold text-center '>CreateAnnouncement</h1>
-                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-5'
+                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-8 shadow-md '
                     onSubmit={uploadToFirestore}
                 >
 
@@ -171,10 +171,10 @@ const CreateAnnouncement = () => {
                         onChange={handleChangeInput}
                         className='border rounded-md p-2 w-fit '
                     />
-                    <button className='primary-button'>create</button>
+                    <button className='bg-cyan-700 py-2 rounded-md text-white'>create</button>
                 </form>
                 <div className="text-xl font-bold text-center my-5 px-5">Show Number of notifications</div>
-                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-5'
+                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-8 shadow-md'
                     onSubmit={updateDatesAllowed}
                 >
                     <label>Nextdays</label>
@@ -193,19 +193,19 @@ const CreateAnnouncement = () => {
                         onChange={handleDatesAllowedInput}
                         className='border rounded-md p-2 w-fit '
                     />
-                    <button className='primary-button'>update</button>
+                    <button className='bg-cyan-700 py-2 rounded-md text-white'>update</button>
                 </form>
-                <h2 className='text-lg font-bold text-center'>Curent Announcements</h2>
+                <h2 className='text-lg font-bold text-center my-10'>Curent Announcements</h2>
                 <div className="flex flex-col gap-5">
 
                     {
                         allannouncement && allannouncement.map((item) => {
                             return (
-                                <div className="border border-red-500" key={item.id}>
+                                <div className="border shadow-md p-2" key={item.id}>
                                     <div className="mgg">
                                         {item.msg}
                                     </div>
-                                    <div className="deletebtn cursor-pointer"
+                                    <div className="deletebtn cursor-pointer w-fit px-5 bg-red-700 py-2 rounded-md text-white"
                                         id={item.slug}
                                         onClick={DeleteAnnouncement}
                                     >

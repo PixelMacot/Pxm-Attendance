@@ -96,10 +96,16 @@ const uploadToFirestore = async (e) => {
             <p className="text-green-700 font-bold">
               {msg}
             </p>
-            <button className='primary-button'
+            <button className='flex gap-2 items-center border-2 border-cyan-700 w-fit px-5 py-2 rounded-md '
               onClick={handleGetLocationClick}
-            >Locate</button>
-            <button className='primary-button'>Update</button>
+            >
+              <img src='/twocoordinates.png' className='w-[25px]'/>
+              Locate
+              
+              </button>
+            <button className='flex gap-2 items-center border-2 border-cyan-700 w-fit px-5 py-2 rounded-md '>
+              Update
+              </button>
           </form>
         </div>
       </div>

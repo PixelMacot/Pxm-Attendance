@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { MessagesContext } from '../../context/MessageContext'
-import { useParams,Navigate,Link} from 'react-router-dom';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 
@@ -15,8 +15,8 @@ const SingleMessage = () => {
     let id = e.target.id
     console.log(id)
     await deleteDoc(doc(db, "messages", id)).then(() => {
-      setMsg('successfully deleted message')  
-      fetchMessages()    
+      setMsg('successfully deleted message')
+      fetchMessages()
     }).catch((err) => {
       setMsg('A error occured while deleting message')
     })
@@ -27,7 +27,10 @@ const SingleMessage = () => {
     <div>
       <div className="flex flex-col justify-center w-[90%] lg:w-[50%] mx-auto gap-5 shadow-md p-5 mt-10">
         <Link to='/admin/message'>
-        <p>Go Back</p>
+          <div className="flex gap-2 items-center font-bold my-2">
+            <img src='/goback.png' className='w-[20px]' />
+            <p>Go Back</p>
+          </div>
         </Link>
         {
           msg && (
@@ -35,17 +38,26 @@ const SingleMessage = () => {
           )
         }
         <div className="name flex flex-col">
-          <p> Name</p>
-          {messages[id]?.name}
+          <div className="flex gap-2 items-center">
+            <img src='/user.png' alt='Name'/>
+            {/* <p> Name</p> */}
+          </div>
+          <p className='text-cyan-900 font-semibold py-2'>{messages[id]?.name}</p>
+        </div>
+        <div className="name flex flex-col">
+          <div className="flex gap-2 items-center">
+            <img src='/messageicon.png' alt='Message'/>
+            {/* <p> Name</p> */}
+          </div>
+          <p className='text-gray-600 leading-8 py-2'>
+          {messages[id]?.message}
+            </p>
         </div>
         {/* <div className="date">
           {messages[id].date}
         </div> */}
-        <div className="message flex flex-col">
-          <p>Message</p>
-          {messages[id]?.message}
-        </div>
-        slug:{messages[id]?.slug}
+
+        {/* slug:{messages[id]?.slug} */}
         <button
           id={messages[id]?.slug}
           onClick={DeleteMessage}
