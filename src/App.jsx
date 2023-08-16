@@ -32,6 +32,7 @@ import SingleMessage from './components/singlemessage/SingleMessage';
 import Inbox from './components/inbox/Inbox';
 import CreateAnnouncement from './adminpages/createannouncement/CreateAnnouncement';
 import ForgotPassword from './pages/forgotpassword/ForgotPassword';
+import SideNav from './components/sidenav/SideNav';
 
 function App() {
   // getFirebaseToken()
@@ -88,17 +89,19 @@ function App() {
   const Layout = () => {
     return (
       <div className="main">
-        <Navbar />
-        {/* <Notification /> */}
-        <div className="page-wrapper">
-          <div className="maincontainer">
+        <div className="flex">
+          <div className="">
+            <SideNav />
           </div>
-          <div className="layout">
-            {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
-            <ProtectedRoute>
-              <Outlet />
-            </ProtectedRoute>
-            {/* </ErrorBoundary> */}
+          {/* <Notification /> */}
+          <div className="page-wrapper">
+            <div className="layout">
+              {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
+              <ProtectedRoute>
+                <Outlet />
+              </ProtectedRoute>
+              {/* </ErrorBoundary> */}
+            </div>
           </div>
         </div>
         <Footer />
@@ -132,12 +135,8 @@ function App() {
   };
   const BasicLayout = () => {
     return (
-      <div className="main">
-        {/* <Navbar /> */}
-        <div className="page-wrapper">
-          <Outlet />
-        </div>
-        {/* <Footer /> */}
+      <div className="main">    
+          <Outlet />   
       </div>
     );
   };

@@ -49,7 +49,7 @@ const Profile = ({ userData, quote }) => {
                             {
                                 quote && (
                                     <div className="quotes-container-in-profile hidden lg:flex w-[100%] md:w-[450px]  lg:-mt-10">
-                                        <Quotes />
+                                        {/* <Quotes /> */}
                                     </div>
                                 )
                             }

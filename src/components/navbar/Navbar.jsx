@@ -15,7 +15,7 @@ import { RiEyeLine } from 'react-icons/ri';
 const Navbar = () => {
   const navigate = useNavigate();
   const [logged, SetLogged] = useState(false)
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const { currentUser, setCurrentUser, userData, getUserProfileData } = useContext(AuthContext)
 
   useEffect(() => {
@@ -40,14 +40,14 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-[#FF4158]  shadow-sm w-full'>
+      <div className='p-2 fixed z-40  flex justify-between text-center items-center bg-white  shadow-sm w-full'>
         <div>
           <NavLink to='/'>
             <div className=''>
               <img
-                src='/logo.svg'
-                width='40'
-                height='40'
+                src='/logo.png'
+                width='200'
+                height='200'
                 alt="PXM"
               />
             </div>

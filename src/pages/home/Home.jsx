@@ -47,7 +47,7 @@ const Home = () => {
         <div className="shadow-md w-[95%] mx-auto my-5">
 
           < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
-            <div className="w-[100%] lg:w-[40%]">
+            <div className="w-[100%]">
               <ShowAnnouncement/>
             </div>
             {/* {
