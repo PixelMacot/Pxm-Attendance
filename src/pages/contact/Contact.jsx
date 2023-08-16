@@ -31,7 +31,7 @@ const Contact = () => {
     const uploadToFirestore = async (e) => {
         e.preventDefault()
         try {
-            // sendAdminEmail(e)
+            sendAdminEmail(e)
         } catch (error) {
             console.log(error)
         }
