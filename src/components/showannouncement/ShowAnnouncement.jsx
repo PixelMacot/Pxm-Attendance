@@ -20,7 +20,7 @@ const ShowAnnouncement = () => {
         nextdays: '',
         prevdays: '',
     })
-
+    console.log(holidaysData)
     useEffect(() => {
         datesAllowed().then(() => {
             fetchAnnouncement()
@@ -56,7 +56,7 @@ const ShowAnnouncement = () => {
                 nextdays: fetched_data[0]['nextdays'],
                 prevdays: fetched_data[0]['previousdays'],
             })
-           console.log("dateallwoed",fetched_data[0]['previousdays'])
+            console.log("dateallwoed", fetched_data[0]['previousdays'])
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -114,7 +114,7 @@ const ShowAnnouncement = () => {
     }
     finalAnnouncement.sort((a, b) => moment(a.date, 'DD-MM-YYYY').diff(moment(b.date, 'DD-MM-YYYY')));
 
-  const currentday = moment(new Date()).format('DD-MM-YYYY')
+    const currentday = moment(new Date()).format('DD-MM-YYYY')
 
     return (
         <div className=''>
@@ -134,8 +134,8 @@ const ShowAnnouncement = () => {
                             return (
 
                                 <div className="py-2">
-                                    <div className={`bg-white p-2 rounded-md ${currentday == item.date ?'currentday':'nottoday'}`} key={item.id}>
-                                        <div className={`flex gap-2 items-center text-sm text-cyan-900 ${currentday == item.date ?'currentday':'nottoday'} `}>
+                                    <div className={`bg-white p-2 rounded-md ${currentday == item.date ? 'currentday' : 'nottoday'}`} key={item.id}>
+                                        <div className={`flex gap-2 items-center text-sm text-cyan-900 ${currentday == item.date ? 'currentday' : 'nottoday'} `}>
                                             <FaCalendarAlt />
                                             {item.date}
                                         </div>
