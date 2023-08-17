@@ -94,8 +94,8 @@ const PresentDates = ({ arr }) => {
         id: index,
         date: attn[key].markdate,
         workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
-        entry:currdata.entry && `${currdata.entry.slice(0, 2)}:${currdata.entry.slice(3,5)}`,
-        exit: currdata.exit && `${currdata.exit.slice(0, 2)}:${currdata.exit.slice(3,5)}`,
+        entry:currdata.entry && `${currdata.entry.slice(0, 2)}:${currdata.entry.slice(3,5)}:${currdata.entry.slice(6,8)}`,
+        exit: currdata.exit && `${currdata.exit.slice(0, 2)}:${currdata.exit.slice(3,5)}:${currdata.exit.slice(6,8)}`,
       })
     }
 
