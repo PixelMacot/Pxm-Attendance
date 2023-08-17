@@ -40,7 +40,7 @@ const PresentDates = ({ arr }) => {
   const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
   // console.log(JSON.parse(currentMonthPresentDays))
 
-  if (!attendance || attendance=="newuser") {
+  if (!attendance || attendance == "newuser") {
     return <div>Not Attendance Data Found</div>
   }
   const convertToNumber = (value) => {

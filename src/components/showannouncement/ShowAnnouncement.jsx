@@ -6,12 +6,14 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 import moment from 'moment'
 import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
 import './showannouncement.scss'
-
+import { AuthContext } from '../../context/AuthContext'
 
 const ShowAnnouncement = () => {
     const [announcement, setAnnouncement] = useState()
     const [allannouncement, setAllAnnouncement] = useState()
     const { holidaysData, setHolidaysData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON } = useContext(HolidaysContext)
+    const { userData } = useContext(AuthContext)
+
     const [msg, setMsg] = useState({
         successtxt: '',
         error: ''

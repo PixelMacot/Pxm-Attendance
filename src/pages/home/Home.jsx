@@ -7,6 +7,9 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 import Quotes from '../../components/quotes/Quotes';
 import ShowAnnouncement from '../../components/showannouncement/ShowAnnouncement';
 // import FilterHolidays from '../../components/filterholiday/filterholiday';
+import moment from 'moment'
+import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
+import { db } from '../../firebase';
 
 const Home = () => {
   const [loader, setLoader] = useState(true)
@@ -31,9 +34,28 @@ const Home = () => {
       console.log("data is  loaded")
       setLoader(false)
     }
+    if (userData.dob) {
+      let cmonth = moment(new Date()).format('MM')
+      console.log("userData.dob exits in month",cmonth,userData.dob.slice(5,7))
+      if(cmonth == userData.dob.slice(6,7)){
+        birthdayAnnouncement()
+      }        
+    }
   }, []);
 
-
+  const birthdayAnnouncement = async (e) => {
+    let dob = moment(userData.dob).format('DD-MM-YYYY')
+    let year = moment().year()
+    console.log('dob',dob)
+    let slug = `Birthday for ${userData.username}`
+    console.log(slug)
+    await setDoc(doc(db, "announcement", slug), {
+      msg: slug,
+      date: `${dob.slice(0,6)}${year}`,
+      link: 'notprovided',
+      slug: slug
+    })
+  };
 
   console.log('filter holidays', filteredHolidays)
   return (
@@ -48,7 +70,7 @@ const Home = () => {
 
           < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
             <div className="w-[100%]">
-              <ShowAnnouncement/>
+              <ShowAnnouncement />
             </div>
             {/* {
               loader && (
