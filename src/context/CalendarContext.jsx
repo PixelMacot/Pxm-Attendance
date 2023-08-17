@@ -9,6 +9,7 @@ export const CalendarContextProvider = ({ children }) => {
   const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
   const [attendance, setAttendance] = useState(false)
   const [markdate, setMarkDate] = useState()
+  const [presentDates,setPresentDates] =useState()
   const [datesLoader,setDatesLoader] = useState(true)
   const [currentMonthPresentDays, setCurrentMonthPresentDays] = useState()
   

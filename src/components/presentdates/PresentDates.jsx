@@ -83,15 +83,19 @@ const PresentDates = ({ arr }) => {
   // })
   let currentDate = currentMonth.slice(3, 10)
   Object.keys(attn).forEach(function (key, index) {
+    
     if (attn[key].markdate.slice(3, 10) != currentDate) {
       //dont push dates of next month in array
+
     } else {
+      // console.log(`${attn[key].entry.slice(0, 2)}:${attn[key].exit.slice(3,5)}`)
+      let currdata = attn[key]
       rows.push({
         id: index,
         date: attn[key].markdate,
         workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
-        entry: attn[key].entry,
-        exit: attn[key].exit,
+        entry:currdata.entry && `${currdata.entry.slice(0, 2)}:${currdata.entry.slice(3,5)}`,
+        exit: currdata.exit && `${currdata.exit.slice(0, 2)}:${currdata.exit.slice(3,5)}`,
       })
     }
 
