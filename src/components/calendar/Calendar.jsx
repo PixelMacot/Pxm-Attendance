@@ -56,15 +56,6 @@ const CalendarComponent = () => {
     else {
       return null; // For future dates with no special marking
     }
-
-    // if (isHoliday(formattedDate)) {
-    //   // console.log("holiday date", formattedDate)
-    //   return <div className="holiday-mark yellow-date" data-tip={getOccasion(formattedDate)}
-    //     data-tooltip-id="my-tooltip" data-tooltip-content={getOccasion(formattedDate)}
-    //   ></div>;
-    // }
-
-    return null;
   };
 
   const isHoliday = (date) => {

@@ -30,6 +30,7 @@ import SingleMessage from './components/singlemessage/SingleMessage';
 import CreateAnnouncement from './adminpages/createannouncement/CreateAnnouncement';
 import ForgotPassword from './pages/forgotpassword/ForgotPassword';
 import SideNav from './components/sidenav/SideNav';
+import ShowEmployee from './adminpages/showemployee/ShowEmployee';
 
 function App() {
   // getFirebaseToken()
@@ -206,7 +207,7 @@ function App() {
         },
         {
           path: "/admin/employee/:id",
-          element: < Attendance />,
+          element:<ShowEmployee/>,
         },
         {
           path: "/admin/update/employee/:id",

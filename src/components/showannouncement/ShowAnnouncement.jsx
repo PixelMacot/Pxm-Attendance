@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
-import UpComingHolidays from '../upcomingholidays/UpcomingHolidays'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import moment from 'moment'
 import { FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';

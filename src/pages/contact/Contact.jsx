@@ -1,11 +1,10 @@
-import React, { useState, useContext, useRef } from 'react'
-import { doc, setDoc, getDocs, updateDoc, collection, addDoc, Timestamp } from "firebase/firestore";
+import React, { useState, useContext} from 'react'
+import { doc, setDoc,Timestamp } from "firebase/firestore";
 import { db } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
-import axios from 'axios';
 import emailjs from '@emailjs/browser';
-
+import './contact.scss'
 
 const Contact = () => {
     const { currentUser, userData } = useContext(AuthContext)
