@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import moment from 'moment';
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
-import moment from 'moment';
+import './createannouncement.scss'
 
 const CreateAnnouncement = () => {
+
+    //All useStates
     const [announcement, setAnnouncement] = useState({
         msg: 'notprovided',
         link: 'notprovided',
@@ -20,22 +23,25 @@ const CreateAnnouncement = () => {
         error: ''
     })
 
+    //all useEffects
+    useEffect(() => {
+        fetchAnnouncement()
+    }, [])
+
+    //All functions
+    //announcement input read
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setAnnouncement({ ...announcement, [name]: value });
         console.log(announcement)
     };
+    //no of notification allowed form input change
     const handleDatesAllowedInput = (e) => {
         const { name, value } = e.target;
         setDatesAllowed({ ...datesallowed, [name]: value });
         console.log(datesallowed)
     };
-
-
-    useEffect(() => {
-        fetchAnnouncement()
-    }, [])
-
+    //add announcement to Database
     const uploadToFirestore = async (e) => {
         e.preventDefault()
         let slug = createSlug(announcement.msg)
@@ -62,6 +68,7 @@ const CreateAnnouncement = () => {
             )
         })
     };
+    //add No of notifications allowed in firebase
     const updateDatesAllowed = async (e) => {
         e.preventDefault()
         await setDoc(doc(db, "datesallowed", "datesallowed"), {
@@ -84,7 +91,7 @@ const CreateAnnouncement = () => {
             )
         })
     };
-
+    //fuction to create slug so that we can name firebase document with slug
     function createSlug(text) {
         return text
             .toString()                         // Convert to string
@@ -94,7 +101,7 @@ const CreateAnnouncement = () => {
             .replace(/[^\w\-]+/g, '')           // Remove non-word characters
             .replace(/\-\-+/g, '-');            // Replace multiple dashes with a single dash
     }
-
+    //function to fetch all announcement
     const fetchAnnouncement = async () => {
         try {
             const collectionRef = collection(db, "announcement");
@@ -107,7 +114,7 @@ const CreateAnnouncement = () => {
             console.error("Error fetching data:", error);
         }
     };
-
+    //function to delete announcement by slug
     const DeleteAnnouncement = async (e) => {
         e.preventDefault()
         let id = e.target.id

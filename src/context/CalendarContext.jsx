@@ -25,7 +25,7 @@ export const CalendarContextProvider = ({ children }) => {
         setAttendance('newuser')
         console.log("No such document!");
         setDatesLoader(false)
-      }
+      } 
     })
   }
   let presentDatesArray=[]

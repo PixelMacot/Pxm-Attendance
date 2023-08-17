@@ -6,30 +6,13 @@ import './calendar.scss'
 import moment from 'moment';
 import { CalendarContext } from '../../context/CalendarContext'
 import { HolidaysContext } from '../../context/HolidaysContext'
-import HolidayEmail from '../holidaysemail/HolidayEmail';
-import UpcomingHolidays from '../upcomingholidays/UpcomingHolidays';
 
+ 
 
 
 const CalendarComponent = () => {
-  const { currentMonth, setCurrentMonth, markdate, setCurrentMonthPresentDays } = useContext(CalendarContext)
-  const { holidaysDataLoading, holidaysData, setHolidaysData, handleCsvData, fetchHolidays, flattenData, convertDataToCSV, convertDataToJSON } = useContext(HolidaysContext)
-  const [presentdays, setPresentDays] = useState(0)
-  // const [currentMonth, setCurrentMonth] = useState(moment(new Date()).format("DD-MM-YYYY"))
-  const [filtereddays, setFilteredDays] = useState(0)
-  let currentDate = currentMonth.slice(3, 10)
-
-  const countDays = () => {
-    let pday = markdate.filter((date) => {
-      // console.log(date.slice(3, 10), currentDate)
-      return date.slice(3, 10) == currentDate
-    })
-    // console.log(pday.length)
-
-    setFilteredDays([...new Set(pday)].sort())
-    setCurrentMonthPresentDays([...new Set(pday)].sort())
-    setPresentDays(filtereddays.length)
-  }
+  const { currentMonth, setCurrentMonth, markdate,} = useContext(CalendarContext)
+  const {holidaysData} = useContext(HolidaysContext)
 
   const onActiveStartDateChangeHandler = ({ activeStartDate, value, view }) => {
     // console.log("vv:", activeStartDate, value, view);

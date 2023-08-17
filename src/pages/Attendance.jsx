@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router';
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase';
@@ -7,6 +7,7 @@ import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-g
 import moment from 'moment';
 import './employee.scss'
 import { AuthContext } from '../context/AuthContext'
+import { Link } from 'react-router-dom';
 
 
 const columns = [
@@ -43,7 +44,7 @@ function CustomToolbar() {
 
 const Attendance = () => {
   // console.log("Attendance",empData)
-  const {userData} = useContext(AuthContext)
+  const { userData } = useContext(AuthContext)
 
   const { id } = useParams();
   console.log(id)
@@ -341,7 +342,7 @@ const Attendance = () => {
 
             <div className="switch flex flex-col gap-10">
               {
-                empData.prevelege && userData.prevelege ==="superadmin" &&(
+                empData.prevelege && userData.prevelege === "superadmin" && (
                   <div className="switchbutton">
                     <div className="container">
                       admin
@@ -363,7 +364,7 @@ const Attendance = () => {
                 )
               }
               {
-                empData.prevelege && userData.prevelege ==="superadmin" && (
+                empData.prevelege && userData.prevelege === "superadmin" && (
                   <div className="switchbutton">
                     <div className="container">
                       status
@@ -401,7 +402,15 @@ const Attendance = () => {
           {/* //switch  */}
 
 
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4">
+            <div className="load-btn">
+              <Link to={`/admin/update/employee/${id}`}>
+                <button
+                  onClick={reloadCalendar}
+                  className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+                >Update User Data</button>
+              </Link>
+            </div>
             <div className="load-btn">
               <button
                 onClick={reloadCalendar}

@@ -16,7 +16,6 @@ import { AuthContext } from "./context/AuthContext";
 import NotVerified from './pages/notverified/NotVerified';
 import AdminHome from './adminpages/home/AdminHome';
 import HolidayCalendar from './adminpages/holiday/HolidayCalendar';
-import EmployeeAttendance from './adminpages/employee/EmployeeAttendance';
 import AttendanceDashboard from './pages/attendance/AttendanceDashboard';
 import Sidebar from './components/sidebar/SideBar'
 import HomePageLoader from './components/loader/HomePageLoader';
@@ -26,10 +25,8 @@ import NotAllowed from './pages/notallowed/NotAllowed';
 import OfficeLocation from './adminpages/location/OfficeLocation';
 import Message from './adminpages/message/Message';
 import Contact from './pages/contact/Contact';
-import Notification from './components/notification/Notification';
 import { requestForToken, onMessageListener } from './firebase'
 import SingleMessage from './components/singlemessage/SingleMessage';
-import Inbox from './components/inbox/Inbox';
 import CreateAnnouncement from './adminpages/createannouncement/CreateAnnouncement';
 import ForgotPassword from './pages/forgotpassword/ForgotPassword';
 import SideNav from './components/sidenav/SideNav';
@@ -169,10 +166,6 @@ function App() {
         {
           path: "/contact",
           element: <Contact />,
-        },
-        {
-          path: "/inbox",
-          element: <Inbox />,
         }
       ],
     },
@@ -210,10 +203,6 @@ function App() {
         {
           path: "/admin/calendar",
           element: <HolidayCalendar />,
-        },
-        {
-          path: "/admin/employees",
-          element: <EmployeeAttendance />,
         },
         {
           path: "/admin/employee/:id",

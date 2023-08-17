@@ -1,7 +1,8 @@
-import { isValidLatitude } from 'geolib';
 import React, { useState } from 'react'
-import { doc, setDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc} from "firebase/firestore";
 import { db } from '../../firebase';
+
+import './officelocation.scss'
 
 const OfficeLocation = () => {
   const [latitude, setLatitude] = useState(28.6292);

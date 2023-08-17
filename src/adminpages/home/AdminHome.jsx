@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getDocs, collection } from "firebase/firestore";
 import { db } from '../../firebase';
 import DataTable from '../../components/datatable/DataTable'
-import PieChartBox from '../../components/piechartbox/PieChartBox'
-
 import './home.scss'
-import CalendarComponent from '../../components/calendar/Calendar';
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   { field: "uid", headerName: "UID", width: 90 },
@@ -14,7 +12,7 @@ const columns = [
     headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
-      return <img src={params.row.img != 'notprovided' ? params.row.img : params.row.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}/>;
+      return <img src={params.row.img != 'notprovided' ? params.row.img : params.row.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'} />;
     },
   },
   {
@@ -57,7 +55,6 @@ const columns = [
 ];
 
 const AdminHome = () => {
-  const [usersData, setUsersData] = useState({})
   const [users, setUsers] = useState(false)
   useEffect(() => {
     fetchusers()
@@ -119,17 +116,6 @@ const AdminHome = () => {
             )
           }
         </div>
-        {/* <div className="charts-wrapper">
-          <div className="piechart-wrapper">
-            <div>
-              <h1>Total Working Hours</h1>
-              <PieChartBox/>
-            </div>
-          </div>
-        </div>
-        <div className="admin-calendar-wrapper">
-          <CalendarComponent/>
-        </div> */}
       </div>
     </section>
 
