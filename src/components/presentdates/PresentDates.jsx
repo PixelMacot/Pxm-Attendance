@@ -35,9 +35,9 @@ function CustomToolbar() {
     </GridToolbarContainer>
   );
 }
-const PresentDates = ({ arr }) => {
+const PresentDates = ({ currentMonth,attendance }) => {
 
-  const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
+  // const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
   // console.log(JSON.parse(currentMonthPresentDays))
 
   if (!attendance || attendance == "newuser") {

@@ -3,66 +3,33 @@ import { useParams } from 'react-router';
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from '../../firebase';
 import Profile from '../../components/profile/Profile';
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import moment from 'moment';
 import './showemployee.scss'
 import { AuthContext } from '../../context/AuthContext'
 import { Link } from 'react-router-dom';
-
-
-const columns = [
-  {
-    field: 'date',
-    headerName: 'Date',
-
-  },
-  {
-    field: 'workinghours',
-    headerName: 'Working Hours',
-    width: 200
-  },
-  {
-    field: 'entry',
-    headerName: 'Entry',
-    width: 200
-  },
-  {
-    field: 'exit',
-    headerName: 'Exit',
-    width: 200
-  },
-];
-
-
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport />
-    </GridToolbarContainer>
-  );
-}
+import CalendarComponent from '../../components/calendar/Calendar';
+import PresentDates from '../../components/presentdates/PresentDates';
+import { CalendarContext } from '../../context/CalendarContext'
 
 const ShowEmployee = () => {
-  // console.log("Attendance",empData)
   const { userData } = useContext(AuthContext)
-
   const { id } = useParams();
-  console.log(id)
-  //send user to login page when user not logged in
+
   const [isadmin, setIsAdmin] = useState(false)
   const [attendance, setAttendance] = useState()
-  const [currentdate, setcurrentDate] = useState(7)
   const [empData, setEmpData] = useState({})
   const [err, setErr] = useState()
   const [msg, setMsg] = useState()
   const [adminmsg, setAdminMsg] = useState()
   const [userStatus, setUserStatus] = useState(false)
+  const [rows, setRows] = useState([])
+  const [presentDatesArray, setPresentDatesArray] = useState([])
+  const { currentMonth } = useContext(CalendarContext)
   const [userattendance, setUserAttendance] = useState({
     date: '',
     entry: '',
     exit: ''
   })
-
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -70,22 +37,16 @@ const ShowEmployee = () => {
     console.log(userattendance)
   };
 
+
   useEffect(() => {
     getUserProfileData(id)
     console.log(empData.prevelege)
   }, [])
 
-  const prevmonth = () => {
-    setcurrentDate(currentdate - 1)
-  }
-  const nextmonth = () => {
-    setcurrentDate(currentdate + 1)
-  }
+
 
   const getUserProfileData = async (id) => {
-    // console.log("getattendance data function called", user.uid)
     getDoc(doc(db, "users", id)).then(docSnap => {
-
       if (docSnap.exists()) {
         console.log("Document data:", JSON.stringify(docSnap.data()));
         setEmpData(docSnap.data())
@@ -102,79 +63,30 @@ const ShowEmployee = () => {
     })
 
   }
-  console.log("isadmin", isadmin)
-  //attendance data
-  // getting Attendance data from cloud firestore 
-  const getAttendanceData = async (useruid) => {
-    // console.log("getattendance data function called", user.uid)
-    getDoc(doc(db, "attendance", useruid)).then(docSnap => {
 
+  const getAttendanceData = async (useruid) => {    // console.log("getattendance data function called", user.uid)
+    let presentDatesArray = []
+    getDoc(doc(db, "attendance", useruid)).then(docSnap => {
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
         setAttendance(docSnap.data())
+        let attn = docSnap.data()
+        Object.keys(attn).forEach(function (key, index) {
+          console.log(attn[key])
+          let currdata = attn[key]
+          presentDatesArray.push(currdata.markdate)
+        });
+        setPresentDatesArray(presentDatesArray)
       } else {
         console.log("No such document!");
       }
-
     })
 
   }
 
-  const reloadCalendar = () => {
+ const reloadCalendar = () => {
     getAttendanceData(id)
   }
-  const convertToNumber = (value) => {
-    if (typeof value === 'string') {
-      return Number(value);
-    }
-    return value; // If it's not a string, return the original value
-  };
-  const calculateWorkingHours = (timePoint1 = "10-10-10", timePoint2 = "10-10-10") => {
-    if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
-      timePoint2 = timePoint1
-    }
-
-    const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
-    const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
-
-    const totalSeconds1 = convertToNumber(hours1) * 3600 + convertToNumber(minutes1) * 60 + convertToNumber(seconds1);
-    const totalSeconds2 = convertToNumber(hours2) * 3600 + convertToNumber(minutes2) * 60 + convertToNumber(seconds2);
-
-    let difference = totalSeconds2 - totalSeconds1;
-
-    const hours = Math.floor(difference / 3600);
-    difference %= 3600;
-    const minutes = Math.floor(difference / 60);
-    const seconds = difference % 60;
-
-    return `${hours} hours, ${minutes} minutes`;
-  };
-
-  //Attendance
-  let months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-  let rows = []
-  let currentMonth = `17-${months[currentdate]}-2023`
-  console.log("currentMont", currentMonth)
-  let currentDate = currentMonth.slice(3, 10)
-  if (attendance) {
-    let attn = attendance
-    Object.keys(attn).forEach(function (key, index) {
-      console.log(attn[key])
-      if (attn[key].markdate.slice(3, 10) != currentDate) {
-        //dont push dates of next month in array
-      } else {
-        rows.push({
-          id: index,
-          date: attn[key].markdate,
-          workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
-          entry: attn[key].entry,
-          exit: attn[key].exit,
-        })
-      }
-      // console.log()
-    });
-  }
-
 
   const convertTo24HourFormat = (time12) => {
     // Check if the time is already in the 24-hour format (e.g., "18:10")
@@ -386,11 +298,6 @@ const ShowEmployee = () => {
                 )
               }
             </div>
-
-
-
-
-
           </div>
           {
             adminmsg && (
@@ -419,17 +326,19 @@ const ShowEmployee = () => {
             </div>
 
           </div>
-          <div className="flex gap-5">
-            <button
-              onClick={prevmonth}
-              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Prev</button>
 
-            <button
-              onClick={nextmonth}
-              className="text-cyan-700 border border-cyan-700 px-5 py-2 rounded-md">Next</button>
+          <div className="">
+
+            {
+              presentDatesArray.length > 0 && (
+                <CalendarComponent attendance={attendance} markdate={presentDatesArray} />
+              )
+            }
+
           </div>
           <div className='max-w-[90vw]'>
-            <DataGrid
+            <PresentDates currentMonth={currentMonth} attendance={attendance} />
+            {/* <DataGrid
               rows={rows}
               columns={columns}
               initialState={{
@@ -448,7 +357,7 @@ const ShowEmployee = () => {
               slots={{
                 toolbar: CustomToolbar,
               }}
-            />
+            /> */}
           </div>
 
         </div>

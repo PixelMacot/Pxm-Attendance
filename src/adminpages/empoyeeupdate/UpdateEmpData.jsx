@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -17,7 +17,7 @@ const UpdateEmpData = () => {
 
     const { id } = useParams();
 
-    if(!id){
+    if (!id) {
         return <div>Sorry can't find user</div>
     }
 
@@ -27,14 +27,14 @@ const UpdateEmpData = () => {
     const [photourl, setPhotoUrl] = useState()
     const [percent, setPercent] = useState(0);
     const [userData, setUserData] = useState({
-      "username": "user",
-      "position": "Web Developer",
-      "skills": "Html Css ,Javascript,Webflow",
-      "profileimg": "/avatar.png",
-      "backgroundimg": "/profilebg.jpg",
-      "prevelege": "employee",
-      "dummyData": true,
-      "status": false
+        "username": "user",
+        "position": "Web Developer",
+        "skills": "Html Css ,Javascript,Webflow",
+        "profileimg": "/avatar.png",
+        "backgroundimg": "/profilebg.jpg",
+        "prevelege": "employee",
+        "dummyData": true,
+        "status": false
     })
     const [formData, setFormData] = useState(
         {
@@ -44,7 +44,7 @@ const UpdateEmpData = () => {
             backgroundimg: '/profilebg.jpg',
             address: '',
             phoneno: '',
-            gender: '',
+            gender: 'male',
             dob: '',
             profileimg: 'notprovided',
         }
@@ -52,18 +52,18 @@ const UpdateEmpData = () => {
     const getUserProfileData = async () => {
         // console.log("getattendance data function called", user.uid)
         getDoc(doc(db, "users", id)).then(docSnap => {
-    
-          if (docSnap.exists()) {
-            console.log("Document data:", JSON.stringify(docSnap.data()));
-            setUserData(docSnap.data())
-            setFormData(docSnap.data())
-    
-          } else {
-            console.log("can't get data of profile update profile to fetch latest data");
-          }
+
+            if (docSnap.exists()) {
+                console.log("Document data:", JSON.stringify(docSnap.data()));
+                setUserData(docSnap.data())
+                setFormData(docSnap.data())
+
+            } else {
+                console.log("can't get data of profile update profile to fetch latest data");
+            }
         })
-    
-      }
+
+    }
     //send user to login page when user not logged in
     useEffect(() => {
         getUserProfileData()
@@ -76,7 +76,7 @@ const UpdateEmpData = () => {
         console.log(id)
         e.preventDefault()
         setLoader(true)
-        let docdta = {
+        let docdata = {
             uid: id,
             username: formData.username,
             profileimg: formData.profileimg,
@@ -85,48 +85,20 @@ const UpdateEmpData = () => {
             address: formData.address,
             phoneno: formData.phoneno,
             backgroundimg: formData.backgroundimg,
-            gender: formData.gender,
+            gender: formData.gender?formData.gender:'male',
             dob: moment(formData.dob).format("YYYY-MM-DD"),
             prevelege: "employee"
         }
-        console.log(docdta)
+        console.log(docdata)
         try {
-            const docRef = doc(db, "users",id);
+            const docRef = doc(db, "users", id);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                await updateDoc(doc(db, "users",id),
-                    {
-                        uid: id,
-                        username: formData.username,
-                        profileimg: formData.profileimg,
-                        position: formData.position,
-                        skills: formData.skills,
-                        address: formData.address,
-                        phoneno: formData.phoneno,
-                        backgroundimg: formData.backgroundimg,
-                        gender: formData.gender,
-                        dob: moment(formData.dob).format("YYYY-MM-DD"),
-                        prevelege: "employee"
-                    }
-                );
+                await updateDoc(doc(db, "users", id), docdata);
             } else {
                 console.log(docdta)
-                await setDoc(doc(db, "users", id),
-                    {
-                        uid:id,
-                        username: formData.username,
-                        profileimg: formData.profileimg,
-                        position: formData.position,
-                        skills: formData.skills,
-                        address: formData.address,
-                        phoneno: formData.phoneno,
-                        backgroundimg: formData.backgroundimg,
-                        gender: formData.gender,
-                        dob: moment(formData.dob).format("YYYY-MM-DD"),
-                        prevelege: "employee"
-                    }
-                );
+                await setDoc(doc(db, "users", id), docdata);
             }
 
             //call function to get updated data
@@ -213,7 +185,7 @@ const UpdateEmpData = () => {
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        console.log(formData.profileimg)
+        console.log(formData)
     };
     return (
         <main >
@@ -249,7 +221,7 @@ const UpdateEmpData = () => {
                                         <Avatar
                                             alt={userData.displayName}
                                             src={formData.profileimg != 'notprovided' ? formData.profileimg : formData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
-                                            sx={{ width: '100%', height: '100%',position:'static' }}
+                                            sx={{ width: '100%', height: '100%', position: 'static' }}
                                         />
                                     </div>
                                     {/* {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />} */}
@@ -346,10 +318,10 @@ const UpdateEmpData = () => {
                             />
                             <select id="gender"
                                 name="gender"
+                                onChange={handleChangeInput}
                                 value={formData.gender}
                                 required
                                 className='border p-2 rounded-md'
-                                onChange={handleChangeInput}
                             >
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>

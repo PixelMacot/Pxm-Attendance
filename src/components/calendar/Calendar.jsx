@@ -10,10 +10,13 @@ import { HolidaysContext } from '../../context/HolidaysContext'
 
 
 
-const CalendarComponent = () => {
-  const { attendance, setCurrentMonth, markdate, } = useContext(CalendarContext)
+const CalendarComponent = ({ attendance, markdate }) => {
+  const { setCurrentMonth } = useContext(CalendarContext)
   const { holidaysData } = useContext(HolidaysContext)
-
+  console.log("from calendar component", holidaysData)
+  if (holidaysData.length < 2) {
+    return <div>loading....</div>
+  }
   console.log("from calendar", holidaysData)
   console.log("from calendar", attendance)
 
@@ -88,7 +91,9 @@ const CalendarComponent = () => {
 
     } else if (isAbsent) {
       return <div className="absent-day" data-tip={getOccasion(formattedDate)}
+        data-tooltip-id="my-tooltip" data-tooltip-content='absent'
       >{date.getDate()}</div>
+
     } else if (isSunday) {
       return <div className='sunday'>
         {date.getDate()}
@@ -111,8 +116,8 @@ const CalendarComponent = () => {
   const getPresentTooltip = (date) => {
     const att = attendance[date];
     console.log("from calendar app", att)
-    return att ? `${att.entry && `${att.entry.slice(0, 2)}:${att.entry.slice(3,5)}`}
-     to ${att.exit ? `${att.exit.slice(0, 2)}:${att.exit.slice(3,5)}` : "not-marked"}
+    return att ? `${att.entry && `${att.entry.slice(0, 2)}:${att.entry.slice(3, 5)}`}
+     to ${att.exit ? `${att.exit.slice(0, 2)}:${att.exit.slice(3, 5)}` : "not-marked"}
      (${calculateWorkingHours(att.entry, att.exit)})`
       : '';
   };

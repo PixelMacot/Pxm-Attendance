@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { MessagesContextProvider } from './context/MessageContext.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
 
-<ErrorBoundary fallback={<div>Something went wrong</div>}>
+
     <AuthContextProvider>
       <CalendarContextProvider>
         <LocationContextProvider>
@@ -30,6 +30,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </LocationContextProvider>
       </CalendarContextProvider>
     </AuthContextProvider>
-</ErrorBoundary>
+
 
 )

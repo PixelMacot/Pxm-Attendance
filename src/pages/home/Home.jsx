@@ -10,12 +10,13 @@ import ShowAnnouncement from '../../components/showannouncement/ShowAnnouncement
 import moment from 'moment'
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
+import './home.scss'
 
 const Home = () => {
   const [loader, setLoader] = useState(true)
   const { currentUser, userData } = useContext(AuthContext)
-  const { datesLoader, getAttendanceData, attendance } = useContext(CalendarContext)
-  const { holidaysDataLoading, fetchHolidays, holidaysData, filteredHolidays } = useContext(HolidaysContext)
+  const { datesLoader, getAttendanceData } = useContext(CalendarContext)
+  const { holidaysDataLoading, fetchHolidays, filteredHolidays } = useContext(HolidaysContext)
 
 
   const reload = () => {
@@ -36,22 +37,22 @@ const Home = () => {
     }
     if (userData.dob) {
       let cmonth = moment(new Date()).format('MM')
-      console.log("userData.dob exits in month",cmonth,userData.dob.slice(5,7))
-      if(cmonth == userData.dob.slice(6,7)){
+      console.log("userData.dob exits in month", cmonth, userData.dob.slice(5, 7))
+      if (cmonth == userData.dob.slice(6, 7)) {
         birthdayAnnouncement()
-      }        
+      }
     }
   }, []);
 
   const birthdayAnnouncement = async (e) => {
     let dob = moment(userData.dob).format('DD-MM-YYYY')
     let year = moment().year()
-    console.log('dob',dob)
+    console.log('dob', dob)
     let slug = `Birthday for ${userData.username}`
     console.log(slug)
     await setDoc(doc(db, "announcement", slug), {
       msg: slug,
-      date: `${dob.slice(0,6)}${year}`,
+      date: `${dob.slice(0, 6)}${year}`,
       link: 'notprovided',
       slug: slug
     })
@@ -61,30 +62,13 @@ const Home = () => {
   return (
     <section className='home-wrapper'>
       <div className="home-container">
-        <div className="shadow-md w-[95%] mx-auto py-5 my-2">
+        <div className="profile">
           <Profile userData={userData} quote={true} />
           {/* <Quotes /> */}
           {/* <ShowAnnouncement /> */}
         </div>
-        <div className="shadow-md w-[95%] mx-auto my-5">
-
-          < div className=" calendar-announcement-container flex  flex-wrap  gap-5 justify-between items-center">
-            <div className="w-[100%]">
-              <ShowAnnouncement />
-            </div>
-            {/* {
-              loader && (
-                <div className="w-fit mx-auto">
-                  <button
-                    onClick={reload}
-                    className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
-                  >Reload Calendar</button>
-                </div>)
-            }
-            <div className="home-calendar lg:w-[50%]">
-              {!loader && (<CalendarComponent />)}
-            </div> */}
-          </div>
+        < div className="announcement-container ">
+          <ShowAnnouncement />
         </div>
         <div>
         </div>

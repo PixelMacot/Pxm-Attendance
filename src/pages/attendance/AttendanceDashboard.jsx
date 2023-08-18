@@ -15,7 +15,8 @@ import GeofenceMap from "../../components/map/SecondMap";
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
     const { currentUser, userData } = useContext(AuthContext)
-    const { getAttendanceData, datesLoader, markdate, attendance } = useContext(CalendarContext)
+    // const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
+    const { currentMonth, attendance, getAttendanceData, datesLoader, markdate, } = useContext(CalendarContext)
     const { holidaysDataLoading, fetchHolidays } = useContext(HolidaysContext)
     const { isUserInsideGeofence, error, lat, lon, reverifyLocation } = useContext(LocationContext)
 
@@ -52,58 +53,43 @@ const AttendanceDashboard = () => {
     ];
 
     return (
-        <div className="AttendanceDashboard pb-5 mt-5">
-            <div className="maincontainer min-h-[70vh]">
-                <div className="attendancedashboard-wrapper flex flex-col gap-5">
-                    <div className="w-[90%] mx-auto rounded-md shadow-md ">
-                        <div className="profile-wrapper py-5">
-                            <Profile userData={userData} />
-                        </div>
-                        {
-                            userData.dummyData ? (
-                                <div className=""></div>
-                            ) : (
-                                <div className="markattendance-btn px-5 pb-5">
-                                    <MarkAttendance />
-                                </div>
-                            )
-                        }
-                    </div>
+        <div className="AttendanceDashboard">
+
+            <div className="attendancedashboard-wrapper ">
+                <div className="">
                     {
-                        loader ? (
-                            <div className="w-fit mx-auto">
-                                <button
-                                    onClick={reload}
-                                    className="bg-cyan-700 text-white px-5 py-2 shadow-md rounded-md w-fit mx-auto"
-                                >Reload Calendar</button>
-                            </div>
+                        userData.dummyData ? (
+                            <div className=""></div>
                         ) : (
-                            <div className="calendarandpresentdays flex flex-wrap justify-center gap-5 border rounde-md md:p-2  w-fit lg:w-[90%] mx-auto rounded-md shadow-md">
-                                <div className="calendarapp w-[90vw] md:w-[55vw] mx-auto p-2 border border-gray-200 ">
-                                    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-                                        <CalendarComponent />
-                                    </ErrorBoundary>
-                                </div>
-                                <div className="presentdayswrapper px-2 w-fit max-w-[95vw]">
-                                    <PresentDates arr={markdate} />
-                                </div>
+                            <div className="markattendance-btn px-5 pb-5">
+                                <MarkAttendance />
                             </div>
                         )
                     }
-                    <div className="attendancedashboard-map shadow-md rounded-md w-[90%] mx-auto">
-
-                        {/* <ErrorBoundary fallback={<div>Something went wrong</div>}> */}
-                            {/* <MapStructure /> */}
-                        {/* </ErrorBoundary> */}
-                    </div>
-
-                    {/* <div>
-                        <h1>Geofence Map</h1>
-                        <GeofenceMap fenceCoordinates={fenceCoordinates} />
-                    </div> */}
-
                 </div>
+                {
+                    loader ? (
+                        <div className="">
+                            <button
+                                onClick={reload}
+                                className="primary-button"
+                            >Reload Calendar</button>
+                        </div>
+                    ) : (
+                        <div className="calendarandpresentdays">
+                            <div className="calendarapp">
+                                <ErrorBoundary fallback={<div>Something went wrong</div>}>
+                                    <CalendarComponent attendance={attendance} markdate={markdate} />
+                                </ErrorBoundary>
+                            </div>
+                            <div className="presentdayswrapper px-2 w-fit max-w-[95vw]">
+                                <PresentDates currentMonth={currentMonth} attendance={attendance} />
+                            </div>
+                        </div>
+                    )
+                }
             </div>
+
         </div>
     )
 }

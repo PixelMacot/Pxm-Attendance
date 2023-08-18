@@ -8,7 +8,7 @@ import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts, AiOutlineMail, AiOutlineClose } from 'react-icons/ai'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { AuthContext } from '../../context/AuthContext'
-
+import Avatar from '@mui/material/Avatar';
 
 const SideNav = () => {
     const navigate = useNavigate();
@@ -44,29 +44,39 @@ const SideNav = () => {
         <div className="">
             {
                 !toggle && (
-                    <div className='p-2 lg:hidden fixed z-40  flex justify-between text-center items-center bg-white  shadow-sm w-full'>
+                    <div className='mobile-menu '>
                         <Link to='/'>
-                            <div className=''>
+                            <div className='logo'>
                                 <img
                                     src='/logo.png'
-                                    width='140'
-                                    height='140'
                                     alt="PXM"
                                 />
                             </div>
                         </Link>
                         {
                             logged && (
-                                <div className="mobile_navbar-menu  p-2 hover:cursor-pointer  order-2 "
+                                <div className="open-mobile-menu"
                                     onClick={scrollTop}
                                 >
-                                    <BiMenuAltRight onClick={() => setToggle(true)}
-                                        className='text-2xl'
+                                    <BiMenuAltRight onClick={() => setToggle(!toggle)}
+                                        className='open-mobile-menu'
                                     />
 
                                 </div>
                             )
                         }
+                        <div className="right">
+                            <div className="notification">
+                                <img src='/notificationicon.png' />
+                            </div>
+                            <div className="avatar">
+                                <Avatar
+                                    alt={userData.username}
+                                    src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
+                                    sx={{ width: '100%', height: '100%', position: 'static' }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 )
             }
@@ -75,21 +85,18 @@ const SideNav = () => {
                 {
                     toggle && (
                         <div
-                            className="hover:text-red-500 lg:hidden cursor-pointer text-2xl solid red absolute right-8 top-4 float-right"
+                            className="close-mobile-menu"
                             onClick={() => setToggle(!toggle)}
                         ><HiX className='float-right' />
                         </div>
                     )
                 }
-                <div
-                    className='flex flex-col gap-2 w-fit '>
-                    <div className="sidenav-wrapper p-4">
-                        <div className="logo mb-4">
-                            <img src='/logo.png'
-                                className='w-[200px]'
-                            />
+                <div>
+                    <div className="sidenav-wrapper">
+                        <div className="logo">
+                            <img src='/logo.png' />
                         </div>
-                        <div className="all-links-wrapper  flex flex-col  text-lg">
+                        <div className="all-links-wrapper">
                             {
                                 [
                                     {
@@ -117,17 +124,12 @@ const SideNav = () => {
                                         "NavLink": "/contact",
                                         "icon": AiOutlineMail
                                     },
-                                    {
-                                        "title": "Inbox",
-                                        "NavLink": "/inbox",
-                                        "icon": AiOutlineMail
-                                    },
                                 ].map((item) => (
-                                    <li key={item.title} className='p-2 font-semibold list-none my-3'>
+                                    <li key={item.title} className='navlist'>
 
                                         <NavLink to={`${item.NavLink}`} onClick={() => setToggle(false)}
 
-                                            className={({ isActive }) => (isActive ? "flex gap-2 items-center active" : 'flex gap-2 items-center ')}
+                                            className={({ isActive }) => (isActive ? "navlink active" : 'navlink')}
                                             style={{ listStyle: 'none' }}
                                         >
 
@@ -139,9 +141,9 @@ const SideNav = () => {
                                 ))}
                             {
                                 (userData.prevelege == "admin" || userData.prevelege == "superadmin") && (
-                                    <li className='p-2 font-semibold list-none my-3'>
+                                    <li className='navlist'>
                                         <NavLink to="/admin"
-                                            className='flex gap-2 items-center'
+                                            className='navlink'
                                         >
                                             <AiOutlineFileProtect />
                                             Admin
@@ -153,11 +155,11 @@ const SideNav = () => {
                             {
                                 logged &&
                                 (
-                                    <li className='p-2 my-4 cursor-pointer hover:text-cyan-700  font-semibold list-none'
+                                    <li className='navlist'
                                         onClick={handleSignOut}
                                     >
                                         <div onClick={() => setToggle(false)}
-                                            className='flex gap-2 items-center '
+                                            className='navlink'
                                             style={{ listStyle: 'none' }}
                                         >
                                             <BiLogOut />

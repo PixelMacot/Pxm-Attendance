@@ -87,18 +87,18 @@ function App() {
   const Layout = () => {
     return (
       <div className="main">
-        <div className="flex ">
-          <div className="border-r-2 border-gray-300">
-            <SideNav />
+        <div className="main-container">
+          <div className="sidenav">
+            <SideNav /> 
           </div>
           {/* <Notification /> */}
           <div className="page-wrapper">
             <div className="layout">
-              <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page </div>}>
+              {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page </div>}> */}
               <ProtectedRoute>
                 <Outlet />
               </ProtectedRoute>
-              </ErrorBoundary>
+              {/* </ErrorBoundary> */}
             </div>
           </div>
         </div>
@@ -117,13 +117,13 @@ function App() {
               <Sidebar />
             </div>
             <div className="admin-container">
-              <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}>
+              {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}> */}
                 <ProtectedRoute>
                   <AdminProtectedRoute>
                     <Outlet />
                   </AdminProtectedRoute>
                 </ProtectedRoute>
-              </ErrorBoundary>
+              {/* </ErrorBoundary> */}
             </div>
           </div>
         </div>

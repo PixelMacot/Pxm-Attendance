@@ -68,7 +68,16 @@ export const HolidaysContextProvider = ({ children }) => {
       setFetchedData(fetched_data);
       //below function convert data into json
       console.log(fetched_data)
-      convertDataToJSON()
+      const jsonData = fetched_data.map((item) => {
+        // Check if date and name properties exist in the object
+        console.log(item.slug)
+        const date = item.date || (item && item.Date.replace(/["']/g, "")) || null;
+        const name = item.name || (item && item.Name) || null;
+        const slug = item.slug || (item && item.slug) || null;
+        return { date, name, slug };
+      });
+      console.log(jsonData)
+      setHolidaysData(jsonData)
       setHolidaysDataLoading(false)
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -100,18 +109,19 @@ export const HolidaysContextProvider = ({ children }) => {
     document.body.removeChild(tempLink);
   };
 
-  const convertDataToJSON = () => {
-    const jsonData = fetchedData.map((item) => {
-      // Check if date and name properties exist in the object
-      console.log(item.slug)
-      const date = item.date || (item && item.Date.replace(/["']/g, "")) || null;
-      const name = item.name || (item && item.Name) || null;
-       const slug = item.slug || (item && item.slug) || null;
-      return { date, name,slug };
-    });
-    console.log(jsonData)
-    setHolidaysData(jsonData)
-  };
+  // const convertDataToJSON = () => {
+  //   const jsonData = fetchedData.map((item) => {
+  //     // Check if date and name properties exist in the object
+  //     console.log(item.slug)
+  //     const date = item.date || (item && item.Date.replace(/["']/g, "")) || null;
+  //     const name = item.name || (item && item.Name) || null;
+  //      const slug = item.slug || (item && item.slug) || null;
+  //     return { date, name,slug };
+  //   });
+  //   console.log(jsonData)
+  //   setHolidaysData(jsonData)
+  // };
+  
   return (
     <HolidaysContext.Provider value={{
       holidaysDataLoading,
@@ -123,7 +133,6 @@ export const HolidaysContextProvider = ({ children }) => {
       fetchHolidays,
       flattenData,
       convertDataToCSV,
-      convertDataToJSON,
       filteredHolidays
     }}>
       {children}

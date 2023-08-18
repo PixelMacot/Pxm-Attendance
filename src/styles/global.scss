@@ -17,17 +17,6 @@ a {
 }
 
 
-.page-wrapper {
-  min-height: 90vh;
-  width: 70%;
-
-
-  @include md {
-    margin: 32px 0px;
-    width: 100%;
-  }
-
-}
 
 .quote-text {
   color: rgba(0, 0, 0, 0.801);
@@ -49,10 +38,23 @@ a {
   font-weight: bold;
   padding: 10px 10px 10px 0px;
 }
-.active {
-  font-weight: bold; /* Or any other styling you prefer */
-  color: white; /* Or any other color you prefer */
-  background-color: rgb(16, 47, 51);
-  padding: 10px;
-  border-radius: 5px;
+
+
+//Layout
+.main-container {
+  display: flex;
+}
+.sidenav {
+  width: 20%;
+  border-right: 2px solid rgba(128, 128, 128, 0.411);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.page-wrapper {
+  min-height: 90vh;
+  width: 80%;
+
+  @include md {
+    margin: 32px 0px;
+    width: 100%;
+  }
 }
