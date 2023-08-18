@@ -215,7 +215,7 @@ const MarkAttendance = () => {
         <div className="markattendance">
             <div className="maincontainer">
                 <div className="markattendance-wrapper">
-
+                   
                     <div className="markattendance-buttons flex flex-col">
                         {
                             !showattendancebtn && distance == 9999 && !error && (

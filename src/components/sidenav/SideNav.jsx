@@ -78,9 +78,9 @@ const SideNav = () => {
                             </div>
                         </div>
                     </div>
+
                 )
             }
-
             <div className={`sideNav ${toggle ? 'open' : 'close'}`}>
                 {
                     toggle && (
