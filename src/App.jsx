@@ -89,7 +89,7 @@ function App() {
       <div className="main">
         <div className="main-container">
           <div className="sidenav">
-            <SideNav /> 
+            <SideNav />
           </div>
           {/* <Notification /> */}
           <div className="page-wrapper">
@@ -110,20 +110,26 @@ function App() {
     return (
       <div className="main">
         {/* <div className="fixed z-50 left-[50%] top-[3%] text-cyan-900 font-bold">Admin Panel</div> */}
-        <Navbar />
-        <div className="min-h-[80vh]">
+
+        <div className="">
+
           <div className="main-container">
-            <div className="">
-              <Sidebar />
+            <div className="sidenav">
+              <SideNav />
             </div>
-            <div className="admin-container">
-              {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}> */}
+            <div className="page-wrapper">
+              <div className="sidebar -mt-8 -ml-5 w-[80%]">
+                <Sidebar />
+              </div>
+              <div className="content">
+                {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}> */}
                 <ProtectedRoute>
                   <AdminProtectedRoute>
                     <Outlet />
                   </AdminProtectedRoute>
                 </ProtectedRoute>
-              {/* </ErrorBoundary> */}
+                {/* </ErrorBoundary> */}
+              </div>
             </div>
           </div>
         </div>
@@ -133,8 +139,8 @@ function App() {
   };
   const BasicLayout = () => {
     return (
-      <div className="main">    
-          <Outlet />   
+      <div className="main">
+        <Outlet />
       </div>
     );
   };
@@ -207,7 +213,7 @@ function App() {
         },
         {
           path: "/admin/employee/:id",
-          element:<ShowEmployee/>,
+          element: <ShowEmployee />,
         },
         {
           path: "/admin/update/employee/:id",

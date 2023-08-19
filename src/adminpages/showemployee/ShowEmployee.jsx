@@ -194,65 +194,65 @@ const ShowEmployee = () => {
   };
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center ">
-      <div className="w-[90vw]">
+    <div className="">
+      <div className="">
         {
           empData && (
-            <div className="border shadow-md rounded-md min-w-[100%] ">
+            <div className="">
               <Profile userData={empData} />
             </div>
           )
         }
-        <div className="flex flex-col gap-10 ">
+        <div className="">
           {
             err && (
-              <p className="text-red-500">{err}</p>
+              <p className="error">{err}</p>
             )
           }
           {
             msg && (
-              <p className="text-green-700 font-bold">{msg}</p>
+              <p className="success">{msg}</p>
             )
           }
 
-          <div className="updateData flex  items-center justify-between shadow-md p-5 rounded-md my-2">
+          <div className="">
 
             <div className="date-update-wrapper">
-              <div className="flex gap-2 flex-col">
+              <div className="">
                 <label>Date</label>
                 <input type="date"
                   name='date'
-                  className='border p-2 w-[180px]'
+                  className=''
                   onChange={handleChangeInput}
                 />
               </div>
-              <div className="flex gap-2 flex-col">
+              <div className="">
                 <label>Entry Time</label>
                 <input type="time"
                   name='entry'
                   step="3600"
-                  className='border p-2 w-[180px]'
+                  className=''
                   onChange={handleChangeInput}
                 />
               </div>
-              <div className="flex gap-2 flex-col">
+              <div className="">
                 <label>Exit Time</label>
                 <input type="time"
                   name='exit'
                   step="3600"
-                  className='border p-2  w-[180px]'
+                  className=''
                   onChange={handleChangeInput}
                 />
               </div>
               <button
                 onClick={markAttendance}
-                className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+                className=''
               >Update</button>
             </div>
 
 
 
-            <div className="switch flex flex-col gap-10">
+            <div className="switch">
               {
                 empData.prevelege && userData.prevelege === "superadmin" && (
                   <div className="switchbutton">
@@ -302,26 +302,26 @@ const ShowEmployee = () => {
           {
             adminmsg && (
               <p
-                className="text-green-700 font-bold"
+                className="success"
               >{adminmsg}</p>
             )
           }
           {/* //switch  */}
 
 
-          <div className="flex flex-col gap-4">
+          <div className="">
             <div className="load-btn">
               <Link to={`/admin/update/employee/${id}`}>
                 <button
                   onClick={reloadCalendar}
-                  className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+                  className=''
                 >Update User Data</button>
               </Link>
             </div>
             <div className="load-btn">
               <button
                 onClick={reloadCalendar}
-                className='bg-cyan-700 px-5 py-2 text-white shadow-md rounded-md my-2'
+                className=''
               >Load Data</button>
             </div>
 
@@ -336,28 +336,9 @@ const ShowEmployee = () => {
             }
 
           </div>
-          <div className='max-w-[90vw]'>
+          <div className=''>
             <PresentDates currentMonth={currentMonth} attendance={attendance} />
-            {/* <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 5,
-                  },
-                },
-                sorting: {
-                  sortModel: [{ field: 'date', sort: 'desc' }],
-                },
-              }}
-              pageSizeOptions={[5]}
-              checkboxSelection
-              disableRowSelectionOnClick
-              slots={{
-                toolbar: CustomToolbar,
-              }}
-            /> */}
+   
           </div>
 
         </div>

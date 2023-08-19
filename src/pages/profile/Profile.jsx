@@ -10,6 +10,7 @@ import Loader from '../../components/loader/Loader';
 import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
+import './profile.scss'
 
 const options = [
     { value: "female", label: "Female" },
@@ -34,6 +35,7 @@ const Profile = () => {
             phoneno: '',
             gender: '',
             dob: '',
+            bio: '',
             profileimg: 'notprovided',
         }
     );
@@ -198,14 +200,15 @@ const Profile = () => {
                 <div>
 
                     {/* //user profile details  */}
-                    <div className='w-[90%]  mx-auto shadow-lg rounded-md mt-2'>
+                    <div className='profile-page-wrapper'>
 
                         {/* //background img  */}
-                        <div className="">
-                            <label for="backgroundimage" className='hover:cursor-pointer'>
+                        <div className="bg-image">
+                            <label for="backgroundimage">
                                 <div
+                                    className='backgroundimage'
                                     style={{ backgroundImage: formData.backgroundimg ? `url('${formData.backgroundimg}')` : `url('/profilebg.jpg')` }}
-                                    className={`bg-[url('${formData.backgroundimg}')] h-[100px] md:h-[200px] w-full bg-cover rounded-t-md`}>
+                                >
                                 </div>
 
                             </label>
@@ -217,16 +220,16 @@ const Profile = () => {
                                 className='hidden'
                             />
                         </div>
-                        <form className='flex flex-col items-center'>
+                        <form className=''>
 
                             {/* //image upload functionality */}
-                            <div className='cursor-pointer'>
-                                <label for="profileimage" className='hover:cursor-pointer'>
-                                    <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-20 md:-mt-24">
+                            <div className='profile-img-wrapper'>
+                                <label for="profileimage" className='profileimglabel'>
+                                    <div className="profile-image">
                                         <Avatar
                                             alt={userData.displayName}
                                             src={formData.profileimg != 'notprovided' ? formData.profileimg : formData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
-                                            sx={{ width: '100%', height: '100%',position:'static' }}
+                                            sx={{ width: '100%', height: '100%', position: 'static' }}
                                         />
                                     </div>
                                     {/* {<img src={userData.photoURL ? userData.photoURL : photourl} className='rounded-full w-[200px] h-[200px] border cursor-pointer' />} */}
@@ -239,17 +242,10 @@ const Profile = () => {
                                     className='hidden'
                                 />
                                 {/* //show Loader when profile image is being updated  */}
-                                <div className="flex items-center justify-center">
+                                <div className="">
 
                                     {loader ? (<Loader />) : ""}
 
-                                </div>
-                            </div>
-
-                            {/* //user details functionality */}
-                            <div className=' flex flex-col items-start p-5 gap-4 '>
-                                <div className="flex flex-row items-center gap-2  rounded-md">
-                                    <div className='px-2 w-full text-2xl'>{formData.username ? formData.username : "username"}</div>
                                 </div>
                             </div>
                         </form>
@@ -257,84 +253,120 @@ const Profile = () => {
 
                     {/* //user  profile  */}
 
-                    <div className="w-[90%] mx-auto shadow-lg p-5 my-8">
+                    <div className="user-details">
                         <form
                             onSubmit={updateProfileDetails}
-                            className='flex flex-col gap-4'
+                            className=''
                         >
-                            <input
-                                name="username"
-                                onChange={handleChangeInput}
-                                placeholder='username'
-                                className='border p-2 rounded-md'
-                                required
-                                minLength="2"
-                                maxLength="32"
-                                value={formData.username}
-                            />
-                            <input
-                                name="position"
-                                onChange={handleChangeInput}
-                                placeholder='Your Position'
-                                className='border p-2 rounded-md'
-                                required
-                                minLength="2"
-                                maxLength="32"
-                                value={formData.position}
-                            />
-                            <input
-                                name="skills"
-                                onChange={handleChangeInput}
-                                placeholder='Your Skills'
-                                className='border p-2 rounded-md'
-                                required
-                                minLength="2"
-                                maxLength="50"
-                                value={formData.skills}
-                            />
-                            <input
-                                name="address"
-                                onChange={handleChangeInput}
-                                placeholder='Address'
-                                className='border p-2 rounded-md'
-                                required
-                                minLength="2"
-                                maxLength="50"
-                                value={formData.address}
-                            />
-                            <input
-                                name="phoneno"
-                                onChange={handleChangeInput}
-                                placeholder='phoneno'
-                                className='border p-2 rounded-md'
-                                required
-                                minLength="2"
-                                maxLength="32"
-                                value={formData.phoneno}
-                            />
-                            <input
-                                name="dob"
-                                onChange={handleChangeInput}
-                                placeholder='Date of Birth'
-                                className='border p-2 rounded-md'
-                                required
-                                type='date'
-                                value={formData.dob}
-                            />
-                            <select id="gender"
-                                name="gender"
-                                value={formData.gender}
-                                required
-                                className='border p-2 rounded-md'
-                                onChange={handleChangeInput}
-                            >
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                            <div className="input-label halfwidth">
+                                <label for='username'>username</label>
+                                <input
+                                    name="username" id='username'
+                                    onChange={handleChangeInput}
+                                    placeholder='username'
+                                    className=''
+                                    required
+                                    minLength="2"
+                                    maxLength="32"
+                                    value={formData.username}
+                                />
+                            </div>
+                            <div className="input-label halfwidth">
+                                <label for='username'>position</label>
+                                <input
+                                    name="position"
+                                    onChange={handleChangeInput}
+                                    placeholder='Your Position'
+                                    className=''
+                                    required
+                                    minLength="2"
+                                    maxLength="32"
+                                    value={formData.position}
+                                />
+                            </div>
+                            <div className="input-label">
+                                <label for='username'>skills</label>
+                                <input
+                                    name="skills"
+                                    onChange={handleChangeInput}
+                                    placeholder='Your Skills'
+                                    className=''
+                                    required
+                                    minLength="2"
+                                    maxLength="50"
+                                    value={formData.skills}
+                                />
+                            </div>
 
-                            </select>
+                            <div className="input-label">
+                                <label for='username'>Address</label>
+                                <input
+                                    name="address"
+                                    onChange={handleChangeInput}
+                                    placeholder='Address'
+                                    className=''
+                                    required
+                                    minLength="2"
+                                    maxLength="50"
+                                    value={formData.address}
+                                />
+                            </div>
+                            <div className="input-label halfwidth">
+                                <label for='username'>Phone no</label>
+                                <input
+                                    name="phoneno"
+                                    onChange={handleChangeInput}
+                                    placeholder='phoneno'
+                                    className=''
+                                    required
+                                    minLength="2"
+                                    maxLength="32"
+                                    value={formData.phoneno}
+                                />
+                            </div>
+                            <div className="input-label halfwidth">
+                                <label for='username'>DOB</label>
+                                <input
+                                    name="dob"
+                                    onChange={handleChangeInput}
+                                    placeholder='Date of Birth'
+                                    className=''
+                                    required
+                                    type='date'
+                                    value={formData.dob}
+                                />
+                            </div>
+                            <div className="input-label halfwidth">
+                                <label for='username'>Gender</label>
+                                <select id="gender"
+                                    name="gender"
+                                    value={formData.gender}
+                                    required
+                                    className=''
+                                    onChange={handleChangeInput}
+                                >
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+
+                                </select>
+                            </div>
+                            <div className="input-label halfwidth">
+                                <label>Bio</label>
+                                <textarea
+                                    name="bio"
+                                    onChange={handleChangeInput}
+                                    placeholder='your bio'
+                                    className=''
+                                    required
+                                    minLength="10"
+                                    maxLength="250"
+                                    value={formData.bio}
+                                />
+                            </div>
+                            
                             <button
                                 // onClick={updateProfileDetails}
-                                className='bg-cyan-700 px-5 py-2 w-fit mx-auto rounded-md text-white'>Update Profile</button>
+                                className='primary-button'>Update Profile</button>
                         </form>
                     </div>
 

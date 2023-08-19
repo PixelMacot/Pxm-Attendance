@@ -9,13 +9,12 @@
         padding: 20px;
     }
     .attendance-btns-wrapper {
-        display: flex;
-        flex-direction: column;
+        display: flex;      
         align-items: center;
         padding-bottom: 10px;
         
 
-        img {
+        .officeimg {
             width: 60%;
         }
     }

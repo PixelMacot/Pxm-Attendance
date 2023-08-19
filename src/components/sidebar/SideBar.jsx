@@ -15,7 +15,9 @@ const Sidebar = () => {
 
       {
         showMenu && (
-          <div className=" fixed w-full z-10 px-5 my-5 border border-gray-200 bg-cyan-700 text-white text-2xl border-r-2 flex items-center justify-between  py-3">
+          <div className=" fixed w-full z-10 px-5 my-5 border border-gray-200 bg-cyan-700 text-white text-2xl border-r-2 flex items-center justify-between  py-3"
+          onClick={() => setShowMenu(!showMenu)}
+          >
             <div className="flex gap-8 md:gap-10  items-center">
               <div className="">
                 <Link to="/admin" className="">
