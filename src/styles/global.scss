@@ -43,11 +43,20 @@ a {
 //Layout
 .main-container {
   display: flex;
+  @include md {
+    margin: 0px;
+    padding: 0px;
+    display: block;
+  }
 }
 .sidenav {
   width: 20%;
   border-right: 2px solid rgba(128, 128, 128, 0.411);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  @include md {
+    margin: 0px 0px;
+    width: 0%;
+  }
 }
 .page-wrapper {
   min-height: 90vh;
@@ -56,14 +65,24 @@ a {
 
 
   @include md {
-    margin: 32px 0px;
+    margin: 0px 0px;
     width: 100%;
+    padding: 10px;
   }
 }
 .primary-button{
   background-color: rgba(4, 25, 37, 0.911);
-  width: 100%;
+  width: fit-content;
   padding: 10px;
   border-radius: 5px;
   color: white;
+}
+
+.secondary-button{
+  background-color: rgba(4, 25, 37, 0.911);
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  margin: 20px 0px;
 }

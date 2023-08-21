@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment';
-import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
+import { doc, setDoc, getDocs, collection, deleteDoc, query, orderBy, } from "firebase/firestore";
 import { db } from '../../firebase';
 import './createannouncement.scss'
 
@@ -104,9 +104,16 @@ const CreateAnnouncement = () => {
     //function to fetch all announcement
     const fetchAnnouncement = async () => {
         try {
-            const collectionRef = collection(db, "announcement");
-            const snapshot = await getDocs(collectionRef);
-            const fetched_data = snapshot.docs.map((doc) => doc.data());
+            // const collectionRef = collection(db, "announcement")
+            // const snapshot = await getDocs(collectionRef);
+            // const fetched_data = snapshot.docs.map((doc) => doc.data());
+         
+            const announcementsRef = collection(db, "announcement");
+            const q = query(announcementsRef, orderBy("date", "desc"));
+            const querySnapshot = await getDocs(q);
+            const fetched_data = querySnapshot.docs.map((doc) => doc.data());
+            // console.log("qs",qs)
+
             setAllAnnouncement(fetched_data);
             //below function convert data into json
             console.log(fetched_data)
@@ -138,92 +145,108 @@ const CreateAnnouncement = () => {
 
     return (
         <div>
-            <div className="py-10 px-2 w-fit mx-auto border shadow-md">
-                <h1 className='text-xl font-bold text-center '>CreateAnnouncement</h1>
-                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-8 shadow-md '
-                    onSubmit={uploadToFirestore}
-                >
+            <div className="announcements-wrapper">
 
-                    {
-                        msg.error && (
-                            <p className="text-red-500 font-bold ">{msg.error}</p>
-                        )
-                    }
-                    {
-                        msg.successtxt && (
-                            <p className="text-green-700 font-bold " >{msg.successtxt}</p>
-                        )
-                    }
-                    <label>Date</label>
-                    <input
-                        type="date"
-                        name='date'
-                        required
-                        onChange={handleChangeInput}
-                        className='border rounded-md p-2 w-fit '
-                    />
-                    <label>Announcement</label>
-                    <input
-                        type="text"
-                        name='msg'
-                        required
-                        maxLength='100'
-                        onChange={handleChangeInput}
-                        className='border rounded-md p-2 w-fit '
-                    />
-                    <label>Link</label>
-                    <input
-                        type="text"
-                        name='link'
-                        onChange={handleChangeInput}
-                        className='border rounded-md p-2 w-fit '
-                    />
-                    <button className='bg-cyan-700 py-2 rounded-md text-white'>create</button>
-                </form>
-                <div className="text-xl font-bold text-center my-5 px-5">Show Number of notifications</div>
-                <form className='flex flex-col gap-2 py-5 w-fit mx-auto  p-8 shadow-md'
-                    onSubmit={updateDatesAllowed}
-                >
-                    <label>Nextdays</label>
-                    <input
-                        type="number"
-                        name='nextdays'
-                        required
-                        onChange={handleDatesAllowedInput}
-                        className='border rounded-md p-2 w-fit '
-                    />
-                    <label>Previousdays</label>
-                    <input
-                        type="number"
-                        name='previousdays'
-                        required
-                        onChange={handleDatesAllowedInput}
-                        className='border rounded-md p-2 w-fit '
-                    />
-                    <button className='bg-cyan-700 py-2 rounded-md text-white'>update</button>
-                </form>
-                <h2 className='text-lg font-bold text-center my-10'>Curent Announcements</h2>
-                <div className="flex flex-col gap-5">
 
-                    {
-                        allannouncement && allannouncement.map((item) => {
-                            return (
-                                <div className="border shadow-md p-2" key={item.id}>
-                                    <div className="mgg">
-                                        {item.msg}
+                {
+                    msg.error && (
+                        <p className="">{msg.error}</p>
+                    )
+                }
+                {
+                    msg.successtxt && (
+                        <p className="" >{msg.successtxt}</p>
+                    )
+                }
+                <div className="create-and-show-announcements-wrapper">
+                    <div className="create">
+                        <h1 className=''>CreateAnnouncement</h1>
+
+                        <form className=''
+                            onSubmit={uploadToFirestore}
+                        >
+
+                            <label>Date</label>
+                            <input
+                                type="date"
+                                name='date'
+                                required
+                                onChange={handleChangeInput}
+                                className=''
+                            />
+                            <label>Announcement</label>
+                            <input
+                                type="text"
+                                name='msg'
+                                required
+                                maxLength='100'
+                                onChange={handleChangeInput}
+                                className=''
+                            />
+                            <label>Link</label>
+                            <input
+                                type="text"
+                                name='link'
+                                onChange={handleChangeInput}
+                                className=''
+                            />
+                            <button className='primary-button'>create</button>
+                        </form>
+                    </div>
+                    <div className="">
+                        <h2>Show Number of announcements</h2>
+                        <form className=''
+                            onSubmit={updateDatesAllowed}
+                        >
+                            <label>Nextdays</label>
+                            <input
+                                type="number"
+                                name='nextdays'
+                                required
+                                onChange={handleDatesAllowedInput}
+                                className=''
+                            />
+                            <label>Previousdays</label>
+                            <input
+                                type="number"
+                                name='previousdays'
+                                required
+                                onChange={handleDatesAllowedInput}
+                                className=''
+                            />
+                            <button className='primary-button'>update</button>
+                        </form>
+                    </div>
+                </div>
+                <div className="all-announcement-container">
+                    <h2 className=''>All Announcements</h2>
+                    <div className="all-announcements">
+
+                        {
+                            allannouncement && allannouncement.map((item) => {
+                                return (
+                                    <div className="announcement-wrapper" key={item.id}>
+                                        <div className="date">
+                                            <span>📅</span>
+                                            {item.date}
+                                        </div>
+                                        <div className="announcement">
+                                            <span>📋</span>
+                                            {item.msg}
+                                        </div>
+                                        <div className="delete-btn"
+                                            id={item.slug}
+                                            onClick={DeleteAnnouncement}
+                                        >
+                                            ⛔ Delete
+                                        </div>
                                     </div>
-                                    <div className="deletebtn cursor-pointer w-fit px-5 bg-red-700 py-2 rounded-md text-white"
-                                        id={item.slug}
-                                        onClick={DeleteAnnouncement}
-                                    >
-                                        Delete
-                                    </div>
-                                </div>
 
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
 
+                    </div>
                 </div>
             </div>
         </div>

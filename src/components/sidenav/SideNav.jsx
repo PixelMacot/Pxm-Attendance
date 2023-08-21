@@ -45,6 +45,11 @@ const SideNav = () => {
             {
                 !toggle && (
                     <div className='mobile-menu '>
+                        <div className="menuicon"
+                        onClick={() => setToggle(!toggle)}
+                        >
+                            <img src="/menuicon.svg"/>
+                        </div>
                         <Link to='/'>
                             <div className='logo'>
                                 <img
@@ -66,9 +71,9 @@ const SideNav = () => {
                             )
                         }
                         <div className="right">
-                            <div className="notification">
+                            {/* <div className="notification">
                                 <img src='/notificationicon.png' />
-                            </div>
+                            </div> */}
                             <div className="avatar">
                                 <Avatar
                                     alt={userData.username}
@@ -87,7 +92,7 @@ const SideNav = () => {
                         <div
                             className="close-mobile-menu"
                             onClick={() => setToggle(!toggle)}
-                        ><HiX className='float-right' />
+                        ><HiX className='' />
                         </div>
                     )
                 }

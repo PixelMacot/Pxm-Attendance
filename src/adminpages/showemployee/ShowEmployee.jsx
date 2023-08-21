@@ -215,10 +215,12 @@ const ShowEmployee = () => {
             )
           }
 
-          <div className="">
+          <div className="attendance-prevelege">
 
-            <div className="date-update-wrapper">
-              <div className="">
+            <div className="attendance-update-wrapper">
+              <h2>Update User Attendance</h2>
+
+              <div className="input-label">
                 <label>Date</label>
                 <input type="date"
                   name='date'
@@ -226,7 +228,7 @@ const ShowEmployee = () => {
                   onChange={handleChangeInput}
                 />
               </div>
-              <div className="">
+              <div className="input-label">
                 <label>Entry Time</label>
                 <input type="time"
                   name='entry'
@@ -235,7 +237,7 @@ const ShowEmployee = () => {
                   onChange={handleChangeInput}
                 />
               </div>
-              <div className="">
+              <div className="input-label">
                 <label>Exit Time</label>
                 <input type="time"
                   name='exit'
@@ -246,13 +248,14 @@ const ShowEmployee = () => {
               </div>
               <button
                 onClick={markAttendance}
-                className=''
-              >Update</button>
+                className='secondary-button'
+              >Update ⇕</button>
             </div>
 
 
 
             <div className="switch">
+            <h2>Update User Prevelege</h2>
               {
                 empData.prevelege && userData.prevelege === "superadmin" && (
                   <div className="switchbutton">
@@ -310,19 +313,19 @@ const ShowEmployee = () => {
 
 
           <div className="">
-            <div className="load-btn">
+            <div className="icon-button">
               <Link to={`/admin/update/employee/${id}`}>
                 <button
                   onClick={reloadCalendar}
-                  className=''
-                >Update User Data</button>
+                  className='primary-button'
+                >Update User Profile ⮞</button>
               </Link>
             </div>
-            <div className="load-btn">
+            <div className="secondary-button">
               <button
                 onClick={reloadCalendar}
                 className=''
-              >Load Data</button>
+              >Load attendance Data ⭯</button>
             </div>
 
           </div>

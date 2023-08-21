@@ -1,9 +1,6 @@
 @import "../../styles/variable.scss";
 @import "../../styles/responsive.scss";
 
-.mobilemenu {
-    z-index: 90;
-}
 .sideNav {
     min-width: 40%;
     // border-right: 2px solid rgba(128, 128, 128, 0.164);
@@ -12,12 +9,14 @@
     @include md {
         border: 5x solid red;
         display: none;
+        margin: 0px;
     }
 }
 
 .sideNav.open {
     display: flex;
-    position: sticky;
+    position: fixed;
+    top: 0;
     z-index: 50;
     width: 100vw;
     gap: 10px;
@@ -40,7 +39,6 @@
     display: flex;
     flex-direction: column;
     padding: 20px 0px;
-    
 }
 .navlist {
     width: 100%;
@@ -62,33 +60,57 @@
 .logo {
     img {
         width: 200px;
+        @include md {
+            width: 150px;
+        }
     }
 }
 .mobile-menu {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     position: fixed;
     background-color: white;
     padding: 20px;
     z-index: 40;
     border-bottom: 2px solid rgba(128, 128, 128, 0.521);
-
-    .avatar{
+    @include md {
+        padding: 10px;
+    }
+    .menuicon {
+        img{
+            width: 25px;
+        }
+    }
+    .avatar {
         width: 40px;
     }
-    .right{
+    .right {
         display: flex;
         align-items: center;
         gap: 20px;
 
-        .notification{
+        .notification {
             width: 40px;
         }
     }
-
 }
 
 .open-mobile-menu {
     display: none;
+}
+.close-mobile-menu{
+   position: absolute;
+   right: 0;
+   padding: 20px;
+   color: red;
+   font-size: 1.4rem;
+
+}
+.mobilemenu {
+    z-index: 90;
+    position: fixed;
+    width: 100%;
+    top: 0px;
 }

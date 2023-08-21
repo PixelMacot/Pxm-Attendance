@@ -1,37 +1,56 @@
 // styles.scss
+.holidays-container {
+  .upload-holidays-container {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 
+    h1,h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    img {
+      width: 200px;
+    }
+  }
+  .delete-btn{
+    background-repeat: no-repeat;
+
+  }
+}
 // Define styles for the table element
 table {
-    width: 100%;
-    border-collapse: collapse;
-  
-    // Add some spacing and borders for aesthetics
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-  
-    // Apply styles to the header row
-    th {
-      background-color: #f2f2f2;
-      padding: 10px;
-      font-weight: bold;
-    }
-  
-    // Apply styles to the data rows
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-      text-align: center;
-    }
-  
-    // Apply alternate background color to even rows for better readability
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
+  width: 100%;
+  border-collapse: collapse;
+
+  // Add some spacing and borders for aesthetics
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+
+  // Apply styles to the header row
+  th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-weight: bold;
   }
-  
-  // Add some general styling to the page
-  body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+
+  // Apply styles to the data rows
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    height: 60px;
   }
-  
+
+  // Apply alternate background color to even rows for better readability
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+// Add some general styling to the page
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}

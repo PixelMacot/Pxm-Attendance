@@ -69,7 +69,7 @@ const HolidayCalendar = () => {
     let id = e.target.id
     console.log(id)
     await deleteDoc(doc(db, "holidays", id)).then(() => {
-      
+
       setMsg('Holiday deleted Successfully')
       fetchHolidays()
     }).catch((err) => {
@@ -78,28 +78,27 @@ const HolidayCalendar = () => {
   }
 
   return (
-    <div className='border shadow-md w-fit mx-auto rounded-md  p-10 py-10 flex flex-col md:flex-row justify-center items-center md:items-start gap-10'>
-      <label htmlFor='holidaycsvfile'>
-        <img src='/uploadfile.png'
-          className='w-[95%] mx-auto'
+    <div className='holidays-container'>
+      <div className="upload-holidays-container">
+        <h1>Upload holidays Data from csv file</h1>
+        <label htmlFor='holidaycsvfile'>
+          <img src='/uploadfile.png'
+            className='w-[95%] mx-auto'
+          />
+        </label>
+        <input type="file"
+          onChange={handleFileChange}
+          id="holidaycsvfile"
+          className='hidden'
         />
-      </label>
-      <input type="file"
-        onChange={handleFileChange}
-        id="holidaycsvfile"
-        className='hidden'
-      />
-      {/* <button onClick={handleImportData}>Import Data to Firestore</button>
-      <button onClick={fetchHolidays}>Fetch Data from Firestore</button>
-      <button onClick={convertDataToCSV}>Download CSV</button>
-      <button onClick={convertDataToJSON}>Convert to JSON</button> */}
+      </div>
       {
         loader && (
           <Loader />
         )
       }
       <div>
-        <h2>Total Holidays</h2>
+        <h2 className='text-xl font-bold my-5'>Total Holidays</h2>
         <table>
           <tr>
             <th>Date</th>
@@ -114,7 +113,7 @@ const HolidayCalendar = () => {
                 <td>{item.name}</td>
                 <td id={item.slug}
                   onClick={DeleteHoliday}
-                  className='bg-[url(/delete.png)]'
+                  className='delete-btn bg-[url(/delete.png)]'
                 >
                   {/* <img src="/delete.png" /> */}
                 </td>

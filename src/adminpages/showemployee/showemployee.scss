@@ -1,85 +1,120 @@
-.switchbutton{
-    // Filename: ToggleSwitch.css
-.container {
-    text-align: center;
+.attendance-update-wrapper {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 10px;
-    font-size: 1rem;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 1.1rem;
+
+    .input-label {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    input{
+        border: 2px solid rgba(128, 128, 128, 0.637) ;
+        padding: 10px;
+        border-radius: 5px;
+    }
+}
+
+.attendance-prevelege {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0px;
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 1rem 0rem;
+    }
+}
+
+.switch{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.switchbutton {
+    
+    .container {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 5px 10px;
+        font-size: 1rem;
     }
     .toggle-switch {
-    position: relative;
-    width: 75px;
-    display: inline-block;
-    text-align: left;
-    top: 8px;
+        position: relative;
+        width: 75px;
+        display: inline-block;
+        text-align: left;
+        top: 8px;
     }
-    .checkbox,.userstatus-checkbox {
-    display: none;
+    .checkbox,
+    .userstatus-checkbox {
+        display: none;
     }
     .label {
-    display: block;
-    overflow: hidden;
-    cursor: pointer;
-    border: 0 solid #bbb;
-    border-radius: 20px;
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 0 solid #bbb;
+        border-radius: 20px;
     }
     .inner {
-    display: block;
-    width: 200%;
-    margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
     }
     .inner:before,
     .inner:after {
-    float: left;
-    width: 50%;
-    height: 36px;
-    padding: 0;
-    line-height: 36px;
-    color: #fff;
-    font-weight: bold;
-    box-sizing: border-box;
+        float: left;
+        width: 50%;
+        height: 36px;
+        padding: 0;
+        line-height: 36px;
+        color: #fff;
+        font-weight: bold;
+        box-sizing: border-box;
     }
     .inner:before {
-    content: "YES";
-    padding-left: 10px;
-    background-color: #060;
-    color: #fff;
+        content: "YES";
+        padding-left: 10px;
+        background-color: #060;
+        color: #fff;
     }
     .inner:after {
-    content: "NO";
-    padding-right: 10px;
-    background-color: #bbb;
-    color: #fff;
-    text-align: right;
+        content: "NO";
+        padding-right: 10px;
+        background-color: #bbb;
+        color: #fff;
+        text-align: right;
     }
     .switch {
-    display: block;
-    width: 24px;
-    margin: 5px;
-    background: #fff;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 40px;
-    border: 0 solid #bbb;
-    border-radius: 20px;
-    transition: all 0.3s ease-in 0s;
+        display: block;
+        width: 24px;
+        margin: 5px;
+        background: #fff;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 40px;
+        border: 0 solid #bbb;
+        border-radius: 20px;
+        transition: all 0.3s ease-in 0s;
     }
     .checkbox:checked + .label .inner {
-    margin-left: 0;
+        margin-left: 0;
     }
     .checkbox:checked + .label .switch {
-    right: 0px;
+        right: 0px;
     }
-    
+
     .userstatus-checkbox:checked + .label .inner {
-    margin-left: 0;
+        margin-left: 0;
     }
     .userstatus-checkbox:checked + .label .switch {
-    right: 0px;
+        right: 0px;
     }
-    
 }

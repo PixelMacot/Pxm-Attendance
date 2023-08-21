@@ -1,0 +1,79 @@
+.announcements-wrapper {
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+    h2 {
+        margin: 15px 0px;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .create-and-show-announcements-wrapper {
+        display: flex;
+        gap: 40px;
+        // flex-wrap: wrap;
+        h1 {
+            margin: 15px 0px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        h2 {
+            margin: 15px 0px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin: 5px 0px;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+            input {
+                border: 2px solid gray;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            button {
+                margin: 20px 0px;
+            }
+        }
+    }
+
+    .all-announcements {
+        width: 500px;
+        height: 500px;
+        overflow-y: scroll;
+
+      
+        .announcement-wrapper {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 10px;
+            border: 2px solid rgba(128, 128, 128, 0.322);
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        
+        }
+        .date {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .announcement{
+            font-size: 1.1rem;
+        }
+        .delete-btn{
+            background-color: red;
+            padding: 7px 10px;
+            color: white;
+            width: fit-content;
+            border-radius: 5px;
+        }
+    }
+}
