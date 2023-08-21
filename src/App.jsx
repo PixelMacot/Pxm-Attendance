@@ -118,7 +118,7 @@ function App() {
               <SideNav />
             </div>
             <div className="page-wrapper">
-              <div className="sidebar -mt-8 -ml-5 w-[80%]">
+              <div className="sidebar mt-8 lg:-mt-8 -ml-2 lg:-ml-5 w-full">
                 <Sidebar />
               </div>
               <div className="content">
