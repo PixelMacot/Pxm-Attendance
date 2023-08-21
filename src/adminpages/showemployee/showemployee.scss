@@ -1,6 +1,24 @@
+@import "../../styles/variable.scss";
+@import "../../styles/responsive.scss";
+
+.attendance-prevelege {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0px;
+    flex-wrap: wrap;
+    @include md {
+        justify-content: center;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 1rem 0rem;
+    }
+}
 .attendance-update-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  
     gap: 5px;
     font-size: 1.1rem;
 
@@ -15,19 +33,6 @@
         border-radius: 5px;
     }
 }
-
-.attendance-prevelege {
-    display: flex;
-    justify-content: space-between;
-    margin: 25px 0px;
-
-    h2 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin: 1rem 0rem;
-    }
-}
-
 .switch{
     display: flex;
     flex-direction: column;

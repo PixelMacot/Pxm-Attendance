@@ -203,7 +203,7 @@ const ShowEmployee = () => {
             </div>
           )
         }
-        <div className="">
+        <div className="text-center">
           {
             err && (
               <p className="error">{err}</p>
@@ -253,7 +253,13 @@ const ShowEmployee = () => {
             </div>
 
 
-
+            {
+            adminmsg && (
+              <p
+                className="success"
+              >{adminmsg}</p>
+            )
+          }
             <div className="switch">
             <h2>Update User Prevelege</h2>
               {
@@ -278,6 +284,7 @@ const ShowEmployee = () => {
                   </div>
                 )
               }
+              
               {
                 empData.prevelege && userData.prevelege === "superadmin" && (
                   <div className="switchbutton">
@@ -302,13 +309,7 @@ const ShowEmployee = () => {
               }
             </div>
           </div>
-          {
-            adminmsg && (
-              <p
-                className="success"
-              >{adminmsg}</p>
-            )
-          }
+        
           {/* //switch  */}
 
 
