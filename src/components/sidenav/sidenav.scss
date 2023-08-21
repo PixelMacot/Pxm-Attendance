@@ -80,8 +80,14 @@
     }
     .menuicon {
         img{
+            display: none;
             width: 25px;
+
+            @include md {
+                display: block;
+             }
         }
+     
     }
     .avatar {
         width: 40px;
