@@ -259,7 +259,7 @@ const Profile = () => {
                             className=''
                         >
                             <div className="input-label halfwidth">
-                                <label for='username'>username</label>
+                                <label for='username'>Username</label>
                                 <input
                                     name="username" id='username'
                                     onChange={handleChangeInput}
@@ -272,7 +272,7 @@ const Profile = () => {
                                 />
                             </div>
                             <div className="input-label halfwidth">
-                                <label for='username'>position</label>
+                                <label for='username'>Position</label>
                                 <input
                                     name="position"
                                     onChange={handleChangeInput}
@@ -285,7 +285,7 @@ const Profile = () => {
                                 />
                             </div>
                             <div className="input-label">
-                                <label for='username'>skills</label>
+                                <label for='username'>Skills</label>
                                 <input
                                     name="skills"
                                     onChange={handleChangeInput}

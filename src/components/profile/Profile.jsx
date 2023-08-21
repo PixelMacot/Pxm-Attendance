@@ -17,7 +17,7 @@ const Profile = ({ userData, quote }) => {
                 </div>
                 <div className="p-5">
                     <div className="flex flex-col  gap-10">
-                        <div className="avatar border-[3px] border-white w-[130px] h-[130px] md:w-[180px] md:h-[180px] rounded-full  -mt-36 lg:-mt-44">
+                        <div className="avatar border-[3px] border-white w-[100px] h-[100px] md:w-[180px] md:h-[180px] rounded-full  -mt-28 lg:-mt-44">
                             <Avatar
                                 alt={userData.username}
                                 src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}

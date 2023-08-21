@@ -19,7 +19,6 @@
     top: 0;
     z-index: 50;
     width: 100vw;
-    gap: 10px;
     justify-content: start;
 }
 .sideNav.close {
@@ -47,6 +46,10 @@
     list-style-type: none;
     margin: 20px 0px;
     font-weight: 600;
+    @include md {
+        margin: 10px 0px;
+        font-size: 14px;
+    }
 }
 .navlink {
     border: 2px solid transparent;
@@ -79,15 +82,14 @@
         padding: 10px;
     }
     .menuicon {
-        img{
+        img {
             display: none;
             width: 25px;
 
             @include md {
                 display: block;
-             }
+            }
         }
-     
     }
     .avatar {
         width: 40px;
@@ -106,13 +108,12 @@
 .open-mobile-menu {
     display: none;
 }
-.close-mobile-menu{
-   position: absolute;
-   right: 0;
-   padding: 20px;
-   color: red;
-   font-size: 1.4rem;
-
+.close-mobile-menu {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    color: red;
+    font-size: 1.4rem;
 }
 .mobilemenu {
     z-index: 90;

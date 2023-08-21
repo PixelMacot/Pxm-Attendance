@@ -1,7 +1,14 @@
+@import "../../styles/variable.scss";
+@import "../../styles/responsive.scss";
+
 .home-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
+   
+    @include md {
+        padding: 40px 0px;
+    }
 
     .profile,
     .announcement-container {

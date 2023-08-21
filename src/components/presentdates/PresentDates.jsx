@@ -9,7 +9,7 @@ const columns = [
   {
     field: 'date',
     headerName: 'Date',
-
+    width: 150
   },
   {
     field: 'workinghours',
@@ -126,7 +126,7 @@ const PresentDates = ({ currentMonth,attendance }) => {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
+        // checkboxSelection
         disableRowSelectionOnClick
         slots={{
           toolbar: CustomToolbar,
