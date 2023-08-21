@@ -1,13 +1,29 @@
-.markattendance-buttons{
-    display: flex;
-    gap: 10px;
+@import "../../styles/variable.scss";
+@import "../../styles/responsive.scss";
 
-    .markattendance-btn{
-      background-color: rgb(69, 131, 155);
-      color: white;     
-      width: 200px;
-      padding: 10px;
+.markattendance-buttons {
+  display: flex;
+  gap: 10px;
+
+  .markattendance-btn {
+    
+    color: white;
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+
+    @include md {
+      width: 150px;
+      padding: 5px;
       border-radius: 5px;
-      font-size: 1.5rem;
+      font-size: 1.1rem;
     }
+  }
+  .markattendance-btn.entry{
+    background-color: rgb(69, 145, 155);
+  }
+  .markattendance-btn.exit{
+    background-color: rgb(69, 155, 69);
+  }
 }

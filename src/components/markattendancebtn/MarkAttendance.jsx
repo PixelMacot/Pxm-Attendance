@@ -287,7 +287,7 @@ const MarkAttendance = () => {
                                 !disablebtn.entry && (
                                     <button
                                         onClick={(e) => markAttendance(e, "entry")}
-                                        className='markattendance-btn'
+                                        className='markattendance-btn entry'
                                     >Entry</button>
                                 )
                             }
@@ -295,7 +295,7 @@ const MarkAttendance = () => {
                                 !disablebtn.exit && (
                                     <button
                                         onClick={(e) => markAttendance(e, "exit")}
-                                        className='markattendance-btn'
+                                        className='markattendance-btn exit'
                                     >Exit</button>
                                 )
                             }
