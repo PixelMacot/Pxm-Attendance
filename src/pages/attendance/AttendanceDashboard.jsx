@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { CalendarContext } from '../../context/CalendarContext'
 import PresentDates from '../../components/presentdates/PresentDates'
 import { HolidaysContext } from '../../context/HolidaysContext'
-import './attendancedashboard.scss'
+import './atndashboard.scss'
 
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
