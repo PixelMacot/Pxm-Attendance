@@ -31,7 +31,8 @@ import CreateAnnouncement from './adminpages/createannouncement/CreateAnnounceme
 import ForgotPassword from './pages/forgotpassword/ForgotPassword';
 import SideNav from './components/sidenav/SideNav';
 import ShowEmployee from './adminpages/showemployee/ShowEmployee';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   // getFirebaseToken()
   const [isTokenFound, setTokenFound] = useState(false);
@@ -93,6 +94,7 @@ function App() {
           </div>
           {/* <Notification /> */}
           <div className="page-wrapper">
+           
             <div className="layout">
               {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page </div>}> */}
               <ProtectedRoute>
@@ -118,6 +120,7 @@ function App() {
               <SideNav />
             </div>
             <div className="page-wrapper">
+              
               <div className="sidebar mt-8 lg:-mt-8 -ml-2 lg:-ml-5 w-full">
                 <Sidebar />
               </div>

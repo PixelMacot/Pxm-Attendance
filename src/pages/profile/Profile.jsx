@@ -11,7 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import { AuthContext } from '../../context/AuthContext'
 import moment from 'moment';
 import './profile.scss'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const options = [
     { value: "female", label: "Female" },
     { value: "male", label: "Male" },
@@ -48,8 +49,6 @@ const Profile = () => {
         }
     }, [])
 
-
-
     async function updateProfileDetails(e) {
         console.log(formData)
         console.log(currentUser.uid)
@@ -65,8 +64,9 @@ const Profile = () => {
             phoneno: formData.phoneno,
             backgroundimg: formData.backgroundimg,
             gender: formData.gender,
+            bio:formData.bio,
             dob: moment(formData.dob).format("YYYY-MM-DD"),
-            prevelege: "employee"
+            prevelege: formData.prevelege?formData.prevelege:"employee"
         }
         console.log(docdta)
         try {
@@ -85,8 +85,9 @@ const Profile = () => {
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
                         gender: formData.gender,
+                        bio:formData.bio,
                         dob: moment(formData.dob).format("YYYY-MM-DD"),
-                        prevelege: "employee"
+                        prevelege: formData.prevelege?formData.prevelege:"employee"
                     }
                 );
             } else {
@@ -102,15 +103,17 @@ const Profile = () => {
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
                         gender: formData.gender,
+                        bio:formData.bio,
                         dob: moment(formData.dob).format("YYYY-MM-DD"),
-                        prevelege: "employee"
+                        prevelege: formData.prevelege?formData.prevelege:"employee"
                     }
                 );
             }
-
+            toast.success("Profile Details successfully updated")
             //call function to get updated data
             getUserProfileData(currentUser)
             setLoader(false)
+            
         } catch (e) {
             console.error("Error adding document: ", e);
         }
@@ -136,7 +139,7 @@ const Profile = () => {
             setPhotoUrl(url)
             setFormData({ ...formData, profileimg: url });
             setLoader(false)
-            alert("profile Updated sucessfully")
+            // alert("profile Updated sucessfully")
         }).catch((error) => {
             console.log(error)
         });
@@ -198,7 +201,7 @@ const Profile = () => {
         <main >
             <section>
                 <div>
-
+                    <ToastContainer />
                     {/* //user profile details  */}
                     <div className='profile-page-wrapper'>
 
@@ -363,7 +366,7 @@ const Profile = () => {
                                     value={formData.bio}
                                 />
                             </div>
-                            
+
                             <button
                                 // onClick={updateProfileDetails}
                                 className='primary-button'>Update Profile</button>
