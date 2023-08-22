@@ -21,7 +21,7 @@ const AttendanceDashboard = () => {
         getAttendanceData(currentUser.uid)
         if (!holidaysDataLoading && !datesLoader) {
             console.log("data is  loaded")
-            toast.success("Data successfully loaded",{autoClose:600})
+            toast.success("Data successfully loaded",{autoClose:1000})
             setLoader(false)
         }
     }, []);
@@ -31,7 +31,7 @@ const AttendanceDashboard = () => {
         getAttendanceData(currentUser.uid)
         if (!holidaysDataLoading && !datesLoader) {
             console.log("data is  loaded")
-            toast.success("Data successfully loaded",{autoClose:600})
+            toast.success("Data successfully loaded",{autoClose:1000})
             setLoader(false)
         }
     }

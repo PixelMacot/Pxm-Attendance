@@ -47,7 +47,7 @@ export const LocationContextProvider = ({ children }) => {
           longitude: docSnap.data().longitude
         }
       )
-      toast.success("Location data loaded",{autoClose:600})
+      toast.success("Location data loaded")
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -59,7 +59,7 @@ export const LocationContextProvider = ({ children }) => {
 
   // Function to reverify the user's location when the button is clicked
   const reverifyLocation = () => {
-    toast.info("loading location data...",{autoClose:400})
+    toast.info("loading location data...",{autoClose:800})
     setError('')
     setLatitude(null);
     setLongitude(null);
