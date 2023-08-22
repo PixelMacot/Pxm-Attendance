@@ -86,7 +86,7 @@ console.log(messages)
       onClick={fetchMessages}
       className='px-5 py-2 bg-cyan-700 text-white rounded-md m-2'
       >Refresh Messages</button>
-      <div className="message-wrapper w-[90%] mx-auto ">
+      <div className="message-wrapper w-[97%] mx-auto ">
         <DataGrid
           rows={messages}
           columns={columns}
