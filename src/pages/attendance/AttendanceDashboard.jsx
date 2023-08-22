@@ -7,6 +7,8 @@ import { CalendarContext } from '../../context/CalendarContext'
 import PresentDates from '../../components/presentdates/PresentDates'
 import { HolidaysContext } from '../../context/HolidaysContext'
 import './atndashboard.scss'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AttendanceDashboard = () => {
     const [loader, setLoader] = useState(true)
@@ -19,6 +21,7 @@ const AttendanceDashboard = () => {
         getAttendanceData(currentUser.uid)
         if (!holidaysDataLoading && !datesLoader) {
             console.log("data is  loaded")
+            toast.success("Data successfully loaded",{autoClose:600})
             setLoader(false)
         }
     }, []);
@@ -28,13 +31,14 @@ const AttendanceDashboard = () => {
         getAttendanceData(currentUser.uid)
         if (!holidaysDataLoading && !datesLoader) {
             console.log("data is  loaded")
+            toast.success("Data successfully loaded",{autoClose:600})
             setLoader(false)
         }
     }
 
     return (
         <div className="AttendanceDashboard">
-
+            <ToastContainer />
             <div className="attendance-dashboard-wrapper ">
 
                 <div className="attendance-btns-wrapper">

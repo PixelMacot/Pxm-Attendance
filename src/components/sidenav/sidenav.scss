@@ -83,13 +83,12 @@
         padding: 10px;
     }
     .menuicon {
+        display: none;
+        @include md {
+            display: block;
+        }
         img {
-            display: none;
             width: 25px;
-
-            @include md {
-                display: block;
-            }
         }
     }
     .avatar {

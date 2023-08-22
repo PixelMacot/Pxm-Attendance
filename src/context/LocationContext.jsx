@@ -2,11 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { getDistance } from "geolib";
 import { db } from "../firebase";
 import { doc, setDoc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
-
-
-
+import { toast } from 'react-toastify';
 export const LocationContext = createContext();
-
 export const LocationContextProvider = ({ children }) => {
 
   const [isUserInsideGeofence, setIsUserInsideGeofence] = useState(false);
@@ -32,7 +29,7 @@ export const LocationContextProvider = ({ children }) => {
     fetchOfficeLocation().then(() => {
       handleGetLocationClick()
     }).catch((err) => {
-      console.log("err fetching office location",err)
+      console.log("err fetching office location", err)
     })
   }, []);
 
@@ -50,7 +47,7 @@ export const LocationContextProvider = ({ children }) => {
           longitude: docSnap.data().longitude
         }
       )
-
+      toast.success("Location data loaded",{autoClose:600})
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -62,6 +59,7 @@ export const LocationContextProvider = ({ children }) => {
 
   // Function to reverify the user's location when the button is clicked
   const reverifyLocation = () => {
+    toast.info("loading location data...",{autoClose:400})
     setError('')
     setLatitude(null);
     setLongitude(null);

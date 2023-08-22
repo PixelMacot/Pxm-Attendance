@@ -7,7 +7,8 @@ import { CalendarContext } from '../../context/CalendarContext'
 import MapStructure from '../map/MapStructure'
 import { LocationContext } from '../../context/LocationContext'
 import './markattendance.scss'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MarkAttendance = () => {
     const [err, setErr] = useState()
@@ -34,6 +35,7 @@ const MarkAttendance = () => {
     const btnshow = () => {
         console.log("location", isUserInsideGeofence)
         if (!isUserInsideGeofence) {
+            toast.warning("You are not at office please visit office to mark attendance",{autoClose:1000})
             setBtnErr("You are not at office please visit office to mark attendance")
         } else {
 
@@ -49,6 +51,7 @@ const MarkAttendance = () => {
                             exit: true
                         })
                         setMsg("your office day is completed")
+                        toast.success("your office day is completed")
                     } else {
                         setDisableBtn({
                             entry: true,
@@ -164,6 +167,7 @@ const MarkAttendance = () => {
                     if (type == "entry") {
 
                         setMsg("Welcome to office")
+                        toast.success("Welcome to office")
                         setDisableBtn({
                             entry: true,
                             exit: false
@@ -187,6 +191,7 @@ const MarkAttendance = () => {
                     if (type == "entry") {
 
                         setMsg("Welcome to office")
+                        toast.success("Welcome to office")
                         setDisableBtn({
                             entry: true,
                             exit: false
@@ -213,6 +218,7 @@ const MarkAttendance = () => {
     }
     return (
         <div className="markattendance">
+            <ToastContainer />
             <div className="maincontainer">
                 <div className="markattendance-wrapper">
                    

@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import CalendarComponent from '../../components/calendar/Calendar';
 import PresentDates from '../../components/presentdates/PresentDates';
 import { CalendarContext } from '../../context/CalendarContext'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ShowEmployee = () => {
   const { userData } = useContext(AuthContext)
@@ -29,6 +31,13 @@ const ShowEmployee = () => {
     date: '',
     entry: '',
     exit: ''
+  })
+  const [empnav, setEmpNav] = useState({
+    profile: false,
+    attendance: false,
+    status: false,
+    calendar: false,
+    atndata: false
   })
 
   const handleChangeInput = (e) => {
@@ -84,7 +93,7 @@ const ShowEmployee = () => {
 
   }
 
- const reloadCalendar = () => {
+  const reloadCalendar = () => {
     getAttendanceData(id)
   }
 
@@ -138,13 +147,15 @@ const ShowEmployee = () => {
 
         updateDoc(doc(db, "attendance", empData.uid), docData).then(() => {
           console.log('Data successfully updated in Firestore!');
-          setMsg("Data successfully updated")
+          // setMsg("Data successfully updated")
+          toast.success("Data successfully updated")
         }).catch((error) => {
           console.error('Error updating data in Firestore:', error);
         });
       } else {
         await setDoc(doc(db, "attendance", empData.uid), docData);
-        setMsg("Data successfully updated")
+        // setMsg("Data successfully updated")
+        toast.success("Data successfully updated")
       }
     } catch (err) {
       console.error("Error adding document: ", err);
@@ -160,14 +171,16 @@ const ShowEmployee = () => {
     if (checked) {
       updateDoc(doc(db, "users", empData.uid), { prevelege: "admin" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
-        setAdminMsg("admin prevelege successfully added")
+        // setAdminMsg("admin prevelege successfully added")
+        toast.success("admin prevelege successfully added")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
       updateDoc(doc(db, "users", empData.uid), { prevelege: "employee" }).then(() => {
         console.log('admin prevelege successfully updated in Firestore!');
-        setAdminMsg("admin prevelege successfully removed")
+        // setAdminMsg("admin prevelege successfully removed")
+        toast.success("admin prevelege successfully removed")
       }).catch((error) => {
         console.error('Error updating admin prevelege in Firestore:', error);
       });
@@ -179,14 +192,16 @@ const ShowEmployee = () => {
     if (checked) {
       updateDoc(doc(db, "users", empData.uid), { status: true }).then(() => {
         console.log('User Status successfully updated in Firestore!');
-        setAdminMsg("User Status successfully added")
+        // setAdminMsg("User Status successfully updated")
+        toast.success("User Status successfully updated")
       }).catch((error) => {
         console.error('Error updating data in Firestore:', error);
       });
     } else {
       updateDoc(doc(db, "users", empData.uid), { status: false }).then(() => {
         console.log('User Status successfully updated in Firestore!');
-        setAdminMsg("User Status successfully removed")
+        // setAdminMsg("User Status successfully removed")
+        toast.success("User Status successfully removed")
       }).catch((error) => {
         console.error('Error updating admin prevelege in Firestore:', error);
       });
@@ -195,133 +210,143 @@ const ShowEmployee = () => {
 
   return (
     <div className="">
+      <ToastContainer />
       <div className="">
+        <div className="emppagenav">
+          <button className="primary-button"
+            onClick={() => setEmpNav({ ...empnav, profile: !empnav.profile })}
+          >
+            profile
+          </button>
+          <button className="primary-button"
+            onClick={() => setEmpNav({ ...empnav, attendance: !empnav.attendance })}
+          >
+            attendance
+          </button>
+          <button className="primary-button"
+            onClick={() => setEmpNav({ ...empnav, status: !empnav.status })}
+          >
+            status
+          </button>
+          <div className="icon-button">
+            <Link to={`/admin/update/employee/${id}`}>
+              <button
+                onClick={reloadCalendar}
+                className='primary-button'
+              >Update User Profile ⮞</button>
+            </Link>
+          </div>
+        </div>
         {
-          empData && (
+          empData && empnav.profile && (
             <div className="">
-              <Profile userData={empData} />
+              <div className="profile open">
+                <Profile userData={empData} />
+              </div>
+              <div className="profilebtn open"></div>
             </div>
           )
         }
-        <div className="text-center">
-          {
-            err && (
-              <p className="error">{err}</p>
-            )
-          }
-          {
-            msg && (
-              <p className="success">{msg}</p>
-            )
-          }
-
+        <div className="">
           <div className="attendance-prevelege">
 
-            <div className="attendance-update-wrapper">
-              <h2>Update User Attendance</h2>
-
-              <div className="input-label">
-                <label>Date</label>
-                <input type="date"
-                  name='date'
-                  className=''
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <div className="input-label">
-                <label>Entry Time</label>
-                <input type="time"
-                  name='entry'
-                  step="3600"
-                  className=''
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <div className="input-label">
-                <label>Exit Time</label>
-                <input type="time"
-                  name='exit'
-                  step="3600"
-                  className=''
-                  onChange={handleChangeInput}
-                />
-              </div>
-              <button
-                onClick={markAttendance}
-                className='secondary-button'
-              >Update ⇕</button>
-            </div>
-
-
             {
-            adminmsg && (
-              <p
-                className="success"
-              >{adminmsg}</p>
-            )
-          }
-            <div className="switch">
-            <h2>Update User Prevelege</h2>
-              {
-                empData.prevelege && userData.prevelege === "superadmin" && (
-                  <div className="switchbutton">
-                    <div className="container">
-                      admin
-                      <div className="toggle-switch">
-                        <input type="checkbox" className="checkbox"
-                          name="admin" id="admin"
-                          value={"admin"}
-                          defaultChecked={isadmin ? true : false}
-                          onChange={handleAdminCheckboxChange}
-                        />
-                        {console.log("from input", isadmin)}
-                        <label className="label" htmlFor={"admin"}>
-                          <span className="inner" />
-                          <span className="switch" />
-                        </label>
-                      </div>
-                    </div>
+              empnav.attendance && (
+                <div className="attendance-update-wrapper">
+                  <h2>Update User Attendance</h2>
+
+                  <div className="input-label">
+                    <label>Date</label>
+                    <input type="date"
+                      name='date'
+                      className=''
+                      onChange={handleChangeInput}
+                    />
                   </div>
-                )
-              }
-              
-              {
-                empData.prevelege && userData.prevelege === "superadmin" && (
-                  <div className="switchbutton">
-                    <div className="container">
-                      status
-                      <div className="toggle-switch">
-                        <input type="checkbox" className="userstatus-checkbox"
-                          name="userstatus" id="userstatus"
-                          value={true}
-                          defaultChecked={userStatus}
-                          onChange={handleUserStatusCheckboxChange}
-                        />
-                        {console.log("from status", userStatus)}
-                        <label className="label" htmlFor={"userstatus"}>
-                          <span className="inner" />
-                          <span className="switch" />
-                        </label>
-                      </div>
-                    </div>
+                  <div className="input-label">
+                    <label>Entry Time</label>
+                    <input type="time"
+                      name='entry'
+                      step="3600"
+                      className=''
+                      onChange={handleChangeInput}
+                    />
                   </div>
-                )
-              }
-            </div>
+                  <div className="input-label">
+                    <label>Exit Time</label>
+                    <input type="time"
+                      name='exit'
+                      step="3600"
+                      className=''
+                      onChange={handleChangeInput}
+                    />
+                  </div>
+                  <button
+                    onClick={markAttendance}
+                    className='secondary-button'
+                  > Update </button>
+                </div>
+              )
+            }
+            {
+              empnav.status && (
+                <div className="switch">
+                  <h2>Update User Prevelege</h2>
+                  {
+                    empData.prevelege && userData.prevelege === "superadmin" && (
+                      <div className="switchbutton">
+                        <div className="container">
+                          admin
+                          <div className="toggle-switch">
+                            <input type="checkbox" className="checkbox"
+                              name="admin" id="admin"
+                              value={"admin"}
+                              defaultChecked={isadmin ? true : false}
+                              onChange={handleAdminCheckboxChange}
+                            />
+                            {console.log("from input", isadmin)}
+                            <label className="label" htmlFor={"admin"}>
+                              <span className="inner" />
+                              <span className="switch" />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+
+                  {
+                    empData.prevelege && userData.prevelege === "superadmin" && (
+                      <div className="switchbutton">
+                        <div className="container">
+                          status
+                          <div className="toggle-switch">
+                            <input type="checkbox" className="userstatus-checkbox"
+                              name="userstatus" id="userstatus"
+                              value={true}
+                              defaultChecked={userStatus}
+                              onChange={handleUserStatusCheckboxChange}
+                            />
+                            {console.log("from status", userStatus)}
+                            <label className="label" htmlFor={"userstatus"}>
+                              <span className="inner" />
+                              <span className="switch" />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
+              )
+            }
           </div>
-        
+
           {/* //switch  */}
 
 
           <div className="">
-            <div className="icon-button">
-              <Link to={`/admin/update/employee/${id}`}>
-                <button
-                  onClick={reloadCalendar}
-                  className='primary-button'
-                >Update User Profile ⮞</button>
-              </Link>
-            </div>
+
             <div className="secondary-button">
               <button
                 onClick={reloadCalendar}
@@ -342,7 +367,7 @@ const ShowEmployee = () => {
           </div>
           <div className=''>
             <PresentDates currentMonth={currentMonth} attendance={attendance} />
-   
+
           </div>
 
         </div>
