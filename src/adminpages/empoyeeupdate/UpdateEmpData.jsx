@@ -46,6 +46,7 @@ const UpdateEmpData = () => {
             phoneno: '',
             gender: 'male',
             dob: '',
+            bio:'',
             profileimg: 'notprovided',
         }
     );
@@ -87,7 +88,8 @@ const UpdateEmpData = () => {
             backgroundimg: formData.backgroundimg,
             gender: formData.gender?formData.gender:'male',
             dob: moment(formData.dob).format("YYYY-MM-DD"),
-            prevelege: "employee"
+            prevelege: formData.prevelege?formData.prevelege:"employee",
+            bio:formData.bio
         }
         console.log(docdata)
         try {
@@ -306,6 +308,16 @@ const UpdateEmpData = () => {
                                 minLength="2"
                                 maxLength="32"
                                 value={formData.phoneno}
+                            />
+                            <input
+                                name="bio"
+                                onChange={handleChangeInput}
+                                placeholder='bio'
+                                className='border p-2 rounded-md'
+                                required
+                                minLength="10"
+                                maxLength="250"
+                                value={formData.bio}
                             />
                             <input
                                 name="dob"

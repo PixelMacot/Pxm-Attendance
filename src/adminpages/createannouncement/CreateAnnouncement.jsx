@@ -3,6 +3,8 @@ import moment from 'moment';
 import { doc, setDoc, getDocs, collection, deleteDoc, query, orderBy, } from "firebase/firestore";
 import { db } from '../../firebase';
 import './createannouncement.scss'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateAnnouncement = () => {
 
@@ -52,20 +54,22 @@ const CreateAnnouncement = () => {
             link: announcement.link ? announcement.link : 'notprovided',
             slug: slug
         }).then(() => {
-            setMsg(
-                {
-                    ...msg,
-                    successtxt: 'successfully created announcement'
-                }
-            )
+            // setMsg(
+            //     // {
+            //     //     ...msg,
+            //     //     successtxt: 'successfully created announcement'
+            //     // }
+            // )
+            toast.success('successfully created announcement')
             fetchAnnouncement()
         }).catch((err) => {
-            setMsg(
-                {
-                    ...msg,
-                    error: err
-                }
-            )
+            // setMsg(
+            //     {
+            //         ...msg,
+            //         error: err
+            //     }
+            // )
+            toast.error("error",err)
         })
     };
     //add No of notifications allowed in firebase
@@ -75,20 +79,22 @@ const CreateAnnouncement = () => {
             nextdays: datesallowed.nextdays,
             previousdays: datesallowed.previousdays
         }).then(() => {
-            setMsg(
-                {
-                    ...msg,
-                    successtxt: 'successfully updated'
-                }
-            )
+            // setMsg(
+            //     {
+            //         ...msg,
+            //         successtxt: 'successfully updated'
+            //     }
+            // )
+            toast.success("successfully updated")
             fetchAnnouncement()
         }).catch((err) => {
-            setMsg(
-                {
-                    ...msg,
-                    error: err
-                }
-            )
+            // setMsg(
+            //     {
+            //         ...msg,
+            //         error: err
+            //     }
+            // )
+            toast.error("error",err)
         })
     };
     //fuction to create slug so that we can name firebase document with slug
@@ -126,27 +132,29 @@ const CreateAnnouncement = () => {
         e.preventDefault()
         let id = e.target.id
         await deleteDoc(doc(db, "announcement", id)).then(() => {
-            setMsg(
-                {
-                    ...msg,
-                    successtxt: 'successfully deleted announcement'
-                }
-            )
+            // setMsg(
+            //     {
+            //         ...msg,
+            //         successtxt: 'successfully deleted announcement'
+            //     }
+            // )
+            toast.success("successfully deleted announcement")
             fetchAnnouncement()
         }).catch((err) => {
-            setMsg(
-                {
-                    ...msg,
-                    error: err
-                }
-            )
+            // setMsg(
+            //     {
+            //         ...msg,
+            //         error: err
+            //     }
+            // )
+            toast.error("error",err)
         })
     }
 
     return (
         <div>
             <div className="announcements-wrapper">
-
+            <ToastContainer />
 
                 {
                     msg.error && (

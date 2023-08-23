@@ -3,6 +3,8 @@ import { MessagesContext } from '../../context/MessageContext'
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SingleMessage = () => {
   const { id } = useParams();
@@ -15,16 +17,19 @@ const SingleMessage = () => {
     let id = e.target.id
     console.log(id)
     await deleteDoc(doc(db, "messages", id)).then(() => {
-      setMsg('successfully deleted message')
+      // setMsg('successfully deleted message')
+      toast.success("successfully deleted message")
       fetchMessages()
     }).catch((err) => {
-      setMsg('A error occured while deleting message')
+      // setMsg('A error occured while deleting message')
+      toast.error(err)
     })
     return <Navigate to="/admin/message" />
   }
 
   return (
     <div>
+      <ToastContainer/>
       <div className="flex flex-col justify-center w-[90%] lg:w-[50%] mx-auto gap-5 shadow-md p-5 mt-10">
         <Link to='/admin/message'>
           <div className="flex gap-2 items-center font-bold my-2">

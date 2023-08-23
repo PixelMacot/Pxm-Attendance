@@ -95,9 +95,9 @@ const CalendarComponent = ({ attendance, markdate }) => {
       >{date.getDate()}</div>
 
     } else if (isSunday) {
-      return <div className='sunday'>
-        {date.getDate()}
-      </div>
+      return <div className="sunday" data-tip={getOccasion(formattedDate)}
+      data-tooltip-id="my-tooltip" data-tooltip-content='Sunday'
+    >{date.getDate()}</div>
     }
 
     else {
