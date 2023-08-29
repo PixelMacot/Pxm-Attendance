@@ -27,7 +27,7 @@
     background-color: white;
 }
 
-.active {
+.navlist .active {
     font-weight: bold; /* Or any other styling you prefer */
     color: white; /* Or any other color you prefer */
     background-color: rgb(16, 47, 51);
@@ -74,11 +74,12 @@
     align-items: center;
     width: 100%;
     position: fixed;
+    top: 0;
     background-color: white;
-    padding: 20px;
+    padding: 10px;
     z-index: 40;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.274);
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    // border-bottom: 1px solid rgba(128, 128, 128, 0.274);
+    // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     @include md {
         padding: 10px;
     }
@@ -120,4 +121,33 @@
     position: fixed;
     width: 100%;
     top: 0px;
+}
+
+//android menu css
+.android-menu {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+
+    .android-navlist {
+        display: flex;
+        list-style-type: none;
+    }
+    .android-navlink {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 15px;
+        padding: 8px;
+    }
+    .android-navlist .active {
+        color: blue;
+        background-color:white;
+        border-radius: 50%;
+        margin: -10px 0px;
+    }
 }

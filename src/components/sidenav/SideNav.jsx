@@ -46,18 +46,12 @@ const SideNav = () => {
                 !toggle && (
                     <div className='mobile-menu '>
                         <div className="menuicon"
-                        onClick={() => setToggle(!toggle)}
+                            onClick={() => setToggle(!toggle)}
                         >
-                            <img src="/menuicon.svg"/>
+                            <img src="/menuicon.svg" />
+                         
                         </div>
-                        <Link to='/'>
-                            <div className='logo'>
-                                <img
-                                    src='/logo.png'
-                                    alt="PXM"
-                                />
-                            </div>
-                        </Link>
+
                         {
                             logged && (
                                 <div className="open-mobile-menu"
@@ -74,13 +68,13 @@ const SideNav = () => {
                             {/* <div className="notification">
                                 <img src='/notificationicon.png' />
                             </div> */}
-                            <div className="avatar">
+                            {/* <div className="avatar">
                                 <Avatar
                                     alt={userData.username}
                                     src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
                                     sx={{ width: '100%', height: '100%', position: 'static' }}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -96,6 +90,7 @@ const SideNav = () => {
                         </div>
                     )
                 }
+
                 <div>
                     <div className="sidenav-wrapper">
                         <div className="logo">
@@ -176,6 +171,50 @@ const SideNav = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className='android-menu '>
+                {
+                    [
+                        {
+                            "title": "Home",
+                            "NavLink": "/",
+                            "icon": AiFillHome
+                        },
+                        {
+                            "title": "Attd",
+                            "NavLink": "/attendancedashboard",
+                            "icon": AiOutlineUnorderedList
+                        },
+                        {
+                            "title": "Profile",
+                            "NavLink": "/profile",
+                            "icon": AiFillContacts
+                        },
+                        {
+                            "title": "Team",
+                            "NavLink": "/team",
+                            "icon": AiOutlineFileProtect
+                        },
+                        {
+                            "title": "Contact",
+                            "NavLink": "/contact",
+                            "icon": AiOutlineMail
+                        },
+                    ].map((item) => (
+                        <li key={item.title} className='android-navlist'>
+
+                            <NavLink to={`${item.NavLink}`} onClick={() => setToggle(false)}
+
+                                className={({ isActive }) => (isActive ? "android-navlink active" : 'android-navlink')}
+                                style={{ listStyle: 'none' }}
+                            >
+
+                                {<item.icon />}
+                                {item.title}
+
+                            </NavLink>
+                        </li>
+                    ))}
             </div>
         </div>
 
