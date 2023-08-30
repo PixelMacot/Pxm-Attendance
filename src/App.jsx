@@ -121,7 +121,7 @@ function App() {
             </div>
             <div className="page-wrapper">
               
-              <div className="sidebar mt-8 lg:-mt-8 -ml-2 lg:-ml-5 w-full">
+              <div className="sidebar mt-8 lg:-mt-8 -ml-2 lg:-ml-5 w-full lg:fixed lg:top-10 z-50">
                 <Sidebar />
               </div>
               <div className="content">
