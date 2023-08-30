@@ -64,18 +64,7 @@ const SideNav = () => {
                                 </div>
                             )
                         }
-                        <div className="right">
-                            {/* <div className="notification">
-                                <img src='/notificationicon.png' />
-                            </div> */}
-                            {/* <div className="avatar">
-                                <Avatar
-                                    alt={userData.username}
-                                    src={userData.profileimg != 'notprovided' ? userData.profileimg : userData.gender == 'male' ? '/boyavatar.png' : '/girlavatar.png'}
-                                    sx={{ width: '100%', height: '100%', position: 'static' }}
-                                />
-                            </div> */}
-                        </div>
+                 
                     </div>
 
                 )

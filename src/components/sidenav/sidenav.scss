@@ -145,9 +145,10 @@
         padding: 8px;
     }
     .android-navlist .active {
-        color: blue;
+        color: rgb(2, 91, 150);
         background-color:white;
         border-radius: 50%;
-        margin: -10px 0px;
+        margin: 0px 0px;
+        font-weight: 600;
     }
 }
