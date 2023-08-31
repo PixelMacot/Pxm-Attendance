@@ -50,6 +50,7 @@ const Profile = () => {
     }, [])
 
     async function updateProfileDetails(e) {
+        toast.info("updating profile....")
         console.log(formData)
         console.log(currentUser.uid)
         e.preventDefault()
@@ -81,7 +82,7 @@ const Profile = () => {
                         profileimg: formData.profileimg,
                         position: formData.position,
                         skills: formData.skills,
-                        address: formData.address,
+                        address: formData.address, 
                         phoneno: formData.phoneno,
                         backgroundimg: formData.backgroundimg,
                         gender: formData.gender,
@@ -199,9 +200,10 @@ const Profile = () => {
     };
     return (
         <main >
+           <ToastContainer />
             <section>
                 <div>
-                    <ToastContainer />
+                    
                     {/* //user profile details  */}
                     <div className='profile-page-wrapper'>
 
@@ -223,6 +225,7 @@ const Profile = () => {
                                 className='hidden'
                             />
                         </div>
+                        
                         <form className=''>
 
                             {/* //image upload functionality */}
@@ -256,7 +259,7 @@ const Profile = () => {
 
                     {/* //user  profile  */}
 
-                    <div className="user-details">
+                    <div className="user-details"> 
                         <form
                             onSubmit={updateProfileDetails}
                             className=''
@@ -369,7 +372,11 @@ const Profile = () => {
 
                             <button
                                 // onClick={updateProfileDetails}
-                                className='primary-button'>Update Profile</button>
+                                className='update-profile-btn'>
+                                    {
+                                        loader ? 'Updating...':'Update Profile'
+                                    }
+                                </button>
                         </form>
                     </div>
 
