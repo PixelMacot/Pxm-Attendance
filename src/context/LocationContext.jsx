@@ -47,7 +47,7 @@ export const LocationContextProvider = ({ children }) => {
           longitude: docSnap.data().longitude
         }
       )
-      toast.success("Location data loaded")
+      // toast.success("Location data loaded")
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");

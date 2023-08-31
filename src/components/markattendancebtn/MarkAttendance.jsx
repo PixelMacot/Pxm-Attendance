@@ -270,7 +270,7 @@ const MarkAttendance = () => {
                                         <div className="my-5">
                                             <button
                                                 onClick={reverifyLocation}
-                                                className='bg-cyan-700 px-5 py-2 text-white  rounded-md shadow-md'
+                                                className='bg-cyan-700 px-5 py-2 text-white w-full rounded-md shadow-md'
                                             >Reverify</button>
                                         </div>
                                     </div>

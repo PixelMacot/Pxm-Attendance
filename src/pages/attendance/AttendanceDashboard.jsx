@@ -42,7 +42,9 @@ const AttendanceDashboard = () => {
             <div className="attendance-dashboard-wrapper ">
 
                 <div className="attendance-btns-wrapper">
-                    <img src="/office.png" alt="" className='officeimg' />
+                  <div className="office-img">
+                    
+                  </div>
                     {
                         userData.dummyData ? (
                             <div className=""></div>
