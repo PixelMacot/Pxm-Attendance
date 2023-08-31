@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth";
 import { BiMenuAltRight, BiLogOut, BiSolidGroup } from 'react-icons/bi';
 import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts, AiOutlineMail, AiOutlineClose } from 'react-icons/ai'
-import { BsPersonFillCheck, BsPersonCircle } from 'react-icons/bs'
+import { BsPersonFillCheck, BsPersonCircle ,BsKeyFill} from 'react-icons/bs'
 import { ImHome } from 'react-icons/im'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { AuthContext } from '../../context/AuthContext'
@@ -214,7 +214,7 @@ const SideNav = () => {
                                 style={{ listStyle: 'none' }}
                             >
                                 <span className="android-nav-icon">
-                                    <AiOutlineFileProtect />
+                                    <BsKeyFill/>
                                 </span>
                                 <span className="android-nav-name">
                                     Admin
