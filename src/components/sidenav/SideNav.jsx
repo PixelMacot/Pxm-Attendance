@@ -172,7 +172,7 @@ const SideNav = () => {
                             "icon": ImHome
                         },
                         {
-                            "title": "Attd",
+                            "title": "Attnd",
                             "NavLink": "/attendancedashboard",
                             "icon": BsPersonFillCheck
                         },
