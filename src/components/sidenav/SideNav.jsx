@@ -3,9 +3,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signOut } from "firebase/auth";
-import { BiMenuAltRight, BiLogOut } from 'react-icons/bi';
+import { BiMenuAltRight, BiLogOut, BiSolidGroup } from 'react-icons/bi';
 import { HiX } from 'react-icons/hi';
 import { AiFillHome, AiOutlineUnorderedList, AiFillContacts, AiOutlineMail, AiOutlineClose } from 'react-icons/ai'
+import { BsPersonFillCheck, BsPersonCircle } from 'react-icons/bs'
+import { ImHome } from 'react-icons/im'
 import { AiOutlineFileProtect } from 'react-icons/ai'
 import { AuthContext } from '../../context/AuthContext'
 import Avatar from '@mui/material/Avatar';
@@ -49,7 +51,7 @@ const SideNav = () => {
                             onClick={() => setToggle(!toggle)}
                         >
                             <img src="/menuicon.svg" />
-                         
+
                         </div>
 
                         {
@@ -64,7 +66,7 @@ const SideNav = () => {
                                 </div>
                             )
                         }
-                 
+
                     </div>
 
                 )
@@ -91,7 +93,7 @@ const SideNav = () => {
                                     {
                                         "title": "Home",
                                         "NavLink": "/",
-                                        "icon": AiFillHome
+                                        "icon": ImHome
                                     },
                                     {
                                         "title": "Attendance",
@@ -106,7 +108,7 @@ const SideNav = () => {
                                     {
                                         "title": "Team",
                                         "NavLink": "/team",
-                                        "icon": AiOutlineFileProtect
+                                        "icon": BiSolidGroup
                                     },
                                     {
                                         "title": "Contact",
@@ -167,22 +169,22 @@ const SideNav = () => {
                         {
                             "title": "Home",
                             "NavLink": "/",
-                            "icon": AiFillHome
+                            "icon": ImHome
                         },
                         {
                             "title": "Attd",
                             "NavLink": "/attendancedashboard",
-                            "icon": AiOutlineUnorderedList
+                            "icon": BsPersonFillCheck
                         },
                         {
                             "title": "Profile",
                             "NavLink": "/profile",
-                            "icon": AiFillContacts
+                            "icon": BsPersonCircle
                         },
                         {
                             "title": "Team",
                             "NavLink": "/team",
-                            "icon": AiOutlineFileProtect
+                            "icon": BiSolidGroup
                         },
                         {
                             "title": "Contact",
@@ -198,8 +200,12 @@ const SideNav = () => {
                                 style={{ listStyle: 'none' }}
                             >
 
-                                {<item.icon />}
-                                {item.title}
+                                <span className="android-nav-icon">
+                                    {<item.icon />}
+                                </span>
+                                <span className="android-nav-name">
+                                    {item.title}
+                                </span>
 
                             </NavLink>
                         </li>

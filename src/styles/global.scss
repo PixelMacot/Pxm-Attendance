@@ -17,8 +17,6 @@ a {
   max-width: 100vw;
 }
 
-
-
 .quote-text {
   color: rgba(0, 0, 0, 0.801);
   line-height: 1.75em;
@@ -39,7 +37,6 @@ a {
   font-weight: bold;
   padding: 10px 10px 10px 0px;
 }
-
 
 //Layout
 .main-container {
@@ -64,14 +61,14 @@ a {
   width: 80%;
   padding: 100px 20px;
 
-
+ 
   @include md {
     margin: 0px 0px;
     width: 100%;
-    padding: 10px;
+    padding: 0px 2px;
   }
 }
-.primary-button{
+.primary-button {
   background-color: rgba(4, 25, 37, 0.911);
   width: fit-content;
   padding: 10px;
@@ -79,7 +76,7 @@ a {
   color: white;
 }
 
-.secondary-button{
+.secondary-button {
   background-color: rgba(4, 25, 37, 0.911);
   width: fit-content;
   padding: 10px;
