@@ -186,11 +186,7 @@ const SideNav = () => {
                             "NavLink": "/team",
                             "icon": BiSolidGroup
                         },
-                        {
-                            "title": "Contact",
-                            "NavLink": "/contact",
-                            "icon": AiOutlineMail
-                        },
+
                     ].map((item) => (
                         <li key={item.title} className='android-navlist'>
 
@@ -210,6 +206,42 @@ const SideNav = () => {
                             </NavLink>
                         </li>
                     ))}
+                {
+                    (userData.prevelege == "admin" || userData.prevelege == "superadmin") ? (
+                        <li className='android-navlist'>
+                            <NavLink to="/admin"
+                                className={({ isActive }) => (isActive ? "android-navlink active" : 'android-navlink')}
+                                style={{ listStyle: 'none' }}
+                            >
+                                <span className="android-nav-icon">
+                                    <AiOutlineFileProtect />
+                                </span>
+                                <span className="android-nav-name">
+                                    Admin
+                                </span>
+
+                            </NavLink>
+                        </li>
+
+
+                    ) : (
+                        <li className='android-navlist'>
+                            <NavLink to="/contact"
+                                className={({ isActive }) => (isActive ? "android-navlink active" : 'android-navlink')}
+                                style={{ listStyle: 'none' }}
+                            >
+                                <span className="android-nav-icon">
+                                    <AiOutlineMail />
+                                </span>
+                                <span className="android-nav-name">
+                                    Contact
+                                </span>
+
+                            </NavLink>
+                        </li>
+                    )
+
+                }
             </div>
         </div>
 
