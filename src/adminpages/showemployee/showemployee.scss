@@ -1,6 +1,8 @@
 @import "../../styles/variable.scss";
 @import "../../styles/responsive.scss";
-
+.show-employee-container{
+    padding: 5px;
+}
 .emppagenav{
     display: flex;
     gap: 10px;

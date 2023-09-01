@@ -211,7 +211,7 @@ const ShowEmployee = () => {
   return (
     <div className="">
       <ToastContainer />
-      <div className="">
+      <div className="show-employee-container">
         <div className="emppagenav">
           <button className="primary-button"
             onClick={() => setEmpNav({ ...empnav, profile: !empnav.profile })}
