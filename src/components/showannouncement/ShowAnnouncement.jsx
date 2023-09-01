@@ -140,7 +140,7 @@ const ShowAnnouncement = () => {
                                             <FaCalendarAlt />
                                             {item.date}
                                         </div>
-                                        <div className="msg text-sm lg:text-lg">
+                                        <div className="msg text-sm lg:text-lg text-[#4f4c4c]">
                                             {item.msg}
                                         </div>
                                     </div>
