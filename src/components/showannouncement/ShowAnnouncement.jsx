@@ -122,7 +122,7 @@ const ShowAnnouncement = () => {
             <div className="bg-cyan-900 rounded-xl">
                 <div className="flex items-center text-white  text-2xl p-2 justify-center gap-4  w-full">
                     <FaCalendarAlt />
-                    <h1 className='font-bold text-center '>
+                    <h1 className=' font-semibold lg:font-bold text-center tracking-wider py-5'>
                         Notifications
                     </h1>
                 </div>
