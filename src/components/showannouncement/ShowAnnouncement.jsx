@@ -122,12 +122,12 @@ const ShowAnnouncement = () => {
             <div className="bg-cyan-900 rounded-xl">
                 <div className="flex items-center text-white  text-2xl p-2 justify-center gap-4  w-full">
                     <FaCalendarAlt />
-                    <h1 className=' font-semibold lg:font-bold text-center tracking-wider py-5'>
+                    <h1 className=' font-semibold lg:font-bold text-center tracking-wider py-2'>
                         Notifications
                     </h1>
                 </div>
 
-                <div className='max-h-[400px] overflow-auto flex flex-col   p-5 '>
+                <div className='max-h-[400px] overflow-auto flex flex-col px-3'>
 
                     {
                         finalAnnouncement && finalAnnouncement.toReversed().map((item) => {
