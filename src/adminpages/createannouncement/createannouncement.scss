@@ -3,12 +3,12 @@
 
 .announcements-wrapper {
     display: flex;
-    margin-top: 50px;
+    margin: 50px 0px;
     justify-content: space-evenly;
     padding: 20px;
     @include md {
         flex-wrap: wrap;
-        margin-top: 20px;
+        margin: 20px 0px;
         padding: 7px;
     }
 

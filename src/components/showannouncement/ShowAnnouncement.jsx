@@ -136,11 +136,11 @@ const ShowAnnouncement = () => {
 
                                 <div className="py-2">
                                     <div className={`bg-white p-2 rounded-md ${currentday == item.date ? 'currentday' : 'nottoday'}`} key={item.id}>
-                                        <div className={`flex gap-2 items-center text-sm text-cyan-900 ${currentday == item.date ? 'currentday' : 'nottoday'} `}>
+                                        <div className={`flex gap-2 items-center text-xs lg:text-sm  text-cyan-900 ${currentday == item.date ? 'currentday' : 'nottoday'} `}>
                                             <FaCalendarAlt />
                                             {item.date}
                                         </div>
-                                        <div className="msg">
+                                        <div className="msg text-sm lg:text-lg">
                                             {item.msg}
                                         </div>
                                     </div>
