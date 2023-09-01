@@ -51,7 +51,7 @@ const uploadToFirestore = async (e) => {
 };
 
   return (
-    <div className="office-location-container">
+    <div className="office-location-container mt-10 lg:mt-20">
       <div className="office-location-wrapper">
         <div className="shadow-md m-5 p-10 w-[95vw] lg:w-[40vw] mx-auto">
           <h1 className="text-xl py-5 text-center font-bold text-cyan-900 ">Change Office Location</h1>

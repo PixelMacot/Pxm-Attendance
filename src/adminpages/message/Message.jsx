@@ -81,7 +81,7 @@ const Message = () => {
 
 console.log(messages)
   return (
-    <div className='message-container mt-4 '>
+    <div className='message-container mt-5 lg:mt-20 '>
       <button
       onClick={fetchMessages}
       className='px-5 py-2 bg-cyan-700 text-white rounded-md m-2'
