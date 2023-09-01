@@ -59,7 +59,7 @@ a {
 .page-wrapper {
   min-height: 90vh;
   width: 80%;
-  padding: 100px 20px;
+  padding:0px 20px;
 
  
   @include md {
@@ -67,6 +67,9 @@ a {
     width: 100%;
     padding: 0px 2px;
   }
+}
+.main-container{
+  min-height: 100vh;
 }
 .primary-button {
   background-color: rgba(4, 25, 37, 0.911);

@@ -119,11 +119,12 @@ function App() {
             <div className="sidenav">
               <SideNav />
             </div>
-            <div className="page-wrapper">
-              
-              <div className="sidebar mt-8 lg:-mt-8 -ml-2 lg:-ml-5 w-full lg:fixed lg:top-10 z-50">
+            <div className="sidebar -mt-2 lg:-mt-8  lg:-ml-5 w-full lg:fixed top-6 z-50">
                 <Sidebar />
               </div>
+            <div className="page-wrapper">
+              
+             
               <div className="content">
                 {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}> */}
                 <ProtectedRoute>
