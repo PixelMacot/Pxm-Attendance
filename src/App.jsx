@@ -96,11 +96,11 @@ function App() {
           <div className="page-wrapper">
            
             <div className="layout">
-              {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page </div>}> */}
+              <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page </div>}>
               <ProtectedRoute>
                 <Outlet />
               </ProtectedRoute>
-              {/* </ErrorBoundary> */}
+              </ErrorBoundary>
             </div>
           </div>
         </div>
@@ -126,13 +126,13 @@ function App() {
               
              
               <div className="content">
-                {/* <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}> */}
+                <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}>
                 <ProtectedRoute>
                   <AdminProtectedRoute>
                     <Outlet />
                   </AdminProtectedRoute>
                 </ProtectedRoute>
-                {/* </ErrorBoundary> */}
+                </ErrorBoundary>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ import moment from 'moment'
 import { doc, setDoc, getDocs, collection, deleteDoc } from "firebase/firestore";
 import { db } from '../../firebase';
 import './home.scss'
-
+import { ErrorBoundary } from "react-error-boundary";
 const Home = () => {
   const [loader, setLoader] = useState(true)
   const { currentUser, userData } = useContext(AuthContext)
@@ -63,12 +63,17 @@ const Home = () => {
     <section className='home-wrapper'>
       <div className="home-container">
         <div className="profile">
-          <Profile userData={userData} quote={true} />
+          <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong while showing profile page</div>}>
+            <Profile userData={userData} quote={true} />
+          </ErrorBoundary>
+
           {/* <Quotes /> */}
           {/* <ShowAnnouncement /> */}
         </div>
         < div className="announcement-container ">
-          <ShowAnnouncement />
+          <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong while showing announcement page</div>}>
+            <ShowAnnouncement />
+          </ErrorBoundary>
         </div>
         <div>
         </div>
