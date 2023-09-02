@@ -66,8 +66,9 @@ const CalendarComponent = ({ attendance, markdate }) => {
 
 
 
-
+  let leaveMarked = false;
   const tileContent = ({ date }) => {
+
     const formattedDate = moment(date).format("DD-MM-YYYY")
 
     // Check if the date is present or a holiday
@@ -81,30 +82,37 @@ const CalendarComponent = ({ attendance, markdate }) => {
     const isSunday = date.getDay() === 0; // 0 is Sunday
     // Define the content for different date types
     const isAbsent = !isPresent && !isHoliday && !isSunday && date < currentDate;
-    // Check if the date is a Sunday
 
-    // Define the content for different date types
-    // if (isPresent) {
-    //   return <div className="present-day" data-tip={getOccasion(formattedDate)}
-    //   >{date.getDate()}</div>
+
+
     if (isPresent) {
       let totaltime = getTotalTime(formattedDate)
-      return <div className={totaltime<4?'absent-day':totaltime>=8?'present-day':'half-day'} data-tip={getOccasion(formattedDate)}
+      return <div className={totaltime < 14400 ? 'absent-day' : totaltime >= 25200 ? 'present-day' : 'half-day'} data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getPresentTooltip(formattedDate)}
       >{date.getDate()}</div>
 
     } else if (isHoliday) {
-
       return <div className="holiday" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getOccasion(formattedDate)}
       >{date.getDate()}</div>
 
-    } else if (isAbsent) {
+    }
+    else if (!leaveMarked) {
+      console.log("entered leavemarked", !leaveMarked)
+      leaveMarked = true;
+      return <div className="leave-day"
+        data-tooltip-id="my-tooltip" data-tooltip-content='leave'
+      >{date.getDate()}</div>
+
+    }
+    else if (isAbsent) {
+      console.log("entered absent", !leaveMarked)
       return <div className="absent-day" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content='absent'
       >{date.getDate()}</div>
+    }
 
-    } else if (isSunday) {
+    else if (isSunday) {
       return <div className="sunday" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content='Sunday'
       >{date.getDate()}</div>
@@ -131,13 +139,17 @@ const CalendarComponent = ({ attendance, markdate }) => {
      (${calculateWorkingHours(att.entry, att.exit)} hrs)`
       : '';
   };
+
+
   const getTotalTime = (date) => {
     const att = attendance[date];
-    
-    let totalworkinghours = calculateWorkingHours(att.entry, att.exit)
+    let totalworkinghours = calculateWorkingHours(att.entry, att.exit);
     const [whhours, whminutes] = totalworkinghours.split(':').map(Number);
-    console.log("from calendar app",whhours)
-    return whhours
+    // Convert hours and minutes to seconds and add them together
+    const totalTimeInSeconds = (whhours * 3600) + (whminutes * 60);
+    console.log("from calendar app", totalTimeInSeconds);
+    return totalTimeInSeconds;
+
   };
 
   // console.log(markdate, holidaysData)

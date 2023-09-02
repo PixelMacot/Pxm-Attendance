@@ -71,7 +71,26 @@
         color: green;
         border: 2px solid green;
         // background-color: green;
-        background: linear-gradient(to right, green 0%, green 90%, red 50%, red 100%);
+        background: linear-gradient(to right, green 0%, green 50%, red 50%, red 100%);
+        color: white;
+        padding: 5px 10px;
+        // border-radius: 50%;
+        text-align: center;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .leave-day {
+        position: absolute;
+        top: 0px;
+        width: 70%;
+        height: 25px;
+        margin: 0px auto;
+        color: green;
+        border: 2px solid green;
+        // background-color: green;
+        background-color: gray;
         color: white;
         padding: 5px 10px;
         // border-radius: 50%;
