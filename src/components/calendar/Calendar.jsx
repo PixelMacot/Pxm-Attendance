@@ -88,7 +88,8 @@ const CalendarComponent = ({ attendance, markdate }) => {
     //   return <div className="present-day" data-tip={getOccasion(formattedDate)}
     //   >{date.getDate()}</div>
     if (isPresent) {
-      return <div className={getTotalTime(formattedDate)>=8?'present-day':'half-day'} data-tip={getOccasion(formattedDate)}
+      let totaltime = getTotalTime(formattedDate)
+      return <div className={totaltime<4?'absent-day':totaltime>=8?'present-day':'half-day'} data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getPresentTooltip(formattedDate)}
       >{date.getDate()}</div>
 
