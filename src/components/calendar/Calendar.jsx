@@ -87,26 +87,19 @@ const CalendarComponent = ({ attendance, markdate }) => {
 
     if (isPresent) {
       let totaltime = getTotalTime(formattedDate)
-      return <div className={totaltime < 14400 ? 'absent-day' : totaltime >= 25200 ? 'present-day' : 'half-day'} data-tip={getOccasion(formattedDate)}
+      return <div className={totaltime < 14400 ? 'absent-day' : totaltime >= 28200 ? 'present-day' : 'half-day'} data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getPresentTooltip(formattedDate)}
       >{date.getDate()}</div>
-
-    } else if (isHoliday) {
+    } 
+    
+    else if (isHoliday) {
       return <div className="holiday" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getOccasion(formattedDate)}
       >{date.getDate()}</div>
 
     }
-    else if (!leaveMarked) {
-      console.log("entered leavemarked", !leaveMarked)
-      leaveMarked = true;
-      return <div className="leave-day"
-        data-tooltip-id="my-tooltip" data-tooltip-content='leave'
-      >{date.getDate()}</div>
 
-    }
     else if (isAbsent) {
-      console.log("entered absent", !leaveMarked)
       return <div className="absent-day" data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content='absent'
       >{date.getDate()}</div>
@@ -167,8 +160,8 @@ const CalendarComponent = ({ attendance, markdate }) => {
                 view={"month"}
                 onActiveStartDateChange={onActiveStartDateChangeHandler}
                 tileContent={tileContent}
+                showNeighboringMonth={false}
               />
-
             )
           }
           <ReactTooltip effect="solid" id="my-tooltip" />
