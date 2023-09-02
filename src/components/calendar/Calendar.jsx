@@ -37,6 +37,15 @@ const CalendarComponent = ({ attendance, markdate }) => {
     if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
       timePoint2 = timePoint1
     }
+    if (timePoint1 !== "10-10-10") {
+      const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
+      if (hours1 < 10) {
+        // If hours1 is less than 10, set it to 10
+        timePoint1 = `10-00-00`;
+        // console.log("timepoint changed")
+      }
+
+    }
     const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
     const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
 
@@ -50,7 +59,7 @@ const CalendarComponent = ({ attendance, markdate }) => {
     const minutes = Math.floor(difference / 60);
     const seconds = difference % 60;
 
-    return `${hours}:${minutes} hrs`;
+    return `${hours}:${minutes}`;
   };
 
 
@@ -79,7 +88,7 @@ const CalendarComponent = ({ attendance, markdate }) => {
     //   return <div className="present-day" data-tip={getOccasion(formattedDate)}
     //   >{date.getDate()}</div>
     if (isPresent) {
-      return <div className="present-day" data-tip={getOccasion(formattedDate)}
+      return <div className={getTotalTime(formattedDate)>=8?'present-day':'half-day'} data-tip={getOccasion(formattedDate)}
         data-tooltip-id="my-tooltip" data-tooltip-content={getPresentTooltip(formattedDate)}
       >{date.getDate()}</div>
 
@@ -96,8 +105,8 @@ const CalendarComponent = ({ attendance, markdate }) => {
 
     } else if (isSunday) {
       return <div className="sunday" data-tip={getOccasion(formattedDate)}
-      data-tooltip-id="my-tooltip" data-tooltip-content='Sunday'
-    >{date.getDate()}</div>
+        data-tooltip-id="my-tooltip" data-tooltip-content='Sunday'
+      >{date.getDate()}</div>
     }
 
     else {
@@ -118,8 +127,16 @@ const CalendarComponent = ({ attendance, markdate }) => {
     console.log("from calendar app", att)
     return att ? `${att.entry && `${att.entry.slice(0, 2)}:${att.entry.slice(3, 5)}`}
      to ${att.exit ? `${att.exit.slice(0, 2)}:${att.exit.slice(3, 5)}` : "not-marked"}
-     (${calculateWorkingHours(att.entry, att.exit)})`
+     (${calculateWorkingHours(att.entry, att.exit)} hrs)`
       : '';
+  };
+  const getTotalTime = (date) => {
+    const att = attendance[date];
+    
+    let totalworkinghours = calculateWorkingHours(att.entry, att.exit)
+    const [whhours, whminutes] = totalworkinghours.split(':').map(Number);
+    console.log("from calendar app",whhours)
+    return whhours
   };
 
   // console.log(markdate, holidaysData)

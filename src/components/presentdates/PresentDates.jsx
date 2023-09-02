@@ -35,7 +35,7 @@ function CustomToolbar() {
     </GridToolbarContainer>
   );
 }
-const PresentDates = ({ currentMonth,attendance }) => {
+const PresentDates = ({ currentMonth, attendance }) => {
 
   // const { currentMonth, currentMonthPresentDays, attendance, markdatefunction } = useContext(CalendarContext)
   // console.log(JSON.parse(currentMonthPresentDays))
@@ -54,6 +54,16 @@ const PresentDates = ({ currentMonth,attendance }) => {
     if (timePoint1 !== "10-10-10" && timePoint2 === "10-10-10") {
       timePoint2 = timePoint1
     }
+    if (timePoint1 !== "10-10-10") {
+      const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
+      if (hours1 < 10) {
+        // If hours1 is less than 10, set it to 10
+        timePoint1 = `10-00-00`;
+        // console.log("timepoint changed")
+      }
+
+    }
+    
     const [hours1, minutes1, seconds1] = timePoint1.split('-').map(Number);
     const [hours2, minutes2, seconds2] = timePoint2.split('-').map(Number);
 
@@ -83,7 +93,7 @@ const PresentDates = ({ currentMonth,attendance }) => {
   // })
   let currentDate = currentMonth.slice(3, 10)
   Object.keys(attn).forEach(function (key, index) {
-    
+
     if (attn[key].markdate.slice(3, 10) != currentDate) {
       //dont push dates of next month in array
 
@@ -94,8 +104,8 @@ const PresentDates = ({ currentMonth,attendance }) => {
         id: index,
         date: attn[key].markdate,
         workinghours: calculateWorkingHours(attn[key].entry, attn[key].exit),
-        entry:currdata.entry && `${currdata.entry.slice(0, 2)}:${currdata.entry.slice(3,5)}:${currdata.entry.slice(6,8)}`,
-        exit: currdata.exit && `${currdata.exit.slice(0, 2)}:${currdata.exit.slice(3,5)}:${currdata.exit.slice(6,8)}`,
+        entry: currdata.entry && `${currdata.entry.slice(0, 2)}:${currdata.entry.slice(3, 5)}:${currdata.entry.slice(6, 8)}`,
+        exit: currdata.exit && `${currdata.exit.slice(0, 2)}:${currdata.exit.slice(3, 5)}:${currdata.exit.slice(6, 8)}`,
       })
     }
 

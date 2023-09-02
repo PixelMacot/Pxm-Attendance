@@ -145,7 +145,6 @@ const ShowAnnouncement = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             )
                         })
                     }
