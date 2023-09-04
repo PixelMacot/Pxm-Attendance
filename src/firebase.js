@@ -15,7 +15,7 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDgKhaIwjPMMN_Pxv9rVSLNfhfrwRaNlkM",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "attendance-14669.firebaseapp.com",
   projectId: "attendance-14669",
   storageBucket: "attendance-14669.appspot.com",
