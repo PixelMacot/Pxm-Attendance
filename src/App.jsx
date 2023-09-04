@@ -123,8 +123,7 @@ function App() {
                 <Sidebar />
               </div>
             <div className="page-wrapper">
-              
-             
+                 
               <div className="content">
                 <ErrorBoundary fallback={<div className='my-40 px-20 font-bold'>Something went wrong refresh page</div>}>
                 <ProtectedRoute>
