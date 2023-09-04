@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Navbar from '../../components/navbar/Navbar'
 import { AuthContext } from '../../context/AuthContext'
 import './notverified.scss'
 

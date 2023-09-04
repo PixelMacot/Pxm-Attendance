@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { doc, setDoc} from "firebase/firestore";
 import { db } from '../../firebase';
-
 import './officelocation.scss'
+
+// components Features
+// (1) set office location and radius 
+
 
 const OfficeLocation = () => {
   const [latitude, setLatitude] = useState(28.6292);

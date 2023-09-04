@@ -5,6 +5,10 @@ import { db } from '../../firebase';
 import { Link } from 'react-router-dom';
 import { MessagesContext } from '../../context/MessageContext'
 
+// components Features
+// (1) show list of messages
+
+
 const columns = [
   {
     field: 'id',

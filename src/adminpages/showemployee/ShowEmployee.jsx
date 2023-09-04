@@ -13,6 +13,15 @@ import { CalendarContext } from '../../context/CalendarContext'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+// components Features
+// (1) show emp profile
+// (2) change emp status 
+// (3) change emp prevelege
+// (4) update emp attendance
+// (5) showing emp attendance
+
+
 const ShowEmployee = () => {
   const { userData } = useContext(AuthContext)
   const { id } = useParams();

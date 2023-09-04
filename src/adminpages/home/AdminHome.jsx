@@ -4,6 +4,12 @@ import { db } from '../../firebase';
 import DataTable from '../../components/datatable/DataTable'
 import './home.scss'
 
+// components Features
+// (1) admin homepage
+// (2) showing all users 
+
+
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   { field: "uid", headerName: "UID", width: 90 },

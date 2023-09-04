@@ -69,6 +69,7 @@ export const AuthContextProvider = ({ children }) => {
 
   }
 
+// Function to send email verification
   const handleSendEmailVerification = () => {
     const user = auth.currentUser;
 
@@ -88,7 +89,7 @@ export const AuthContextProvider = ({ children }) => {
 
   };
 
-
+//  This is for getting the device token for sending the notification 
   async function updateFcmToken(userData,Fcmtoken) {
 
     let docData = {

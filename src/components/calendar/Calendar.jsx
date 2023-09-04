@@ -7,7 +7,9 @@ import moment from 'moment';
 import { CalendarContext } from '../../context/CalendarContext'
 import { HolidaysContext } from '../../context/HolidaysContext'
 
-
+// components Features
+// (1) calendar app to show attendance
+// (2) calculate working hours  
 
 
 const CalendarComponent = ({ attendance, markdate }) => {

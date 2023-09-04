@@ -12,6 +12,9 @@ import moment from 'moment';
 import { useParams } from 'react-router';
 import './updateempdata.scss'
 
+// components Features
+// (1) update user profile
+
 
 const UpdateEmpData = () => {
 

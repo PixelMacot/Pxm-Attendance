@@ -8,6 +8,13 @@ import { db } from '../../firebase';
 import Loader from '../../components/loader/Loader';
 import './holiday.scss'
 
+// components Features
+// (1) upload holidays as csv
+// (2) showing holidays 
+// (3) delete holiday
+
+
+
 const HolidayCalendar = () => {
   const [loader, setLoader] = useState(false)
   const [csvFile, setCsvFile] = useState(null);

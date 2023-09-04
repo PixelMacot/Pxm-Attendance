@@ -6,6 +6,12 @@ import './createannouncement.scss'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// components Features
+// (1) create announcement
+// (2) show how many announcement you want to user to show 
+// (3) showing all announcemens
+// (4) Delete announcements
+
 const CreateAnnouncement = () => {
 
     //All useStates
@@ -69,7 +75,7 @@ const CreateAnnouncement = () => {
             //         error: err
             //     }
             // )
-            toast.error("error",err)
+            toast.error("error", err)
         })
     };
     //add No of notifications allowed in firebase
@@ -94,7 +100,7 @@ const CreateAnnouncement = () => {
             //         error: err
             //     }
             // )
-            toast.error("error",err)
+            toast.error("error", err)
         })
     };
     //fuction to create slug so that we can name firebase document with slug
@@ -113,7 +119,7 @@ const CreateAnnouncement = () => {
             // const collectionRef = collection(db, "announcement")
             // const snapshot = await getDocs(collectionRef);
             // const fetched_data = snapshot.docs.map((doc) => doc.data());
-         
+
             const announcementsRef = collection(db, "announcement");
             const q = query(announcementsRef, orderBy("date", "desc"));
             const querySnapshot = await getDocs(q);
@@ -147,14 +153,14 @@ const CreateAnnouncement = () => {
             //         error: err
             //     }
             // )
-            toast.error("error",err)
+            toast.error("error", err)
         })
     }
 
     return (
         <div>
             <div className="announcements-wrapper">
-            <ToastContainer />
+                <ToastContainer />
 
                 {
                     msg.error && (
@@ -249,11 +255,9 @@ const CreateAnnouncement = () => {
                                             ⛔ Delete
                                         </div>
                                     </div>
-
                                 )
                             })
                         }
-
                     </div>
                 </div>
             </div>

@@ -6,10 +6,7 @@ import Login from './pages/login/Login';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 // import { Routes, Route } from 'react-router-dom';
 import Profile from './pages/profile/Profile';
-import Attendance from './pages/Attendance';
 
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
 import Team from './pages/team/Team';
 
 import { AuthContext } from "./context/AuthContext";

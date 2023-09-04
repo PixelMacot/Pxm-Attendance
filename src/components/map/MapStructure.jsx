@@ -4,6 +4,13 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LocationContext } from '../../context/LocationContext'
 
+
+
+// components Features
+// (1) show map ui to user
+
+
+
 const MapStructure = () => {
     const [mapCenter, setMapCenter] = useState();
     const [placeName, setPlaceName] = useState('');

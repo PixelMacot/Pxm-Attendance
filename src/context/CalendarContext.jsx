@@ -13,7 +13,7 @@ export const CalendarContextProvider = ({ children }) => {
   const [datesLoader,setDatesLoader] = useState(true)
   const [currentMonthPresentDays, setCurrentMonthPresentDays] = useState()
   
-  // getting Attendance data from cloud firestore 
+  // Getting Attendance data from cloud firestore 
   const getAttendanceData = async (useruid) => {
     // console.log("getattendance data function called", user.uid)
     getDoc(doc(db, "attendance", useruid)).then(docSnap => {

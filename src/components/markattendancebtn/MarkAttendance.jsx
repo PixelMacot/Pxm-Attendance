@@ -10,6 +10,13 @@ import './markattendance.scss'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+// components Features
+// (1) markattendance button logic
+
+
+
+
 const MarkAttendance = () => {
     const [err, setErr] = useState()
     const [msg, setMsg] = useState()
